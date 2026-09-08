@@ -260,14 +260,14 @@ f(X) -> {Low, High}
 
 API에 입력한 effort 설정값을 ground truth로 사용한다.
 
-주의(2026-09-08, 급소3): configured effort를 명시적 parameter로 강제 고정할 수 있는
-provider/model에서만 이 label이 깨끗하다. adaptive thinking(모델이 effort를 스스로 결정,
-예: Claude adaptive / Gemini auto thinking level)의 경우 "Low/High 설정"이 실제 동작으로
-이어지지 않아 label이 오염될 수 있다. 따라서:
-- 강제 고정 가능한 provider/model → Task A 주 실험 포함.
-- adaptive-only provider/model → Task A에서 제외하거나 별도 표기하고, Task B(realized
-  reasoning token)를 중심 target으로 사용한다.
-설정값이 실제로 반영됐는지는 realized reasoning token 분포로 사후 검증한다.
+주의(2026-09-08, 급소3): 대상 provider/model은 모두 effort/thinking level 설정 노브를 가진다
+(§1-A 표: OpenAI reasoning.effort, Claude effort, Gemini thinkingLevel, Grok reasoning_effort).
+따라서 configured effort(low/high)를 Task A label로 쓰며 **전부 Task A에 포함한다.**
+단 Claude 5·Gemini처럼 adaptive로 동작하는 경우 "high 설정"이 반드시 실제 thinking 증가로
+이어지진 않는다(realized ≠ configured). 처방은 "제외"가 아니라:
+- 전부 Task A 포함, effort 설정값을 label로 사용.
+- 각 provider/model에서 설정이 실제로 반영됐는지 realized reasoning token 분포로 사후 검증.
+- 설정 ↔ realized 괴리가 큰 모델은 Task A 성능을 Task B(realized 회귀)와 **함께 해석**한다.
 
 ## Task B: Realized Reasoning Amount Estimation
 
@@ -279,15 +279,11 @@ API usage에서 제공하는 실제 reasoning/thinking token 수를 target으로
 
 h(X) -> model
 
-예:
-- Sonnet
-- Opus 4.8
-- Gemini Flash
-- Gemini Pro
-- Fable
-- Sol
-- Terra
-- Luna
+예: (정확한 model ID/snapshot은 §8·실제 API 응답 기준)
+- Claude: Opus 4.8 / Opus 4.7 / Sonnet 5 / Haiku 5 / Fable 5
+- GPT (OpenAI): GPT-5.6 Sol / GPT-5.6 Terra / GPT-5.6 Luna
+- Gemini: Gemini Pro / Gemini Flash
+- Grok (xAI): grok-4.6
 
 Task A와 Task C를 분리하여, reasoning effort 탐지기가 단순히 모델별 traffic fingerprint를 이용하는 것인지 확인한다.
 
@@ -319,24 +315,31 @@ High 설정이라고 해서 항상 실제 reasoning token이 많은 것은 아�
 서비스와 모델별 tokenization 차이를 고려하여 절대 token 수를 무조건 비교하지 말고 정규화된 분석도 고려하라.
 
 (급소3 연결, 2026-09-08) configured effort label의 신뢰도 자체가 provider마다 다르다 —
-§Task A 주의 참조. adaptive 계열은 configured보다 realized reasoning token을 1차
-ground truth로 둔다.
+§Task A 주의 참조. adaptive 계열은 Task A(configured label)와 Task B(realized token)를
+병행하고, 설정 ↔ realized 괴리가 크면 realized 쪽을 우선 해석한다(제외가 아니라 병행).
 
 ---
 
 # 7. 데이터셋 설계
 
+용어 구분: **service(provider) = Claude / GPT / Gemini / Grok = 4개**,
+**model = provider별 개별 모델의 합계 M개**(§8). 세션 수의 곱셈 단위는 service가 아니라 **model**이다.
+
+현재 §8 기준 M = 11 (Claude 5개 + GPT 3개 + Gemini 2개 + Grok 1개). 모델 추가 시 M만 갱신.
+
 파일럿:
 
-100 prompts × 4 services × 2 efforts × 3 repeats
-= 2,400 sessions
+100 prompts × M models × 2 efforts × 3 repeats
+= (M=11) 6,600 sessions
 
 본 실험:
 
-500 prompts × 4 services × 2 efforts × 5 repeats
-= 20,000 sessions
+500 prompts × M models × 2 efforts × 5 repeats
+= (M=11) 55,000 sessions
 
-실제 모델 수가 늘어나면 모델 수를 포함하여 총 session 수를 다시 계산하라.
+주의: model을 단위로 두면 세션·API 비용이 service 기준(4)의 M/4배(현재 약 2.75배)로 커진다.
+비용·시간이 부족하면 (a) 핵심 모델만 주실험 + 나머지 축소 세트, (b) prompt/repeat 축소로 조절한다.
+단 paired(같은 prompt low/high) 구조는 유지한다. 모델 수가 바뀌면 이 식으로 총 session 수를 다시 계산한다.
 
 반복 실험은 동일 시간대에 몰아서 수행하지 말고 여러 날짜와 시간대에 분산한다.
 
@@ -593,8 +596,8 @@ encrypted traffic
 Output:
 model identity
 
-예:
-Sonnet / Opus 4.8 / Gemini Flash / Gemini Pro / Fable / Sol / Terra / Luna
+예: (§8 모델 목록)
+Claude Opus 4.8 / Opus 4.7 / Sonnet 5 / Haiku 5 / Fable 5 · GPT-5.6 Sol / Terra / Luna · Gemini Pro / Flash · Grok grok-4.6
 
 이 실험의 목적은 모델 자체의 traffic fingerprint가 얼마나 강한지 확인하는 것이다.
 
@@ -610,18 +613,18 @@ Model Identification 성능과 Reasoning Effort Detection 성능을 동일하게
 예:
 
 Train:
-- Sonnet
+- Sonnet 5
 - Opus 4.8
 - Gemini Flash
 - Gemini Pro
 
 Test:
-- Fable
+- Fable 5
 
 또는:
 
 Train:
-- Sonnet + Gemini
+- Sonnet 5 + Gemini Pro
 
 Test:
 - Opus 4.8
@@ -820,7 +823,10 @@ F1 @ 3 sec
 - model information 포함/제외
 - random label sanity check
 
-특히 TTFA baseline보다 full sequence가 유의미하게 우수한지 확인한다.
+TTFA baseline 대비 full sequence의 이득은 §1-B thesis에 따라 **스트리밍 그룹별로** 검증한다.
+- Streamed / Summary-only 그룹: full sequence가 TTFA-only보다 유의하게 우수한지(§29 문제8의 통계 검정).
+- Hidden 그룹: full sequence가 TTFA로 수렴하는지 = "TTFA가 정보 상한"인지 확인(반증 아니라 결과).
+한 덩어리로 "full sequence가 항상 우수하다"고 검증 목표를 걸지 않는다.
 
 ---
 
