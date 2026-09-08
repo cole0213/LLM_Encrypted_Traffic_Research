@@ -260,14 +260,22 @@ f(X) -> {Low, High}
 
 API에 입력한 effort 설정값을 ground truth로 사용한다.
 
-주의(2026-09-08, 급소3): 대상 provider/model은 모두 effort/thinking level 설정 노브를 가진다
+주의(2026-09-08, 급소3 → 재해석): 대상 provider/model은 모두 effort/thinking level 설정 노브를 가진다
 (§1-A 표: OpenAI reasoning.effort, Claude effort, Gemini thinkingLevel, Grok reasoning_effort).
-따라서 configured effort(low/high)를 Task A label로 쓰며 **전부 Task A에 포함한다.**
-단 Claude 5·Gemini처럼 adaptive로 동작하는 경우 "high 설정"이 반드시 실제 thinking 증가로
-이어지진 않는다(realized ≠ configured). 처방은 "제외"가 아니라:
-- 전부 Task A 포함, effort 설정값을 label로 사용.
-- 각 provider/model에서 설정이 실제로 반영됐는지 realized reasoning token 분포로 사후 검증.
-- 설정 ↔ realized 괴리가 큰 모델은 Task A 성능을 Task B(realized 회귀)와 **함께 해석**한다.
+configured effort(low/high)를 Task A label로 쓰며 **전부 Task A에 포함한다.**
+
+프레이밍(중요): configured=High인데 트래픽이 low 모양인 경우는 **"오염된 label"이 아니라 참인 결과**다.
+Task A는 "사람이 넣은 **설정을 트래픽에서 복원할 수 있는가**(configured 복원가능성)"를 재는 것이고,
+adaptive 모델이 High 설정을 실제 계산으로 안 옮기면(realized 낮음) 그 설정은 애초에 트래픽에
+안 새는 게 맞다. 이 "실패"는 정상 결과이며 제외 대상이 아니다.
+
+- **Task A(configured) 성능과 Task B(realized) 성능의 gap 자체가 finding** =
+  "모델이 요청한 effort를 얼마나 안 따르는지"를 트래픽으로 정량화한 값.
+- 해석을 흐리지 않도록 realized reasoning token 로그(§10)로 두 경우를 분리한다:
+  (1) configured=High · realized=low → 모델이 안 생각함(설정 ≠ 실행).
+  (2) configured=High · realized=high · 트래픽 평평 → side-channel 실패(§1-A 그룹 A / 빠른 인프라).
+- 따라서 Task A 정확도를 "reasoning 탐지 성능"으로 곧장 등치하지 말고, **configured 복원가능성**으로
+  명명하고 Task B(realized)와 병기해 해석한다.
 
 ## Task B: Realized Reasoning Amount Estimation
 
@@ -314,9 +322,9 @@ High 설정이라고 해서 항상 실제 reasoning token이 많은 것은 아�
 
 서비스와 모델별 tokenization 차이를 고려하여 절대 token 수를 무조건 비교하지 말고 정규화된 분석도 고려하라.
 
-(급소3 연결, 2026-09-08) configured effort label의 신뢰도 자체가 provider마다 다르다 —
-§Task A 주의 참조. adaptive 계열은 Task A(configured label)와 Task B(realized token)를
-병행하고, 설정 ↔ realized 괴리가 크면 realized 쪽을 우선 해석한다(제외가 아니라 병행).
+(급소3 연결, 2026-09-08 → 재해석) configured와 realized가 갈리는 것은 label 결함이 아니라
+**측정 대상**이다. Task A(configured 복원가능성)와 Task B(realized 회귀)를 병행하고,
+**두 성능의 gap = "모델이 요청 effort를 얼마나 안 따르나"의 트래픽 관측값**으로 해석한다(§Task A 주의).
 
 ---
 
