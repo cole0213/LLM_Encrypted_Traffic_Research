@@ -23,7 +23,10 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 
 # e1_classify.py와 동일한 8개 패킷 피처(길이=output_tokens 제외).
 PKT_FEATS = ["pkt_gap_ms", "up_bytes", "down_bytes", "up_pkts", "down_pkts",
-             "down_iat_mean_ms", "down_pkt_mean", "down_pkt_max"]
+             "down_iat_mean_ms", "down_pkt_mean", "down_pkt_max",
+             # 2026-10-27 추가 — 긴 응답에서 평균 간격이 신호를 희석하는 것이 확인돼,
+             # 희석에 강한 간격 피처를 넣는다. 옛 CSV 에 없으면 결측 처리된다.
+             "down_iat_max_ms", "down_iat_p90_ms", "stall_total_ms", "down_iat_first_ms"]
 
 # 업링크(요청) 피처는 설정값을 그대로 누출한다.
 #   gem_strict 에서 up_bytes 중앙값 = no_think 808 / think_low 875 / think_high 876.
@@ -41,7 +44,8 @@ DOWN_FEATS = [f for f in PKT_FEATS if not f.startswith("up_")]
 #            이쪽은 진짜 데이터가 더 내려온 것이라, 추론 요약 전송이 의심된다.
 # 어느 쪽이든 '암호화된 트래픽의 미세 신호'라는 주장과는 성격이 다르므로,
 # 크기를 전혀 안 쓴 타이밍 전용 수치를 항상 같이 낸다. 이게 방어 가능한 하한선이다.
-TIME_FEATS = ["pkt_gap_ms", "down_iat_mean_ms"]
+TIME_FEATS = ["pkt_gap_ms", "down_iat_mean_ms",
+              "down_iat_max_ms", "down_iat_p90_ms", "stall_total_ms", "down_iat_first_ms"]
 
 # --reasoned-only 플래그(main 에서 설정). 자세한 이유는 run() 안 주석 참조.
 REASONED_ONLY = False
@@ -64,6 +68,11 @@ def load(path):
             rec["answer_tokens"] = float(an) if an not in ("", "None", None) else None
             th = r.get("thoughts_tokens", "")
             rec["thoughts_tokens"] = float(th) if th not in ("", "None", None) else None
+            # 응답 길이 arm. 길이가 다른 콜을 섞어 평가하면 길이 통제가 깨지므로
+            # arm 이 여러 개 섞인 CSV 는 arm 별로 나눠 돌려야 한다(main 이 자동 분리).
+            # arm 은 정수(고정 길이) 또는 free_* 문자열(자유 응답)이라 문자열로 보관한다.
+            am = r.get("arm", "")
+            rec["arm"] = am if am not in ("", "None", None) else None
             # 길이 통제가 깨진 콜을 걸러내기 위한 정보.
             #   (a) 토큰 한계까지 가서 답을 못 낸 콜 — Groq q4 think_high 5/5 등. app_ttft 가 빈다.
             #   (b) 지시를 무시하고 문장으로 답한 콜 — Gemini 3차 q4 think_high 1건(answer_chars=224).
@@ -208,26 +217,48 @@ def main():
     paths = args or ["out/gem_feats.csv"]
     if pair:
         for p in paths:
-            rows = load(p)
-            print(f"\n########## {p}  (n={len(rows)}) ##########")
-            run(rows, pair, f"지정 비교: {pair[0]} vs {pair[1]}")
+            rows_all = load(p)
+            for arm in (sorted({r["arm"] for r in rows_all if r["arm"] is not None}, key=_arm_key) or [None]):
+                rows = [r for r in rows_all if r["arm"] == arm] if arm is not None else rows_all
+                label = f"  [arm={arm}]" if arm is not None else ""
+                print(f"\n########## {p}{label}  (n={len(rows)}) ##########")
+                run(rows, pair, f"지정 비교: {pair[0]} vs {pair[1]}")
         return
     for p in paths:
-        rows = load(p)
-        print(f"\n########## {p}  (n={len(rows)}) ##########")
-        conds = set(r["condition"] for r in rows)
-        # 존재하는 얕은 조건(no_think 우선, 없으면 think_low) vs think_high 이진
-        shallow = "no_think" if "no_think" in conds else ("think_low" if "think_low" in conds else None)
-        if shallow and "think_high" in conds:
-            run(rows, [shallow, "think_high"], f"이진: {shallow} vs think_high")
-        # 3클래스: Gemini(no/low/high) 우선, 없으면 Groq gpt-oss(low/med/high). 먼저 맞는 것 하나.
-        for triple in (["no_think", "think_low", "think_high"],
-                       ["think_low", "think_med", "think_high"]):
-            if all(c in conds for c in triple):
-                nice = {"no_think": "no", "think_low": "low", "think_med": "med", "think_high": "high"}
-                short = "/".join(nice.get(t, t) for t in triple)
-                run(rows, triple, f"3클래스: {short}")
-                break
+        rows_all = load(p)
+        # arm 이 여러 개 섞여 있으면 arm 별로 따로 돌린다. 응답 길이가 다른 콜을 한 덩어리로
+        # 평가하면 분류기가 추론이 아니라 길이를 읽게 되어 통제가 무너진다.
+        arms = sorted({r["arm"] for r in rows_all if r["arm"] is not None}, key=_arm_key)
+        for arm in (arms or [None]):
+            rows = [r for r in rows_all if r["arm"] == arm] if arm is not None else rows_all
+            label = f"  [arm={arm}]" if arm is not None else ""
+            print(f"\n########## {p}{label}  (n={len(rows)}) ##########")
+            run_all(rows)
+
+
+def _arm_key(a):
+    """arm 정렬 키. 고정 길이(정수)를 먼저 작은 것부터, 자유 응답(free_*)을 뒤에."""
+    try:
+        return (0, float(a), "")
+    except (TypeError, ValueError):
+        return (1, 0.0, str(a))
+
+
+def run_all(rows):
+    """한 덩어리(단일 arm)에 대해 기본 이진·3클래스 비교를 돌린다."""
+    conds = set(r["condition"] for r in rows)
+    # 존재하는 얕은 조건(no_think 우선, 없으면 think_low) vs think_high 이진
+    shallow = "no_think" if "no_think" in conds else ("think_low" if "think_low" in conds else None)
+    if shallow and "think_high" in conds:
+        run(rows, [shallow, "think_high"], f"이진: {shallow} vs think_high")
+    # 3클래스: Gemini(no/low/high) 우선, 없으면 Groq gpt-oss(low/med/high). 먼저 맞는 것 하나.
+    for triple in (["no_think", "think_low", "think_high"],
+                   ["think_low", "think_med", "think_high"]):
+        if all(c in conds for c in triple):
+            nice = {"no_think": "no", "think_low": "low", "think_med": "med", "think_high": "high"}
+            short = "/".join(nice.get(t, t) for t in triple)
+            run(rows, triple, f"3클래스: {short}")
+            break
 
 
 if __name__ == "__main__":

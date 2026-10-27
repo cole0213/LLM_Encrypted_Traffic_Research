@@ -74,6 +74,58 @@ QUESTIONS = [
 #   q4(체스 나이트)처럼 경로 탐색을 요구해 추론이 토큰 한계까지 폭주하는 유형은 새로 넣지 않았다.
 INSTR = "\n\n정답 한 글자(A, B, C, D 중 하나)만 출력하라. 설명·다른 말·문장부호 금지."
 
+# --- 응답 길이 arm (2026-10-27 추가) -------------------------------------------
+# 지금까지의 결과는 전부 '답 1글자' 조건이라, 탐지 성능이 아니라 상한(best case)이다.
+# 실제 LLM 응답은 수백 토큰이고 그때 추론 신호가 응답 스트림에 묻히는지는 측정한 적이 없다.
+# → 답 뒤에 '정해진 문자열'을 붙여 응답을 길게 만들되, 길이는 콜마다 완전히 동일하게 둔다.
+#   길이가 콜마다 달라지면 지금까지 쌓은 출력 길이 통제가 무너져 "추론이냐 길이냐"로 되돌아간다.
+# 단일 문자 반복(AAAA...)은 토크나이저가 뭉쳐 토큰 수가 비선형이 되므로 10자 블록을 쓴다.
+FILLER_BLOCK = "ABCDEFGHIJ"
+
+
+# 자유 응답 arm. 길이를 고정하지 않고 '실제로 몇 토큰이 나오는지' 재는 쪽이다.
+#   고정 arm 과 역할이 다르다:
+#     고정 arm  = arm 안에서 길이가 상수 → low vs high 비교에서 길이 교란이 없다(인과 분리).
+#     자유 arm  = 길이를 통제하지 않음  → 실제 배포 조건의 관측 성능. 단 추론과 길이가 섞인다.
+#   둘을 섞어 한 덩어리로 평가하면 안 되고, 보고할 때도 성격을 구분해 적어야 한다.
+FREE_ARMS = {
+    "free_brief": "\n\n정답을 고르고, 이유를 두세 문장으로 간단히 설명하라.",
+    "free_full":  "\n\n정답을 고르고, 풀이 과정을 단계별로 자세히 설명하라.",
+}
+
+
+def build_arm(arm):
+    """arm → (지시문, 기대 답변 글자수 또는 None, max_output_tokens).
+
+    arm 은 정수(덧붙일 글자 수) 또는 FREE_ARMS 의 키.
+      0            = 기존 1글자 프로토콜(3차와 비교 가능한 기준선)
+      양의 정수     = 답 뒤에 고정 문자열을 붙여 길이를 정확히 고정
+      free_*       = 길이 통제 없음. 기대 글자수는 None(준수 판정 대상 아님)
+    max_output_tokens 는 추론 여유에 답변 몫을 더해 잡는다. 답변이 길어지면 기존 2048 로는
+    추론이 멀쩡해도 답이 잘려 '토큰 한계' 결함이 되살아난다.
+    """
+    if isinstance(arm, str) and arm in FREE_ARMS:
+        return FREE_ARMS[arm], None, MAX_OUTPUT_TOKENS + 1024
+    n_chars = int(arm)
+    if n_chars <= 0:
+        return INSTR, 1, MAX_OUTPUT_TOKENS
+    k = n_chars // len(FILLER_BLOCK)
+    instr = ("\n\n먼저 정답 한 글자(A, B, C, D 중 하나)를 출력하고, 이어서 "
+             f"'{FILLER_BLOCK}' 를 정확히 {k}번 반복해 출력하라. "
+             "줄바꿈·공백·설명·다른 말 금지.")
+    return instr, 1 + k * len(FILLER_BLOCK), MAX_OUTPUT_TOKENS + n_chars // 2
+
+
+def parse_arms(spec):
+    """--arms 문자열 → arm 목록. 정수와 free_* 키를 섞어 쓸 수 있다."""
+    out = []
+    for a in spec.split(","):
+        a = a.strip()
+        if not a:
+            continue
+        out.append(a if a in FREE_ARMS else int(a))
+    return out
+
 CONDITIONS = [
     ("no_think",   None),
     ("think_low",  {"thinking_level": "low"}),
@@ -98,13 +150,13 @@ PAD_CHARS = {"no_think": 46, "think_low": 1, "think_high": 0}
 MAX_OUTPUT_TOKENS = 2048
 
 
-def run_one(client, question, think, pad):
+def run_one(client, question, think, pad, instr=INSTR, max_tok=None):
     """스트리밍 요청. 벽시계 시각(pcap 정렬용) + 앱지표 반환."""
-    kw = {"max_output_tokens": MAX_OUTPUT_TOKENS}
+    kw = {"max_output_tokens": max_tok or MAX_OUTPUT_TOKENS}
     if think:
         kw["thinking_config"] = types.ThinkingConfig(**think)
     cfg = types.GenerateContentConfig(**kw)
-    contents = question + INSTR + (" " * pad)      # 조건별 요청 바이트 맞추기
+    contents = question + instr + (" " * pad)      # 조건별 요청 바이트 맞추기
     t_start = time.time()
     t_first_answer = None
     answer_chars = 0
@@ -163,7 +215,12 @@ def main():
                     help="시행 순서 섞기용 시드(재현 가능하게 고정)")
     ap.add_argument("--no-shuffle", action="store_true",
                     help="섞지 않고 예전처럼 순서대로(비교용)")
+    ap.add_argument("--arms", default="0",
+                    help="응답 길이 arm. 정수=답 뒤에 덧붙일 글자 수(길이 고정), "
+                         "free_brief/free_full=길이 통제 없는 자유 응답. "
+                         "예) --arms 0,400,1600,free_brief,free_full")
     args = ap.parse_args()
+    arms = parse_arms(args.arms)
 
     key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
     if not key:
@@ -172,10 +229,11 @@ def main():
     qs = QUESTIONS[: args.limit] if args.limit else QUESTIONS
 
     # 전체 시행을 만든 뒤 섞는다. 조건 순서가 고정이면 시간 추세가 조건과 엉킨다.
-    trials = [(qi, cond, think, rep)
+    trials = [(qi, cond, think, rep, arm)
               for qi, _ in enumerate(qs)
               for cond, think in CONDITIONS
-              for rep in range(args.repeats)]
+              for rep in range(args.repeats)
+              for arm in arms]
     if not args.no_shuffle:
         random.Random(args.seed).shuffle(trials)
 
@@ -184,19 +242,29 @@ def main():
     total = len(trials)
     time.sleep(1.0)
     with open(logp, "w", encoding="utf-8") as f:
-        for i, (qi, cond, think, rep) in enumerate(trials, 1):
+        for i, (qi, cond, think, rep, arm) in enumerate(trials, 1):
+            instr, expect, max_tok = build_arm(arm)
             try:
-                m = run_one(client, qs[qi], think, PAD_CHARS.get(cond, 0)); m["error"] = None
+                m = run_one(client, qs[qi], think, PAD_CHARS.get(cond, 0),
+                            instr=instr, max_tok=max_tok); m["error"] = None
             except Exception as e:
                 m = {"error": f"{type(e).__name__}: {e}"}
             # order_idx = 실제 실행 순서. 나중에 시간 추세가 남았는지 확인할 때 쓴다.
+            # complied = 지시한 글자 수를 정확히 지켰는가. arm 이 길수록 떨어질 수 있어,
+            #   분석에서 쓸 수 있는 유효 표본이 얼마나 남는지 재는 데 쓴다.
             m.update({"idx": i, "order_idx": i, "q_idx": qi, "condition": cond, "rep": rep,
+                      "arm": arm, "expect_chars": expect,
+                      # 자유 arm 은 기대 길이가 없으므로 준수 판정 대상이 아니다(None).
+                      "complied": None if expect is None else m.get("answer_chars") == expect,
                       "model": MODEL, "shuffled": not args.no_shuffle})
             f.write(json.dumps(m, ensure_ascii=False) + "\n"); f.flush()
             tag = m.get("error") or (
                 f"ttft={m.get('app_ttft_ms')}ms out_tok={m.get('output_tokens')} "
-                f"think={m.get('thoughts_tokens')}" + (" [잘림]" if m.get("truncated") else ""))
-            print(f"[{i}/{total}] q{qi} {cond:10s} {tag}")
+                f"think={m.get('thoughts_tokens')} "
+                f"chars={m.get('answer_chars')}" + ("" if expect is None else f"/{expect}")
+                + ("" if m.get("complied") is not False else " [불일치]")
+                + (" [잘림]" if m.get("truncated") else ""))
+            print(f"[{i}/{total}] q{qi} {cond:10s} arm={str(arm):<10s} {tag}")
             time.sleep(args.sleep)
     print(f"\n[done] 로그 -> {logp}")
     print("→ 확인 1: answer_chars 가 조건 무관 1로 고정됐는지(길이 통제 성공 여부)")

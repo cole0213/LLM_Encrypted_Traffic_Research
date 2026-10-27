@@ -123,6 +123,18 @@ def main():
         # server→client 패킷 간 간격(IAT) 통계.
         down_times = sorted(r[0] for r in inc)
         iats = [(down_times[i+1]-down_times[i])*1000 for i in range(len(down_times)-1)]
+        # 평균 간격만으로는 긴 응답에서 신호가 지워진다(2026-10-27 쓸기 실험).
+        #   추론으로 멈추는 구간은 응답당 사실상 한 번인데, 답이 길면 간격이 수백 개로 늘어
+        #   평균을 내면 그 한 번이 묻힌다(1글자 519개 패킷 비교: 평균 31→184ms vs 2.4→11ms).
+        #   멈춤은 평균에는 안 잡혀도 최대값·정체 구간에는 그대로 남으므로 따로 뽑는다.
+        iats_sorted = sorted(iats)
+        def _pct(p):
+            if not iats_sorted:
+                return None
+            k = min(len(iats_sorted) - 1, int(len(iats_sorted) * p))
+            return round(iats_sorted[k], 1)
+        STALL_MS = 100.0      # 이 값을 넘는 간격을 '정체'로 본다
+        stalls = [v for v in iats if v >= STALL_MS]
         rows.append({
             "idx": e["idx"], "q_idx": e["q_idx"], "condition": e["condition"],
             "rep": e["rep"],
@@ -132,6 +144,15 @@ def main():
             "down_pkt_mean": round(st.mean(down_sizes), 1) if down_sizes else None,
             "down_pkt_max": max(down_sizes) if down_sizes else None,
             "down_iat_mean_ms": round(st.mean(iats), 1) if iats else None,
+            # 희석에 강한 간격 피처들(위 주석 참조).
+            "down_iat_max_ms": round(max(iats), 1) if iats else None,
+            "down_iat_p90_ms": _pct(0.90),
+            "down_iat_p99_ms": _pct(0.99),
+            "stall_total_ms": round(sum(stalls), 1) if iats else None,
+            "stall_count": len(stalls) if iats else None,
+            # 응답이 시작된 뒤 첫 간격. Groq 처럼 첫 패킷이 추론과 무관하게 고정인 경우,
+            # 추론 멈춤은 첫 패킷 '다음'에 나타난다.
+            "down_iat_first_ms": round(iats[0], 1) if iats else None,
             "n_pkts_window": len(win),
             # 참고로 앱지표도 같이(비교용).
             "app_ttft_ms": e.get("app_ttft_ms"),
@@ -146,6 +167,11 @@ def main():
             "thought_chars": e.get("thought_chars", e.get("reasoning_chars")),
             "had_thought": _flag(e.get("had_thought", e.get("had_reasoning"))),
             "chunk_count": e.get("chunk_count"),
+            # 응답 길이 arm(덧붙인 글자 수)과 지시 준수 여부. arm 이 섞인 캡처는
+            # arm 별로 나눠서 평가해야 한다 — 길이가 다르면 애초에 비교 대상이 아니다.
+            "arm": e.get("arm"),
+            "expect_chars": e.get("expect_chars"),
+            "complied": _flag(e.get("complied")),
         })
 
     out_csv = Path(a.out)
