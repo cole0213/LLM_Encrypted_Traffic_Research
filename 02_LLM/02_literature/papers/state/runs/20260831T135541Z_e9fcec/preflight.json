@@ -1,0 +1,43 @@
+{
+  "run_id": "20260831T135541Z_e9fcec",
+  "project": "genai-traffic-fine-grained-fingerprinting",
+  "root": "\\\\163.152.223.17\\root\\root\\02_SGS\\lit",
+  "os": "Windows-10-10.0.19045-SP0",
+  "python": "3.12.13 (main, Aug  7 2026, 02:26:41) [MSC v.1944 64 bit (AMD64)]",
+  "metadata_records": 0,
+  "existing_pdf_files": 23,
+  "existing_valid_pdfs": 23,
+  "unmatched_existing_pdfs": [
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2018_Deep_Fingerprinting_Undermining_Website_Fingerprinting_Defen_9cd893a5.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2018_Var_CNN_A_Data_Efficient_Website_Fingerprinting_Attack_Based_c7145505.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2022_ET_BERT_A_Contextualized_Datagram_Representation_with_Pre_tr_1b8994d2.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2023_TFE_GNN_A_Temporal_Fusion_Encoder_Using_Graph_Neural_Network_caf52226.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2023_Time_Will_Tell_44f16b9e.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2023_YaTC_226637c4.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2024_Remote_Timing_Attacks_on_Efficient_Language_Model_Inference_00008ff3.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2024_The_Early_Bird_Catches_the_Leak_Unveiling_Timing_Side_Channe_bf4cdf48.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2024_Time_Will_Tell_Timing_Side_Channels_via_Output_Token_Count_i_6a5ea591.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2025_DecETT_Accurate_App_Fingerprinting_Under_Encrypted_Tunnels_v_c8a330ee.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2025_Real_world_Edge_Neural_Network_Implementations_Leak_Private__44bbd675.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2025_Redefining_Website_Fingerprinting_Attacks_With_Multiagent_LL_5219c842.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2025_Spill_The_Beans_Exploiting_CPU_Cache_Side_Channels_to_Leak_T_2c1c9394.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2025_TAO_Net_Two_stage_Adaptive_OOD_Classification_Network_for_Fi_f9bf9c64.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2025_The_Sweet_Danger_of_Sugar_Debunking_Representation_Learning__70f98089.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2025_Whisper_Leak_a_side_channel_attack_on_Large_Language_Models_5dd5e364.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2026_Multimodal_Reasoning_with_LLM_for_Encrypted_Traffic_Interpre_6fad6bab.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2026_PrefixWall_Mitigating_Prefix_Caching_Side_Channels_in_Shared_7edf258b.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2026_SparSEEty_Extracting_Tokens_from_Sparsity_Exploiting_LLM_Ser_8fd3085f.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\2026_The_Vision_Encoder_as_a_Privacy_Boundary_Visual_Token_Side_C_057b0d44.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\3730567.3764441.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\electronics-14-01263.pdf",
+    "\\\\163.152.223.17\\root\\root\\02_SGS\\lit\\papers\\pdfs\\From_Keystrokes_to_Semantics_Acoustic_Side-Channel_Attacks_on_Typed_Text_Using_Deep_Neural_Networks_and_Large_Language_Models.pdf"
+  ],
+  "api_env_present": {
+    "LIT_CONTACT_EMAIL": false,
+    "UNPAYWALL_EMAIL": false,
+    "OPENALEX_API_KEY": false,
+    "S2_API_KEY": false,
+    "CROSSREF_MAILTO": false
+  },
+  "institutional_access_authorized": false
+}

@@ -1,0 +1,81 @@
+# Manual Queue
+
+OA-only pipeline: do not bypass paywalls. Items below need an authorized human review.
+
+- **Hello, GenAI? Dissecting Human to Generative AI Calling** — `10.1145/3730567.3764441` — http_403 → browser_oa_retry_or_manual_download
+- **Remote Timing Attacks on Efficient Language Model Inference** — `2410.17175` — OperationalError → browser_oa_retry_or_manual_download
+- **Time Will Tell: Timing Side Channels via Output Token Count in LLMs** — `2412.15431` — OperationalError → browser_oa_retry_or_manual_download
+- **Whisper Leak: a side-channel attack on Large Language Models** — `2511.03675` — OperationalError → browser_oa_retry_or_manual_download
+- **Betalogger: Smartphone Sensor-based Side-channel Attack Detection and Text Inference Using Language Modeling and Dense MultiLayer Neural Network** — `10.1145/3460392` — ReadTimeout → browser_oa_retry_or_manual_download
+- **Evaluation of local LLMs for network traffic packet analysis** — `10.1080/23742917.2026.2671738&quot` — title_mismatch → browser_oa_retry_or_manual_download
+- **InputSnatch: Stealing Input in LLM Services via Timing Side-Channel Attacks** — `10.48550/arxiv.2411.18191` — OperationalError → browser_oa_retry_or_manual_download
+- **MoEcho: Exploiting Side-Channel Attacks to Compromise User Privacy in Mixture-of-Experts LLMs** — `10.1145/3719027.3765174` — http_403 → browser_oa_retry_or_manual_download
+- **A Concept Drift Detection Approach Based on Jensen-Shannon Divergence for Network Traffic Classification** — `10.1145/3573942.3573979` — http_403 → browser_oa_retry_or_manual_download
+- **A Lightweight, Efficient and Explainable-by-Design Convolutional Neural Network for Internet Traffic Classification** — `10.1145/3580305.3599762` — http_403 → browser_oa_retry_or_manual_download
+- **A Survey of Smart Home IoT Device Classification Using Machine Learning-Based Network Traffic Analysis** — `10.1109/access.2022.3205023` — title_mismatch → browser_oa_retry_or_manual_download
+- **A Survey of Techniques for Mobile Service Encrypted Traffic Classification Using Deep Learning** — `10.1109/access.2019.2912896` — title_mismatch → browser_oa_retry_or_manual_download
+- **Active Learning for Network Traffic Classification: A Technical Study** — `10.1109/tccn.2021.3119062` — invalid_magic → browser_oa_retry_or_manual_download
+- **Assessing the Accuracy of Artificial Intelligence Models in Scoliosis Classification and Suggested Therapeutic Approaches** — `10.3390/jcm13144013` — http_403 → browser_oa_retry_or_manual_download
+- **Automated Website Fingerprinting through Deep Learning** — `10.14722/ndss.2018.23105` — OperationalError → browser_oa_retry_or_manual_download
+- **Blocking Without Breaking: Identification and Mitigation of Non-Essential IoT Traffic** — `10.2478/popets-2021-0075` — invalid_magic → browser_oa_retry_or_manual_download
+- **CESNET-QUIC22: A large one-month QUIC network traffic dataset from backbone lines** — `10.1016/j.dib.2023.108888` — invalid_magic → browser_oa_retry_or_manual_download
+- **CLD-Net: A Network Combining CNN and LSTM for Internet Encrypted Traffic Classification** — `10.1155/2021/5518460` — http_403 → browser_oa_retry_or_manual_download
+- **Comparison of machine-learning algorithms for classification of VPN network traffic flow using time-related features** — `10.1080/23742917.2017.1321891` — http_403 → browser_oa_retry_or_manual_download
+- **Darknet traffic analysis, and classification system based on modified stacking ensemble learning algorithms** — `10.1007/s10257-023-00626-2` — invalid_magic → browser_oa_retry_or_manual_download
+- **DataZoo: Streamlining Traffic Classification Experiments** — `10.1145/3630050.3630176` — http_403 → browser_oa_retry_or_manual_download
+- **Deep Fingerprinting** — `10.1145/3243734.3243768` — http_403 → browser_oa_retry_or_manual_download
+- **Deep Fingerprinting: Undermining Website Fingerprinting Defenses with\n Deep Learning** — `10.48550/arxiv.1801.02265` — OperationalError → browser_oa_retry_or_manual_download
+- **Deep Forest with LRRS Feature for Fine-grained Website Fingerprinting with Encrypted SSL/TLS** — `10.1145/3357384.3357993` — no_legal_oa_location → manual_metadata_review
+- **Deep Learning for Encrypted Traffic Classification and Unknown Data Detection** — `10.3390/s22197643` — http_403 → browser_oa_retry_or_manual_download
+- **Deep Learning for Encrypted Traffic Classification and Unknown Data Detection** — `10.48550/arxiv.2203.15501` — title_mismatch → browser_oa_retry_or_manual_download
+- **Deep Learning for Network Traffic Monitoring and Analysis (NTMA): A Survey** — `10.1016/j.comcom.2021.01.021` — http_403 → browser_oa_retry_or_manual_download
+- **Deep Packet: A Novel Approach For Encrypted Traffic Classification Using\n Deep Learning** — `10.48550/arxiv.1709.02656` — OperationalError → browser_oa_retry_or_manual_download
+- **Deep packet: a novel approach for encrypted traffic classification using deep learning** — `10.1007/s00500-019-04030-2` — invalid_magic → browser_oa_retry_or_manual_download
+- **ET-BERT: A Contextualized Datagram Representation with Pre-training Transformers for Encrypted Traffic Classification** — `10.1145/3485447.3512217` — http_403 → browser_oa_retry_or_manual_download
+- **Edge Exemplars Enhanced Incremental Learning Model for Tor-Obfuscated Traffic Identification** — `10.3390/electronics14081589` — http_403 → browser_oa_retry_or_manual_download
+- **Efficient Fine-Grained Website Fingerprinting via Encrypted Traffic Analysis with Deep Learning** — `10.1109/iwqos52092.2021.9521272` — no_legal_oa_location → manual_metadata_review
+- **Encrypted Network Traffic Analysis and Classification Utilizing Machine Learning** — `10.3390/s24113509` — http_403 → browser_oa_retry_or_manual_download
+- **Encrypted Network Traffic Classification Using Deep and Parallel Network-in-Network Models** — `10.1109/access.2020.3010637` — title_mismatch → browser_oa_retry_or_manual_download
+- **Enhancing Website Fingerprinting Attacks against Traffic Drift** — `10.14722/ndss.2026.230059` — OperationalError → browser_oa_retry_or_manual_download
+- **Enhancing encrypted HTTPS traffic classification based on stacked deep ensembles models** — `10.1038/s41598-025-21261-6` — invalid_magic → browser_oa_retry_or_manual_download
+- **Evaluating practical QUIC website fingerprinting defenses for the masses** — `10.56553/popets-2023-0099` — OperationalError → browser_oa_retry_or_manual_download
+- **Feature mining for encrypted malicious traffic detection with deep learning and other machine learning algorithms** — `10.1016/j.cose.2023.103143` — OperationalError → browser_oa_retry_or_manual_download
+- **Fine-grained TLS services classification with reject option** — `10.1016/j.comnet.2022.109467` — http_403 → browser_oa_retry_or_manual_download
+- **FingerprinTV: Fingerprinting Smart TV Apps** — `10.56553/popets-2022-0088` — OperationalError → browser_oa_retry_or_manual_download
+- **Fingerprinting Encrypted Voice Traffic on Smart Speakers with Deep Learning** — `10.48550/arxiv.2005.09800` — OperationalError → browser_oa_retry_or_manual_download
+- **Fingerprinting Technique for YouTube Videos Identification in Network Traffic** — `10.1109/access.2022.3192458` — http_404 → browser_oa_retry_or_manual_download
+- **Fingerprinting encrypted network traffic types using machine learning** — `10.1109/noms.2018.8406218` — title_mismatch → browser_oa_retry_or_manual_download
+- **FlowPrint: Semi-Supervised Mobile-App Fingerprinting on Encrypted Network Traffic** — `10.14722/ndss.2020.24412` — invalid_magic → browser_oa_retry_or_manual_download
+- **From traffic classes to content: A hierarchical approach for encrypted traffic classification** — `10.1016/j.comnet.2022.109017` — no_legal_oa_location → manual_metadata_review
+- **HOLMES & WATSON: A Robust and Lightweight HTTPS Website Fingerprinting through HTTP Version Parallelism** — `10.1145/3696410.3714578` — http_403 → browser_oa_retry_or_manual_download
+- **High Precision Open-World Website Fingerprinting** — `10.1109/sp40000.2020.00015` — OperationalError → browser_oa_retry_or_manual_download
+- **ICLSTM: Encrypted Traffic Service Identification Based on Inception-LSTM Neural Network** — `10.3390/sym13061080` — http_403 → browser_oa_retry_or_manual_download
+- **MIETT: Multi-Instance Encrypted Traffic Transformer for Encrypted Traffic Classification** — `10.1609/aaai.v39i15.33748` — title_mismatch → browser_oa_retry_or_manual_download
+- **Measuring Information Leakage in Website Fingerprinting Attacks and Defenses** — `10.1145/3243734.3243832` — http_403 → browser_oa_retry_or_manual_download
+- **Mobile Traffic Classification through Physical Channel Fingerprinting: a\n Deep Learning Approach** — `10.48550/arxiv.1910.11617` — OperationalError → browser_oa_retry_or_manual_download
+- **Multi-Task Scenario Encrypted Traffic Classification and Parameter Analysis** — `10.3390/s24103078` — http_403 → browser_oa_retry_or_manual_download
+- **Multi-granularity Mobile Encrypted Traffic Classification Based on Fusion Features** — `10.1007/978-3-030-89137-4_11` — no_legal_oa_location → manual_metadata_review
+- **Network traffic classification: Techniques, datasets, and challenges** — `10.1016/j.dcan.2022.09.009` — http_403 → browser_oa_retry_or_manual_download
+- **Online Classification of RTC Traffic** — `10.1109/ccnc49032.2021.9369470` — http_403 → browser_oa_retry_or_manual_download
+- **Open-Source Framework for Encrypted Internet and Malicious Traffic Classification** — `10.48550/arxiv.2206.10144` — OperationalError → browser_oa_retry_or_manual_download
+- **QoS management for WebRTC : loose coupling strategies** — `10.70675/2d0116d9z5911z48d8z9f08z56dad79674a8` — title_mismatch → browser_oa_retry_or_manual_download
+- **Real Network Traffic Collection and Deep Learning for Mobile App Identification** — `10.1155/2020/4707909` — http_403 → browser_oa_retry_or_manual_download
+- **Realistic Website Fingerprinting By Augmenting Network Traces** — `10.1145/3576915.3616639` — http_403 → browser_oa_retry_or_manual_download
+- **Revolutionizing Encrypted Traffic Classification with MH-Net: A Multi-View Heterogeneous Graph Model** — `10.1609/aaai.v39i1.32091` — title_mismatch → browser_oa_retry_or_manual_download
+- **Robust open-set classification for encrypted traffic fingerprinting** — `10.1016/j.comnet.2023.109991` — invalid_magic → browser_oa_retry_or_manual_download
+- **Rosetta: Enabling Robust TLS Encrypted Traffic Classification in Diverse Network Environments with TCP-Aware Traffic Augmentation** — `10.1145/3603165.3607437` — http_403 → browser_oa_retry_or_manual_download
+- **Semi-2DCAE: a semi-supervision 2D-CNN AutoEncoder model for feature representation and classification of encrypted traffic** — `10.7717/peerj-cs.1635` — http_403 → browser_oa_retry_or_manual_download
+- **Semi-Supervised Encrypted Traffic Classification With Deep Convolutional Generative Adversarial Networks** — `10.1109/access.2019.2962106` — title_mismatch → browser_oa_retry_or_manual_download
+- **SoK: A Critical Evaluation of Efficient Website Fingerprinting Defenses** — `10.1109/sp46215.2023.10179289` — no_legal_oa_location → manual_metadata_review
+- **TAO-Net: Two-stage Adaptive OOD classification Network for fine-grained encrypted traffic classification** — `10.1016/j.neucom.2026.133170` — no_legal_oa_location → manual_metadata_review
+- **TFE-GNN: A Temporal Fusion Encoder Using Graph Neural Networks for Fine-grained Encrypted Traffic Classification** — `10.1145/3543507.3583227` — http_403 → browser_oa_retry_or_manual_download
+- **The Discriminative Power of Cross-layer RTTs in Fingerprinting Proxy Traffic** — `10.14722/ndss.2025.240966` — OperationalError → browser_oa_retry_or_manual_download
+- **Towards the Deployment of Machine Learning Solutions in Network Traffic Classification: A Systematic Survey** — `10.1109/comst.2018.2883147` — OperationalError → browser_oa_retry_or_manual_download
+- **Traffic Fingerprinting Attacks on Internet of Things Using Machine Learning** — `10.1109/access.2020.2969015` — http_202 → browser_oa_retry_or_manual_download
+- **Triplet Fingerprinting: More Practical and Portable Website Fingerprinting with N-shot Learning** — `10.1145/3319535.3354217` — http_403 → browser_oa_retry_or_manual_download
+- **Var-CNN: A Data-Efficient Website Fingerprinting Attack Based on Deep Learning** — `10.2478/popets-2019-0070` — invalid_magic → browser_oa_retry_or_manual_download
+- **WF-GAN: Fighting Back Against Website Fingerprinting Attack Using Adversarial Learning** — `10.1109/iscc50000.2020.9219593` — no_legal_oa_location → manual_metadata_review
+- **Yet Another Traffic Classifier: A Masked Autoencoder Based Traffic Transformer with Multi-Level Flow Representation** — `10.1609/aaai.v37i4.25674` — title_mismatch → browser_oa_retry_or_manual_download
+- **AiF: Accelerating On-Device LLM Inference Using In-Flash Processing** — `10.1145/3695053.3731073` — http_403 → browser_oa_retry_or_manual_download
+- **Efficiently Scaling LLM Reasoning with Certaindex** — `10.48550/arxiv.2412.20993` — OperationalError → browser_oa_retry_or_manual_download
+- **Remote Timing Attacks on Efficient Language Model Inference** — `10.48550/arxiv.2410.17175` — OperationalError → browser_oa_retry_or_manual_download

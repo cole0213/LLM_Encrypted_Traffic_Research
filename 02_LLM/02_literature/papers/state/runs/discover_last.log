@@ -1,0 +1,90 @@
+﻿[run 20260822T070005Z_a0df38] 28 queries x 3 sources
+  [1/28] openalex  'LLM chatbot network traffic identifica' ->  60 ret,  60 new
+  [1/28] arxiv     'LLM chatbot network traffic identifica' ->  60 ret,  60 new
+  [1/28] crossref  'LLM chatbot network traffic identifica' ->  60 ret,  60 new
+  [2/28] openalex  'ChatGPT traffic fingerprinting encrypt' ->  60 ret,  59 new
+  [2/28] arxiv     'ChatGPT traffic fingerprinting encrypt' ->  60 ret,  52 new
+  [2/28] crossref  'ChatGPT traffic fingerprinting encrypt' ->  60 ret,  57 new
+  [3/28] openalex  'generative AI service traffic classifi' ->  60 ret,  52 new
+  [3/28] arxiv     'generative AI service traffic classifi' ->  60 ret,  51 new
+  [3/28] crossref  'generative AI service traffic classifi' ->  60 ret,  59 new
+  [4/28] openalex  'large language model traffic detection' ->  60 ret,  56 new
+  [4/28] arxiv     'large language model traffic detection' ->  60 ret,  48 new
+  [4/28] crossref  'large language model traffic detection' ->  60 ret,  57 new
+  [5/28] openalex  'AI chatbot encrypted traffic analysis' ->  60 ret,  48 new
+  [5/28] arxiv     'AI chatbot encrypted traffic analysis' ->  60 ret,  15 new
+  [5/28] crossref  'AI chatbot encrypted traffic analysis' ->  60 ret,  42 new
+  [6/28] openalex  'encrypted traffic classification deep ' ->  60 ret,  47 new
+  [6/28] arxiv     'encrypted traffic classification deep ' ->  60 ret,  42 new
+  [6/28] crossref  'encrypted traffic classification deep ' ->  60 ret,  29 new
+  [7/28] openalex  'encrypted traffic classification trans' ->  60 ret,  47 new
+  [7/28] arxiv     'encrypted traffic classification trans' ->  60 ret,  25 new
+  [7/28] crossref  'encrypted traffic classification trans' ->  60 ret,  18 new
+  [8/28] openalex  'network traffic classification pre-tra' ->  60 ret,  38 new
+  [8/28] arxiv     'network traffic classification pre-tra' ->  60 ret,  33 new
+  [8/28] crossref  'network traffic classification pre-tra' ->  60 ret,  57 new
+  [9/28] openalex  'byte-level traffic classification BERT' ->  60 ret,  35 new
+  [9/28] arxiv     'byte-level traffic classification BERT' ->  60 ret,  34 new
+  [9/28] crossref  'byte-level traffic classification BERT' ->  60 ret,  52 new
+  [10/28] openalex  'TLS 1.3 encrypted traffic classificati' ->  60 ret,  42 new
+  [10/28] arxiv     'TLS 1.3 encrypted traffic classificati' ->  60 ret,  14 new
+  [10/28] crossref  'TLS 1.3 encrypted traffic classificati' ->  60 ret,  10 new
+  [11/28] openalex  'QUIC traffic classification machine le' ->  60 ret,  41 new
+  [11/28] arxiv     'QUIC traffic classification machine le' ->  60 ret,  55 new
+  [11/28] crossref  'QUIC traffic classification machine le' ->  60 ret,  52 new
+  [12/28] openalex  'website fingerprinting encrypted traff' ->  60 ret,  41 new
+  [12/28] arxiv     'website fingerprinting encrypted traff' ->  60 ret,  33 new
+  [12/28] crossref  'website fingerprinting encrypted traff' ->  60 ret,  28 new
+  [13/28] openalex  'service identification encrypted traff' ->  60 ret,  36 new
+  [13/28] arxiv     'service identification encrypted traff' ->  60 ret,  16 new
+  [13/28] crossref  'service identification encrypted traff' ->  60 ret,  32 new
+  [14/28] openalex  'mobile app traffic fingerprinting iden' ->  60 ret,  43 new
+  [14/28] arxiv     'mobile app traffic fingerprinting iden' ->  60 ret,  44 new
+  [14/28] crossref  'mobile app traffic fingerprinting iden' ->  60 ret,  48 new
+  [15/28] openalex  'application identification network flo' ->  60 ret,  50 new
+  [15/28] arxiv     'application identification network flo' ->  60 ret,  47 new
+  [15/28] crossref  'application identification network flo' ->  60 ret,  59 new
+  [16/28] openalex  'streaming service traffic identificati' ->  60 ret,  46 new
+  [16/28] arxiv     'streaming service traffic identificati' ->  60 ret,  25 new
+  [16/28] crossref  'streaming service traffic identificati' ->  60 ret,  57 new
+  [17/28] openalex  'server-sent events traffic analysis' ->  60 ret,  48 new
+  [17/28] arxiv     'server-sent events traffic analysis' ->  60 ret,  31 new
+  [17/28] crossref  'server-sent events traffic analysis' ->  60 ret,  60 new
+  [18/28] openalex  'token streaming side channel language ' ->  60 ret,  54 new
+  [18/28] arxiv     'token streaming side channel language ' ->  60 ret,  49 new
+  [18/28] crossref  'token streaming side channel language ' ->  60 ret,  60 new
+  [19/28] openalex  'LLM response length side channel netwo' ->  60 ret,  51 new
+  [19/28] arxiv     'LLM response length side channel netwo' ->  60 ret,  34 new
+  [19/28] crossref  'LLM response length side channel netwo' ->  60 ret,  56 new
+  [20/28] openalex  'prompt length inference encrypted traf' ->  60 ret,  51 new
+  [20/28] arxiv     'prompt length inference encrypted traf' ->  60 ret,  13 new
+  [20/28] crossref  'prompt length inference encrypted traf' ->  60 ret,   8 new
+  [21/28] openalex  'keystroke timing side channel encrypte' ->  60 ret,  49 new
+  [21/28] arxiv     'keystroke timing side channel encrypte' ->  60 ret,  44 new
+  [21/28] crossref  'keystroke timing side channel encrypte' ->  60 ret,  53 new
+  [22/28] openalex  'variable length compression side chann' ->  60 ret,  53 new
+  [22/28] arxiv     'variable length compression side chann' ->  60 ret,  45 new
+  [22/28] crossref  'variable length compression side chann' ->  60 ret,  52 new
+  [23/28] openalex  'encrypted traffic dataset benchmark cl' ->  60 ret,  24 new
+  [23/28] arxiv     'encrypted traffic dataset benchmark cl' ->  60 ret,  16 new
+  [23/28] crossref  'encrypted traffic dataset benchmark cl' ->  60 ret,   4 new
+  [24/28] openalex  'network traffic dataset LLM chatbot' ->  60 ret,  24 new
+  [24/28] arxiv     'network traffic dataset LLM chatbot' ->  60 ret,   8 new
+  [24/28] crossref  'network traffic dataset LLM chatbot' ->  60 ret,  10 new
+  [25/28] openalex  'traffic capture labeling methodology d' ->  60 ret,  35 new
+  [25/28] arxiv     'traffic capture labeling methodology d' ->  60 ret,  16 new
+  [25/28] crossref  'traffic capture labeling methodology d' ->  60 ret,  59 new
+  [26/28] openalex  'traffic classification concept drift g' ->  60 ret,  46 new
+  [26/28] arxiv     'traffic classification concept drift g' ->  60 ret,  36 new
+  [26/28] crossref  'traffic classification concept drift g' ->  60 ret,  57 new
+  [27/28] openalex  'cross-dataset generalization traffic c' ->  60 ret,  34 new
+  [27/28] arxiv     'cross-dataset generalization traffic c' ->  60 ret,  13 new
+  [27/28] crossref  'cross-dataset generalization traffic c' ->  60 ret,  54 new
+  [28/28] openalex  'robust encrypted traffic classificatio' ->  60 ret,  26 new
+  [28/28] arxiv     'robust encrypted traffic classificatio' ->  60 ret,  10 new
+  [28/28] crossref  'robust encrypted traffic classificatio' ->  60 ret,   5 new
+
+[done] unique papers=3340, new this run=3340
+  relevance={'background': 559, 'core': 201, 'method': 1394, 'noise': 846, 'unclear': 340}
+  manifest: U:\root\02_SGS\lit\papers\state\manifests\manifest.csv
+  reports:  U:\root\02_SGS\lit\papers\reports

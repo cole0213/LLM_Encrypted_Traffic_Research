@@ -29,3 +29,15 @@ __pycache__/
 # OS
 Thumbs.db
 .DS_Store
+
+# 의존성 (벤더링·패키지)
+node_modules/
+vendor/
+*.dist-info/
+
+# 논문 PDF 원문 (저작권·용량). 메타데이터·리포트는 추적함
+*.pdf
+*.title_mismatch
+*.db
+02_LLM/02_literature/papers/state/raw_api/
+01_MachineLearning/

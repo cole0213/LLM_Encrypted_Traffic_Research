@@ -1,0 +1,83 @@
+project:
+  project_id: "genai-traffic-fine-grained-fingerprinting"
+  root: "/root/02_SGS/02_LLM/02_literature"
+  topic: "GenAI traffic identification and TASK/AGENT-BEHAVIOUR inference from encrypted traffic only. Beyond service-name fingerprinting (which overlaps existing app classification), infer the interaction's task stage and agent behaviour: agent type (conversational vs coding vs research), output modality (text vs image vs voice), task complexity (simple query vs long reasoning vs tool use), deployment (local model vs cloud API), and autonomy (interactive user vs autonomous agent). Size, direction, timing only — no SNI/IP/port/certificate/payload shortcuts."
+  research_questions:
+    - "RQ1: GenAI vs ordinary web, streaming, and API traffic from size, direction, and timing only."
+    - "RQ2: Agent-behaviour type — conversational AI vs coding agent vs research agent — inferred from traffic behaviour, not service name."
+    - "RQ3: Output modality — text vs image vs voice generation — from stream cadence and bidirectional volume."
+    - "RQ4: Task stage/complexity — simple query vs long reasoning (extended thinking) vs tool-use — after controlling prompt/output length."
+    - "RQ5: Deployment and autonomy — local model vs cloud API; interactive user vs autonomous agent — from traffic pattern."
+    - "RQ6: Robustness/drift and WHY behaviour-level labels generalise across services better than service-name fingerprints."
+  include_scope:
+    - "encrypted traffic classification and representation learning"
+    - "fine-grained app/service/website fingerprinting without SNI/IP shortcuts"
+    - "LLM network timing, token-streaming, output-token-count, and side-channel studies"
+    - "real-time voice, WebRTC, QUIC, SSE, chunked streaming, and timing analysis"
+    - "LLM reasoning/extended-thinking/inference-latency traffic characteristics"
+    - "LLM agent / tool-use / agentic workflow traffic; autonomous-agent vs human/bot traffic distinction"
+    - "task-type inference and interaction-behaviour recognition from traffic"
+    - "open-world, OOD, hierarchical/multitask classification, drift, and cross-environment generalization"
+  exclude_scope:
+    - "payload/DPI or plaintext reconstruction"
+    - "LLMs used merely for IDS, anomaly detection, or traffic generation"
+    - "malware/IDS tasks not relevant to service identification"
+    - "pure NLP/ASR/generation work without traffic, timing, side-channel, or service-identification relevance"
+    - "SNI, IP, port, certificate, and endpoint-identity shortcuts"
+input:
+  mode: "topic_discovery"
+  metadata_files: []
+  identifier_files: []
+  seed_papers:
+    - "Whisper Leak: a side-channel attack on Large Language Models (arXiv:2511.03675)"
+    - "Time Will Tell: Timing Side Channels via Output Token Count in LLMs (arXiv:2412.15431)"
+    - "Remote Timing Attacks on Efficient Language Model Inference (arXiv:2410.17175)"
+    - "Hello, GenAI? Dissecting Human to Generative AI Calling (DOI:10.1145/3730567.3764441)"
+  manual_import_dir: "papers/incoming_manual"
+run:
+  scope: "full_pipeline"
+  download_pdfs: true
+output:
+  pdf_dir: "papers/pdfs"
+  state_dir: "papers/state"
+  report_dir: "papers/reports"
+  manifest_dir: "papers/state/manifests"
+  raw_api_dir: "papers/state/raw_api"
+  quarantine_dir: "papers/quarantine"
+access:
+  legal_mode: "oa_only"
+  institutional_access_authorized: false
+  institution_name: "Korea University"
+  browser_allowed: true
+  browser_headless: true
+identity:
+  contact_email: "cole0213@korea.ac.kr"
+  contact_email_env: "LIT_CONTACT_EMAIL"
+  unpaywall_email_env: "UNPAYWALL_EMAIL"
+  openalex_api_key_env: "OPENALEX_API_KEY"
+  semantic_scholar_api_key_env: "S2_API_KEY"
+  crossref_mailto_env: "CROSSREF_MAILTO"
+  user_agent: "genai-traffic-fine-grained-fingerprinting/3.0 (mailto:cole0213@korea.ac.kr)"
+discovery:
+  sources: ["openalex", "arxiv", "crossref"]
+  per_query_limit: 25
+  openalex_from_year: 2015
+  max_candidates: 700
+limits:
+  http_workers: 4
+  browser_workers: 1
+  per_host_concurrency: 2
+  request_timeout_seconds: 45
+  retry_max: 4
+  backoff_base_seconds: 2.0
+  per_source_sleep_seconds: 0.5
+  arxiv_sleep_seconds: 3.0
+  max_pdf_mb: 250
+  max_download_candidates: 100
+collection_policy:
+  download_relevance: ["core", "method"]
+  keep_background_metadata: true
+  download_background_by_default: false
+  min_title_similarity: 0.78
+  prefer_version_order: ["published", "accepted", "submitted"]
+  delete_files_automatically: false

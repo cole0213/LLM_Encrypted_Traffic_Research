@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "sejong-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "Z:/nmlab/99_sgs/99_sejong-youth-connect", "run", "dev"],
+      "port": 3000
+    }
+  ]
+}
