@@ -19,7 +19,14 @@ len_control.py — 답 길이를 통제해도 추론 신호가 남는가.
 
 입력: parse_pcap.py 가 만든 CSV 여러 개(arm 별). answer_chars·down_bytes·thoughts_tokens 필수.
 출력: 표준출력. arm 별 분해표 + arm 간 비교표.
+라벨 정하기 — provider 마다 조건이 다르다:
+  Gemini : no_think 가 있어 '추론 0 vs >0' 이 자연스러운 이진이다(기본값).
+  Groq   : no_think 가 없고 low/med/high 모두 추론한다(중앙 20/143/230).
+           기본 라벨로는 음성 집단이 비어 평가가 안 되므로
+           --split think_low,think_high 처럼 조건 두 개를 직접 지정한다.
+
 사용: python3 len_control.py out/gem_sigtest.csv out/gem_sigbrief.csv out/gem_sigfull.csv
+      python3 len_control.py out/groq_Alen0.csv out/groq_Alenbrief.csv out/groq_Alenfull.csv --split think_low,think_high
 작성일: 2026-11-03
 """
 import csv
@@ -92,6 +99,10 @@ def load(path):
         ac = _num(r.get("answer_chars"))
         if db is None or ac is None:
             continue
+        # 토큰 한계에 걸려 잘린 콜은 답이 0자로 남아 층화를 망가뜨린다
+        # (Groq Alen0 에서 '0~0자' 층이 생겼다). 분석에서 제외한다.
+        if r.get("truncated") in ("1", "True", "true") or ac <= 0:
+            continue
         out.append({
             "db": db,
             "ac": ac,
@@ -100,13 +111,17 @@ def load(path):
             "sig": _num(r.get("sig_chars")),
             "gap": _num(r.get("pkt_gap_ms")),
             "stall": _num(r.get("stall_total_ms")),
+            "imax": _num(r.get("down_iat_max_ms")),
             "cond": r.get("condition", ""),
         })
     return out
 
 
-def analyze(path, label_name):
+def analyze(path, label_name, split=None):
     R = load(path)
+    if split:
+        # 조건 기반 라벨. 두 번째 조건이 양성(= 더 깊은 추론 설정).
+        R = [r for r in R if r["cond"] in split]
     print(f"\n\n{'#' * 78}")
     print(f"# {label_name}   ({path}, n={len(R)})")
     print(f"{'#' * 78}")
@@ -114,9 +129,18 @@ def analyze(path, label_name):
         print("빈 파일. 건너뜀.")
         return None
 
-    lab = [1 if r["th"] > 0 else 0 for r in R]
+    if split:
+        lab = [1 if r["cond"] == split[1] else 0 for r in R]
+    else:
+        lab = [1 if r["th"] > 0 else 0 for r in R]
     n1, n0 = sum(lab), len(lab) - sum(lab)
-    print(f"추론함 {n1}건 / 추론안함 {n0}건")
+    if split:
+        t1 = st.median([r["th"] for r, l in zip(R, lab) if l == 1])
+        t0 = st.median([r["th"] for r, l in zip(R, lab) if l == 0])
+        print(f"{split[1]} {n1}건 / {split[0]} {n0}건  (조건 기반 — 양쪽 다 추론은 한다)")
+        print(f"    추론 토큰 중앙: {split[0]} {t0:.0f} / {split[1]} {t1:.0f}")
+    else:
+        print(f"추론함 {n1}건 / 추론안함 {n0}건")
     if n1 == 0 or n0 == 0:
         print("한쪽 클래스가 비어 평가 불가.")
         return None
@@ -127,9 +151,10 @@ def analyze(path, label_name):
     m1, m0 = st.median(a1), st.median(a0)
     auc_len = auc([r["ac"] for r in R], lab)
     print(f"\n[1] 답 길이 교란")
-    print(f"    추론함 답 중앙 {m1:.0f}자 / 추론안함 {m0:.0f}자"
+    pn, nn = (split[1], split[0]) if split else ("추론함", "추론안함")
+    print(f"    {pn} 답 중앙 {m1:.0f}자 / {nn} {m0:.0f}자"
           f"  = {(m1 / m0 - 1) * 100:+.1f}%")
-    print(f"    답 길이만으로 추론 유무 맞히기 AUC = {auc_len:.3f}"
+    print(f"    답 길이만으로 라벨 맞히기 AUC = {auc_len:.3f}"
           + ("   ← 길이만으로도 꽤 갈린다. 반드시 보정 필요"
              if auc_len and auc_len > 0.65 else "   (교란 약함)"))
 
@@ -140,13 +165,28 @@ def analyze(path, label_name):
     st_rows = [(r["stall"], l) for r, l in zip(R, lab) if r["stall"] is not None]
     auc_stall = auc([s for s, _ in st_rows], [l for _, l in st_rows]) if st_rows else None
     print(f"\n[2] 보정 전 — 관측자가 그냥 쓰는 값")
-    print(f"    down_bytes      AUC {_fmt(auc_db)}")
-    print(f"    pkt_gap_ms      AUC {_fmt(auc_gap)}   (타이밍, 길이와 무관)")
-    print(f"    stall_total_ms  AUC {_fmt(auc_stall)}")
+    im_rows = [(r["imax"], l) for r, l in zip(R, lab) if r["imax"] is not None]
+    auc_imax = auc([v for v, _ in im_rows], [l for _, l in im_rows]) if im_rows else None
+    # provider 마다 추론 침묵이 생기는 위치가 다르다(3-12).
+    #   Gemini: 첫 응답 패킷 '전'  -> pkt_gap_ms 가 잡는다
+    #   Groq  : 첫 응답 패킷 '뒤'  -> pkt_gap_ms 는 못 잡고 stall/iat_max 가 잡는다
+    # 한 피처만 요약표에 올리면 Groq 이 "아무것도 안 샌다"로 잘못 읽힌다.
+    cands = [("pkt_gap_ms", auc_gap), ("stall_total_ms", auc_stall),
+             ("down_iat_max_ms", auc_imax)]
+    best_t = max(((n, v) for n, v in cands if v is not None),
+                 key=lambda kv: abs(kv[1] - 0.5), default=(None, None))
+    print(f"    down_bytes       AUC {_fmt(auc_db)}")
+    print(f"    pkt_gap_ms       AUC {_fmt(auc_gap)}   (추론 전 침묵 — Gemini 형)")
+    print(f"    stall_total_ms   AUC {_fmt(auc_stall)}   (추론 후 정체 — Groq 형)")
+    print(f"    down_iat_max_ms  AUC {_fmt(auc_imax)}")
+    if best_t[0]:
+        print(f"    -> 이 데이터의 최량 타이밍 피처: {best_t[0]} ({best_t[1]:.3f})")
 
     # --- 3. 길이 보정 잔차 ---
-    # 추론 0 인 콜만으로 '답 길이 -> 바이트' 직선을 잡는다.
-    # 이 콜들은 서명이 98자 고정이라 서명 몫이 상수로 b 에 흡수된다.
+    # 음성 집단만으로 '답 길이 -> 바이트' 직선을 잡는다.
+    #   기본(Gemini): 추론 0 콜. 서명이 98자 고정이라 서명 몫이 상수로 b 에 흡수된다.
+    #   --split(Groq): 얕은 조건 콜. 추론량이 0은 아니지만 조건 안에서 거의 일정하므로
+    #                  같은 논리가 근사적으로 성립한다. 깊은 조건의 '추가분'만 잔차로 남는다.
     bx = [r["ac"] for r, l in zip(R, lab) if l == 0]
     by = [r["db"] for r, l in zip(R, lab) if l == 0]
     m, b = fit_line(bx, by)
@@ -154,15 +194,20 @@ def analyze(path, label_name):
     auc_res = auc(resid, lab)
     r1 = st.median([v for v, l in zip(resid, lab) if l == 1])
     r0 = st.median([v for v, l in zip(resid, lab) if l == 0])
-    print(f"\n[3] 길이 보정 — 추론0 콜로 적합한 직선을 빼고 남은 것")
+    print(f"\n[3] 길이 보정 — 음성 집단으로 적합한 직선을 빼고 남은 것")
     print(f"    기준선: down_bytes = {m:.2f} × answer_chars + {b:.0f}"
-          f"   (추론0 {n0}건으로 적합)")
+          f"   ({(split[0] if split else '추론0')} {n0}건으로 적합)")
     print(f"    잔차 중앙  추론함 {r1:+.0f}바이트 / 추론안함 {r0:+.0f}바이트")
     print(f"    잔차        AUC {_fmt(auc_res)}", end="")
     if auc_res is not None and auc_db is not None:
         drop = auc_db - auc_res
         print(f"   (보정 전 대비 {drop:+.3f})")
-        if auc_res >= 0.95:
+        # 보정 '전'이 이미 우연 수준이면 잃을 신호가 없었던 것이다.
+        # 그걸 "길이였다"로 찍으면 결론이 거꾸로 읽힌다(Groq free_brief 에서 발생).
+        if auc_db < 0.6:
+            print("    → 보정 전부터 우연 수준이다. 이 채널엔 애초에 신호가 없다")
+            print("       (길이에 묻힌 게 아니라 원래 없었다는 뜻)")
+        elif auc_res >= 0.95:
             print("    → 답 길이를 걷어내도 신호가 그대로다. '긴 답 탐지' 아님")
         elif auc_res >= 0.75:
             print("    → 신호가 줄었지만 남아 있다. 길이가 일부 기여했다")
@@ -222,23 +267,37 @@ def analyze(path, label_name):
             print(f"    비율     서명 {sig_share / tot * 100:.0f}% : "
                   f"답 {len_share / tot * 100:.0f}%")
     else:
-        print("\n[5] sig_chars 열이 없어 분해 불가(2026-10-30 이전 캡처).")
+        print("\n[5] sig_chars 열이 없어 분해 불가.")
+        print("    Gemini 는 2026-10-30 이전 캡처라서, Groq 은 thoughtSignature 자체가")
+        print("    없어서다. Groq 은 추론을 숨기고 서명도 안 보낸다 — 타이밍만 남는다.")
 
     return {"name": label_name, "n": len(R), "len_med": m0,
             "auc_len": auc_len, "auc_db": auc_db, "auc_res": auc_res,
-            "auc_gap": auc_gap, "pooled": pooled}
+            "auc_gap": auc_gap, "pooled": pooled,
+            "best_t": best_t[1], "best_t_name": best_t[0]}
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("csv", nargs="+")
+    ap.add_argument("--split", default=None,
+                    help="조건 기반 라벨. '음성조건,양성조건' 형식. "
+                         "예) --split think_low,think_high (Groq 처럼 no_think 가 없을 때)")
     a = ap.parse_args()
+    split = None
+    if a.split:
+        parts = [s.strip() for s in a.split.split(",")]
+        if len(parts) != 2:
+            ap.error("--split 은 '음성조건,양성조건' 두 개여야 한다")
+        split = tuple(parts)
     names = {"sigtest": "arm 0 — 답 1글자", "sigbrief": "arm free_brief — 답 ~150자",
-             "sigfull": "arm free_full — 답 ~600자"}
+             "sigfull": "arm free_full — 답 ~600자",
+             "Alen0": "arm 0 — 답 1글자", "Alenbrief": "arm free_brief",
+             "Alenfull": "arm free_full"}
     res = []
     for p in a.csv:
         key = next((k for k in names if k in p), None)
-        out = analyze(p, names.get(key, p))
+        out = analyze(p, names.get(key, p), split)
         if out:
             res.append(out)
 
@@ -247,15 +306,20 @@ def main():
         print("  arm 간 비교 — 답이 길어질수록 신호가 묻히나")
         print(f"{'=' * 78}")
         print(f"{'arm':<26}{'답중앙':>8}{'길이만':>8}{'바이트':>8}"
-              f"{'잔차':>8}{'층화':>8}{'타이밍':>8}")
+              f"{'잔차':>8}{'층화':>8}{'pkt_gap':>9}{'최량타이밍':>11}")
         for r in res:
+            bt = f"{r['best_t']:.3f}" if r['best_t'] is not None else "-"
             print(f"{r['name']:<26}{r['len_med']:>7.0f}자"
                   f"{_fmt(r['auc_len'], 8)}{_fmt(r['auc_db'], 8)}"
                   f"{_fmt(r['auc_res'], 8)}{_fmt(r['pooled'], 8)}"
-                  f"{_fmt(r['auc_gap'], 8)}")
+                  f"{_fmt(r['auc_gap'], 9)}{bt:>11}")
+        for r in res:
+            if r['best_t_name']:
+                print(f"    ({r['name']} 의 최량 타이밍 = {r['best_t_name']})")
         print("\n  '길이만' = 답 길이만 보고 맞히기(교란 크기). 높을수록 보정이 중요하다.")
-        print("  '잔차'·'층화' = 답 길이를 걷어낸 뒤의 탐지력. 이게 유지되면 주장이 선다.")
-        print("  '타이밍' = 길이와 무관한 채널. 패딩으로도 못 막는 바닥.")
+        print("  '잔차'·'층화' = 답 길이를 걷어낸 뒤의 탐지력. 바이트 채널에만 해당한다.")
+        print("  'pkt_gap' 은 Gemini 형(추론 전 침묵) 전용이다. Groq 은 추론 침묵이")
+        print("  첫 패킷 뒤에 와서 pkt_gap 으로는 안 보인다 — '최량타이밍' 열을 봐야 한다.")
 
 
 if __name__ == "__main__":

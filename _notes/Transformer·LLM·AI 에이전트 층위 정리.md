@@ -9,7 +9,14 @@
 
 ## 세 가지의 차이
 
-![Transformer 구조, 학습된 LLM, 에이전트 시스템의 연결 관계](assets/transformer-llm-agent/relationship.png)
+```mermaid
+flowchart LR
+    T["① Transformer<br/>계산 구조"] -->|"이 구조로 모델을 만들고 학습"| L["② LLM<br/>학습된 언어 모델"]
+    L -->|"도구·작업 상태·실행 규칙과 연결"| A["③ AI 에이전트<br/>작업을 수행하는 시스템"]
+    style T fill:#dbeafe,stroke:#2563eb,color:#172554
+    style L fill:#dcfce7,stroke:#16a34a,color:#14532d
+    style A fill:#fff7ed,stroke:#ea580c,color:#7c2d12
+```
 
 | 비교할 것 | Transformer — 계산 구조 | LLM — 학습된 모델 | AI 에이전트 — 작업 시스템 |
 |---|---|---|---|
@@ -25,6 +32,40 @@
 | **문제가 나면 무엇을 보나?** | 입력 벡터·마스크·계산 구현 | 실제 입력·출력·tokenizer·생성 설정 | 도구 인자·결과·작업 상태·종료 조건 |
 
 ## 1. 입출력과 토큰은 어떻게 다른가
+
+```mermaid
+flowchart TB
+    subgraph T["① Transformer를 사용한 모델 — 분류 작업의 예"]
+        direction LR
+        TI["입력 자료<br/>텍스트·이미지·수치 등"] --> TV["입력 변환<br/>숫자 벡터로 표현"]
+        TV --> TM["Transformer 계산<br/>문맥을 반영한 새 벡터"]
+        TM --> TH["작업별 출력층"] --> TO["분류 결과"]
+    end
+
+    subgraph L["② GPT류 LLM — 문장 생성"]
+        direction LR
+        LI["문장·메시지"] --> LT["메시지 형식·토큰화<br/>모델에 맞는 토큰 ID"]
+        LT --> LM["학습된 LLM<br/>벡터로 바꾸어 계산"]
+        LM -->|"다음 토큰 후보의 점수"| LS["생성 엔진<br/>토큰 선택"]
+        LS -->|"선택한 토큰을 입력에 추가"| LM
+        LS -->|"생성한 토큰을 해석"| LO["응답 문장·도구 호출 내용"]
+    end
+
+    subgraph A["③ AI 에이전트 — 도구를 사용하는 작업"]
+        direction LR
+        AI["목표·자료<br/>현재 작업 상태"] --> AC["작업 제어<br/>필요한 정보를 LLM에 전달"]
+        AC -->|"모델의 도구 호출 제안"| AT["도구 런타임<br/>인자·권한 확인 후 실행"]
+        AT -->|"결과·오류를 다음 판단에 반영"| AC
+        AC -->|"종료 조건을 확인"| AO["최종 답변·작업 결과"]
+    end
+
+    T ~~~ L
+    L ~~~ A
+
+    style T fill:#eff6ff,stroke:#2563eb,color:#172554
+    style L fill:#f0fdf4,stroke:#16a34a,color:#14532d
+    style A fill:#fff7ed,stroke:#ea580c,color:#7c2d12
+```
 
 **Transformer는 숫자로 표현된 정보를 계산하는 구조다.** 문장을 처리한다면 텍스트를 숫자 벡터로 바꿔 넣고, 이미지라면 이미지 조각을 벡터로 바꿔 넣을 수 있다. 블록의 출력도 새 벡터다. 그 뒤에 어떤 출력 부분을 붙이는지에 따라 단어 후보의 점수, 분류 결과 등으로 이어진다. 따라서 Transformer 자체에 하나의 고정된 ‘입력 토큰 종류’나 ‘최종 답변 형식’이 있는 것은 아니다.
 
@@ -57,6 +98,41 @@ LLM을 파인튜닝할 때는 원하는 입력과 응답 같은 학습 예시를
 **에이전트는 대화 외에 작업의 진행 상황도 관리한다.** 어떤 문서를 읽었는지, 어떤 도구가 실패했는지, 다음에 무엇을 해야 하는지를 저장하고 필요한 정보를 다음 모델 입력에 연결한다. 이것이 긴 작업을 이어가는 데 쓰인다. 다만 대화를 저장하는 기능은 일반 챗봇 서비스에도 있을 수 있으므로, 기억이 있다는 사실만으로 에이전트가 되는 것은 아니다.
 
 ## 4. 실제 행동과 반복은 어떻게 다른가
+
+```mermaid
+flowchart TB
+    ARCH["① Transformer<br/>계산 구조"] -.->|"이 모델의 구조로 채택"| MODEL
+    USER["사용자"] -->|"목표·자료"| CTRL
+
+    subgraph AGENT["③ LLM 기반 AI 에이전트 시스템"]
+        CTRL["작업 제어<br/>다음 행동·종료 판단"]
+        STATE["작업 상태<br/>메시지·계획·도구 결과"]
+        TOOL["도구 런타임<br/>인자·권한 확인 후 실행"]
+
+        subgraph SERVING["추론·서빙"]
+            ENGINE["토큰화·토큰 생성<br/>KV cache 관리"]
+            MODEL["② 학습된 LLM<br/>구조 + 학습된 가중치"]
+            ENGINE -->|"모델 입력"| MODEL
+            MODEL -->|"다음 토큰 점수"| ENGINE
+        end
+
+        CTRL -->|"메시지·도구 결과"| ENGINE
+        ENGINE -->|"응답·도구 호출 제안"| CTRL
+        CTRL <-->|"참조·갱신"| STATE
+        CTRL -->|"도구 호출 요청"| TOOL
+        TOOL -->|"결과·오류"| CTRL
+    end
+
+    TOOL <-->|"읽기·쓰기·검색 등"| ENV["파일·검색·외부 서비스"]
+    CTRL -->|"최종 결과"| USER
+
+    style ARCH fill:#dbeafe,stroke:#2563eb,color:#172554
+    style MODEL fill:#dcfce7,stroke:#16a34a,color:#14532d
+    style AGENT fill:#fff7ed,stroke:#ea580c,color:#7c2d12
+    style SERVING fill:#f0fdf4,stroke:#86a989,color:#14532d
+```
+
+그림은 논리적인 구성 관계를 보여준다. LLM은 로컬에서 실행하거나 외부 API로 호출할 수 있다.
 
 **Transformer의 역할은 정의된 계산을 수행하는 것이다.** 한 번의 모델 실행 안에서 여러 레이어를 거치는 것과, 파일을 읽거나 외부 서비스에 요청하는 것은 다른 작업이다.
 
