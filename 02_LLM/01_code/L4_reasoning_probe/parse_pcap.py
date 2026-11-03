@@ -172,6 +172,11 @@ def main():
             "arm": e.get("arm"),
             "expect_chars": e.get("expect_chars"),
             "complied": _flag(e.get("complied")),
+            # thoughtSignature(암호화된 사고 표현) 길이. down_bytes 가 추론량에 비례해
+            # 커지는데 텍스트는 안 오는 현상의 유력 원인이라 직접 재서 대조한다.
+            "sig_chars": e.get("sig_chars"),
+            "sig_parts": e.get("sig_parts"),
+            "parts_no_text": e.get("parts_no_text"),
         })
 
     out_csv = Path(a.out)

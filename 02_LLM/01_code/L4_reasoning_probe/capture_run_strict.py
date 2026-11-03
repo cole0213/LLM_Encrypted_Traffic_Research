@@ -168,6 +168,17 @@ def run_one(client, question, think, pad, instr=INSTR, max_tok=None):
     had_thought = False
     # 추론 중 빈 keep-alive 청크가 바이트를 밀어올렸을 가능성을 배제하기 위한 대조.
     chunk_count = 0
+    # thoughtSignature (2026-10-27 추가) — 바이트 미스터리의 유력 용의자.
+    #   Gemini 3 계열은 '사고 과정을 암호화한 표현'을 응답 파트에 실어 보낸다
+    #   (공식문서: 함수 호출이 없는 응답은 마지막 파트에 thought signature 를 담아 반환).
+    #   이 파트는 text 가 없어서 아래 `if not txt: continue` 에 걸려 통째로 무시된다.
+    #   그래서 thought_chars=0 인데도 down_bytes 는 추론 토큰에 비례해 커질 수 있다
+    #   (실측 상관 0.922, 패킷 수는 4개 고정인데 평균 패킷 크기만 646→843 증가).
+    #   길이를 재서 "바이트 증가분이 이것으로 설명되는가"를 직접 검정한다.
+    sig_chars = 0
+    sig_parts = 0
+    parts_total = 0
+    parts_no_text = 0
     stream = client.models.generate_content_stream(
         model=MODEL, contents=contents, config=cfg)
     for chunk in stream:
@@ -176,8 +187,16 @@ def run_one(client, question, think, pad, instr=INSTR, max_tok=None):
         cand = (getattr(chunk, "candidates", None) or [None])[0]
         content = getattr(cand, "content", None) if cand else None
         for part in (getattr(content, "parts", None) or []):
+            parts_total += 1
+            # 파트에 실린 thought signature 의 길이를 먼저 잰다(텍스트 유무와 무관).
+            sig = (getattr(part, "thought_signature", None)
+                   or getattr(part, "thoughtSignature", None))
+            if sig:
+                sig_parts += 1
+                sig_chars += len(sig) if isinstance(sig, (str, bytes)) else len(str(sig))
             txt = getattr(part, "text", None)
             if not txt:
+                parts_no_text += 1
                 continue
             if getattr(part, "thought", False):
                 had_thought = True
@@ -199,6 +218,8 @@ def run_one(client, question, think, pad, instr=INSTR, max_tok=None):
         "thoughts_tokens": thoughts_tok, "output_tokens": answer_tok,
         "thought_chars": thought_chars, "had_thought": had_thought,
         "chunk_count": chunk_count,
+        "sig_chars": sig_chars, "sig_parts": sig_parts,
+        "parts_total": parts_total, "parts_no_text": parts_no_text,
         "pad_chars": pad,
         # 답이 한 글자도 안 나왔으면 추론이 한계까지 간 것으로 본다(분석서 제외 대상).
         "truncated": answer_chars == 0,
