@@ -65,7 +65,13 @@ def load(path):
             "q": r.get("q_idx"),
             "cond": r.get("condition", ""),
             "feat": {k: _num(r.get(k)) for k in PKT_FEATS},
-            "alen": _num(r.get("answer_tokens")) or _num(r.get("output_tokens")) or 0.0,
+            # 0.0 은 falsy 라 or 체인이 다음 값으로 넘어간다. Groq 의 output_tokens 는
+            # 추론을 포함하므로 그게 '길이 대조군'에 섞이면 라벨을 보는 셈이 된다.
+            "alen": (_num(r.get("answer_tokens"))
+                     if _num(r.get("answer_tokens")) is not None
+                     else (_num(r.get("output_tokens")) or 0.0)),
+            "achars": _num(r.get("answer_chars")) or 0.0,
+            "arm": r.get("arm") or "",
         })
     return out
 
@@ -121,6 +127,11 @@ def resolution_curve(y, pred, deltas):
 
     Δ=0 이면 보통의 순위 일치율(AUC 와 같은 계열)이고, Δ 를 키우면
     '확실히 다른 두 콜'만 남아 쉬워진다. 곡선이 꺾이는 지점이 실질 해상도다.
+
+    주의 — 추론량이 **똑같은** 쌍은 애초에 정답 순서가 없으므로 Δ 와 무관하게 제외한다.
+    예전엔 Δ=0 에서 이 쌍들이 전부 '오답'으로 세어져, Gemini 처럼 추론 0 이 많은
+    데이터(270콜 중 165개)에서 13,530 쌍이 통째로 깎여 0.718 이 나왔다.
+    데이터의 성질이지 탐지력이 아니다.
     """
     y = np.asarray(y, dtype=float)
     p = np.asarray(pred, dtype=float)
@@ -131,7 +142,8 @@ def resolution_curve(y, pred, deltas):
         for i in range(n):
             dy = y[i + 1:] - y[i]
             dp = p[i + 1:] - p[i]
-            sel = np.abs(dy) >= d
+            # dy == 0 인 쌍은 정답 순서가 정의되지 않는다. 항상 뺀다.
+            sel = (np.abs(dy) >= d) & (dy != 0)
             if not np.any(sel):
                 continue
             tot += int(sel.sum())
@@ -184,11 +196,19 @@ def report(rows, title, args):
             best = (name, p)
 
     # --- 대조군: 답 길이만 / 평균만 ---
+    # 답 길이가 완전히 고정되면(arm 0 에서 Groq 10, Gemini 1) 분산이 0 이라
+    # 모델이 폴드별 평균만 뱉는다. 그 평균이 폴드마다 조금씩 달라 ±0.3 수준의
+    # 가짜 상관이 찍힌다(3차에서 -0.391 이 나왔다). 분산 0 이면 '신호 없음'으로 못박는다.
     Xlen = np.array([[r["alen"]] for r in rows], dtype=float)
-    plen = cv_predict(Xlen, y, groups)
-    rlen = spearman(y, plen)
+    if np.std(Xlen) == 0:
+        plen = np.full(len(y), y.mean())
+        rlen = None
+    else:
+        plen = cv_predict(Xlen, y, groups)
+        rlen = spearman(y, plen)
     mae_mean = float(np.mean(np.abs(y - y.mean())))
-    print(f"    {'[대조] length-only':<26}{(f'{rlen:.3f}' if rlen else '-'):>9}"
+    ltag = "[대조] length-only" + (" (분산0)" if rlen is None else "")
+    print(f"    {ltag:<26}{(f'{rlen:.3f}' if rlen is not None else '-'):>9}"
           f"{float(np.mean(np.abs(y - plen))):>9.1f}"
           f"{float(np.median(np.abs(y - plen))):>9.1f}"
           f"{float(1 - np.sum((y - plen) ** 2) / np.sum((y - y.mean()) ** 2)):>8.3f}")
@@ -237,7 +257,17 @@ def main():
             print(f"\n[빈 데이터] {path}")
             continue
         tag = " (추론>0만)" if a.reasoned_only else ""
-        report(rows, f"{path}{tag}", a)
+        # 답 길이를 제목에 박는다. 같은 수치라도 '답 1글자에서 잰 상한'인지
+        # '현실 길이에서 잰 값'인지가 해석을 완전히 바꾸기 때문이다.
+        if a.by_arm and len({r["arm"] for r in rows}) > 1:
+            for arm in sorted({r["arm"] for r in rows}):
+                sr = [r for r in rows if r["arm"] == arm]
+                am = np.median([r["achars"] for r in sr])
+                report(sr, f"{path}{tag}  [arm={arm or '0'}, 답 중앙 {am:.0f}자]", a)
+        else:
+            am = np.median([r["achars"] for r in rows])
+            arm = next(iter({r["arm"] for r in rows}), "")
+            report(rows, f"{path}{tag}  [arm={arm or '0'}, 답 중앙 {am:.0f}자]", a)
 
 
 if __name__ == "__main__":

@@ -122,12 +122,23 @@ def run(rows, labels, title):
     cand = [r for r in rows if r["condition"] in labels and not np.isnan(r["pkt_gap_ms"])]
     # 답 글자수의 최빈값을 '정상'으로 보고 거기서 벗어난 콜을 뺀다.
     #   (CSV 에 answer_chars 가 없는 옛 파일은 이 검사를 건너뛰고 app_ttft 유무만 본다.)
+    #
+    # ★ 이 검사는 '답 길이를 고정한 arm' 에서만 유효하다.
+    #   free_brief / free_full 처럼 길이를 풀어놓은 arm 은 답이 콜마다 다르므로
+    #   최빈값이 우연히 2번 나온 값이 되고 나머지가 전부 탈락한다
+    #   (2026-11-03: groq_Alenfull 89콜 중 87콜이 버려져 n=2 로 평가가 무너졌다).
+    #   그래서 최빈값이 후보의 과반을 덮을 때만 '고정 길이 arm' 으로 보고 적용한다.
+    #   arm 열이 있으면 free_* 인지도 함께 본다(옛 CSV 는 열이 없어 과반 기준만 쓴다).
     acs = [r["answer_chars"] for r in cand if r.get("answer_chars") is not None]
     modal = max(set(acs), key=acs.count) if acs else None
+    free_arm = any(str(r.get("arm") or "").startswith("free") for r in cand)
+    fixed_len = (modal is not None
+                 and not free_arm
+                 and acs.count(modal) >= 0.5 * len(acs))
     def ok(r):
         if not r.get("answered", True) or r.get("truncated"):
             return False
-        if modal is not None and r.get("answer_chars") is not None:
+        if fixed_len and r.get("answer_chars") is not None:
             return r["answer_chars"] == modal
         return True
     sub = [r for r in cand if ok(r)]
@@ -158,7 +169,12 @@ def run(rows, labels, title):
     if reasoned_dropped:
         print(f"  ※ --reasoned-only: 추론 토큰 0/미보고 {reasoned_dropped}건 추가 제외")
     if dropped:
-        print(f"  ※ 출력 길이 고정이 깨진 콜 {dropped}건 제외(토큰 한계 도달 또는 지시 무시)")
+        why = ("토큰 한계 도달 또는 지시 무시" if fixed_len
+               else "토큰 한계 도달/응답 없음")
+        print(f"  ※ {dropped}건 제외({why})")
+        if not fixed_len and modal is not None:
+            print(f"  ※ 자유 길이 arm 이라 '답 길이 고정' 검사는 건너뜀"
+                  f" (답 글자수 최빈값 {modal:.0f}자가 {acs.count(modal)}/{len(acs)}건뿐)")
         # 질문별 교차검증이라, 어떤 질문의 한 조건이 통째로 비면 그 회차가 성립하지 않는다.
         from collections import Counter
         per = Counter((r["q_idx"], r["condition"]) for r in sub)
