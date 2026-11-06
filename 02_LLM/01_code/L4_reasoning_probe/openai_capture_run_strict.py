@@ -16,12 +16,22 @@ openai_capture_run_strict.py — 길이 완전통제판 캡처 요청 생성기(
 
 준비: pip install openai ; export OPENAI_API_KEY=sk-...
 사용: openai_capture_strict.sh 가 tcpdump 와 함께 호출(직접도 가능).
-  python3 openai_capture_run_strict.py --list                 # 모델 목록부터 확인
-  python3 openai_capture_run_strict.py --model <id> --repeats 3
+  python3 openai_capture_run_strict.py --list                      # 모델 목록
+  python3 openai_capture_run_strict.py --probe --model a,b,c       # 모델당 1콜로 사전확인
+  python3 openai_capture_run_strict.py --model <id> --api chat --repeats 3
 입력: OPENAI_API_KEY. 출력: out/openai_log_strict.jsonl
 비고: 파싱은 parse_pcap.py --out out/openai_strict.csv, 분류는 e1_from_csv.py.
-  ⚠️ 모델 id 와 지원 effort 단계는 **실행 전에 --list / --probe 로 확인할 것.**
-     모델 라인업이 자주 바뀌어 코드에 박아둔 기본값이 틀릴 수 있다.
+
+  ⚠️ 모델 id·지원 effort 단계·엔드포인트는 **실행 전에 --list / --probe 로 확인할 것.**
+     라인업이 자주 바뀌어 코드에 박아둔 기본값이 틀릴 수 있다.
+
+  엔드포인트가 두 종류다. --probe 가 어느 쪽인지 알려주고, 본캡처는 --api 로 못박는다:
+    chat      : reasoning_effort 가 평평한 최상위 인자,
+                usage.completion_tokens_details.reasoning_tokens
+    responses : reasoning={"effort": ...} 로 중첩,
+                usage.output_tokens_details.reasoning_tokens
+  본캡처에서 --api auto 는 금지다 — 콜마다 엔드포인트가 달라지면 요청 모양이 섞여
+  캡처가 통째로 못 쓰게 된다.
 작성일: 2026-11-06
 """
 import os
@@ -39,10 +49,15 @@ from groq_capture_run_strict import (
 )
 
 # ⚠️ 기본값일 뿐이다. --list 로 실제 사용 가능한 추론 모델을 확인하고 --model 로 지정하라.
-DEFAULT_MODEL = "gpt-5-mini"
+DEFAULT_MODEL = "gpt-6-luna"
 
 # Groq 과 같은 3단계를 기본으로 둔다(교차 비교가 목적이므로 단계를 맞추는 쪽이 중요하다).
-# 모델이 더 많은 단계를 지원하면 --efforts 로 늘린다.
+#
+# gpt-6 계열은 none / low / medium / high / xhigh / max 의 6단계를 받는다(공식 문서 기준,
+# 단 gpt-6.1-sol 은 none 미지원). 'none' 은 Gemini 의 no_think 에 대응하는 진짜 추론 끄기로,
+# Groq gpt-oss 에는 없던 조건이다 — 지금까지 '설정없음 vs high' 를 Gemini 로만 쟀다.
+# 전 단계를 쓰려면:  --efforts none,low,medium,high,xhigh,max
+# 단 단계를 늘리면 조건 수가 늘어 콜 수도 비례해 늘어난다. 예산을 보고 정할 것.
 DEFAULT_EFFORTS = "low,medium,high"
 
 
@@ -62,51 +77,56 @@ def build_conditions(spec):
     return conds
 
 
+def _get(obj, name):
+    """객체 속성이든 dict 키든 같은 방식으로 꺼낸다(SDK 판마다 달라서)."""
+    if obj is None:
+        return None
+    if isinstance(obj, dict):
+        return obj.get(name)
+    return getattr(obj, name, None)
+
+
 def _reasoning_tokens(usage):
     """usage 에서 추론 토큰수를 방어적으로 추출.
 
-    OpenAI 는 completion_tokens_details.reasoning_tokens 에 넣는다. SDK 판에 따라
-    객체이기도 dict 이기도 해서 둘 다 받는다. Groq 판의 같은 이름 함수와 동일한 이유다.
+    경로가 API 마다 다르다 — 둘 다 본다:
+      Chat Completions : usage.completion_tokens_details.reasoning_tokens
+      Responses        : usage.output_tokens_details.reasoning_tokens
+    ※ reasoning_tokens 는 output 토큰 '안에' 포함된다. 비용 계산에서 따로 더하면 중복이다.
     """
     if usage is None:
         return None
-    det = getattr(usage, "completion_tokens_details", None)
-    if det is None and isinstance(usage, dict):
-        det = usage.get("completion_tokens_details")
-    if det is not None:
-        v = getattr(det, "reasoning_tokens", None)
-        if v is None and isinstance(det, dict):
-            v = det.get("reasoning_tokens")
+    for det_key in ("completion_tokens_details", "output_tokens_details"):
+        v = _get(_get(usage, det_key), "reasoning_tokens")
         if v is not None:
             return v
     for attr in ("reasoning_tokens", "completion_reasoning_tokens"):
-        v = getattr(usage, attr, None)
+        v = _get(usage, attr)
         if v:
             return v
     return None
 
 
-def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
-            include_usage=True):
-    """스트리밍 요청. 벽시계 t_start/t_first_answer/t_end(pcap 정렬용) + 토큰수 반환.
+def _output_tokens(usage):
+    """생성 토큰 총량. Chat Completions 는 completion_tokens, Responses 는 output_tokens."""
+    if usage is None:
+        return None
+    for k in ("completion_tokens", "output_tokens"):
+        v = _get(usage, k)
+        if v is not None:
+            return v
+    return None
 
-    반환 필드는 groq_capture_run_strict.run_one 과 같은 이름을 쓴다 —
-    parse_pcap.py 가 그 이름으로 읽기 때문이다.
-    """
-    t0 = time.time(); t_first = None
-    answer_chars = 0; comp_tok = None; think_tok = None; finish = None
-    # 추론 요약이 스트림에 실려 내려오는지 양으로 기록한다. 0 이면 '바이트 신호 없음'의
-    # 직접 근거가 되고, 0 이 아니면 Gemini thoughtSignature 와 같은 누출 경로가 된다.
-    reasoning_chars = 0
-    # 추론 중 빈 keep-alive 청크가 바이트를 밀어올렸을 가능성을 배제하기 위한 대조.
-    chunk_count = 0
-    stream = client.chat.completions.create(
+
+def _stream_chat(client, model, prompt, effort, max_tok, include_usage):
+    """Chat Completions 스트림. reasoning_effort 는 평평한 최상위 인자."""
+    return client.chat.completions.create(
         model=model,
-        messages=[{"role": "user", "content": question + (instr or INSTR) + (" " * pad)}],
+        messages=[{"role": "user", "content": prompt}],
         stream=True,
         # 추론 모델은 temperature 를 받지 않는다. 보내지 않는다(Groq 판과 다른 점).
         reasoning_effort=effort,
-        max_completion_tokens=max_tok or MAX_COMPLETION_TOKENS,
+        max_completion_tokens=max_tok,
         # ⚠️ include_usage 는 마지막 청크에 usage 숫자를 실어 보낸다. 추론 토큰이 클수록
         #    그 숫자의 자릿수가 늘어 응답 바이트가 커진다 — 즉 **라벨을 수집하는 행위 자체가
         #    신호를 만들어낼 수 있다.** Groq 에서 이 가설이 제기됐고 아직 대조 캡처를 못 했다
@@ -115,26 +135,130 @@ def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
         #    단 --no-usage 면 thoughts_tokens 가 안 와서 Task B 라벨이 없다. Task A 전용.
         **({"stream_options": {"include_usage": True}} if include_usage else {}),
     )
+
+
+def _stream_responses(client, model, prompt, effort, max_tok):
+    """Responses 스트림. effort 가 reasoning 객체 안으로 들어가고 한계 인자 이름도 다르다.
+
+    gpt-6 계열 문서가 usage 를 output_tokens_details 로 적고 있어 이쪽이 정본일 가능성이
+    높다. 어느 쪽이 되는지는 --probe 가 가린다.
+    """
+    return client.responses.create(
+        model=model,
+        input=[{"role": "user", "content": prompt}],
+        reasoning={"effort": effort},
+        max_output_tokens=max_tok,
+        stream=True,
+    )
+
+
+def probe_one(client, model, effort, args):
+    """모델 1개를 1콜로 찔러 세 가지를 가린다.
+
+      (1) 어느 엔드포인트를 받는가 — chat(평평한 reasoning_effort) / responses(중첩 reasoning)
+      (2) usage 에 추론 토큰을 돌려주는가 → Task B(회귀) 가능 여부
+      (3) 한 콜이 토큰을 얼마나 먹는가 → 콜 수를 곱하면 풀런 예산이 나온다
+
+    본캡처 전에 반드시 돌릴 것. 모델마다 다를 수 있으므로 쓸 모델 전부 찍어본다.
+    """
+    prompt = QUESTIONS[0] + INSTR
+    tries = ["chat", "responses"] if args.api == "auto" else [args.api]
+    for which in tries:
+        try:
+            if which == "chat":
+                r = client.chat.completions.create(
+                    model=model,
+                    messages=[{"role": "user", "content": prompt}],
+                    reasoning_effort=effort,
+                    max_completion_tokens=args.max_tok)
+            else:
+                r = client.responses.create(
+                    model=model,
+                    input=[{"role": "user", "content": prompt}],
+                    reasoning={"effort": effort},
+                    max_output_tokens=args.max_tok)
+        except Exception as e:
+            print(f"[{model} / {which}] 실패: {type(e).__name__}: {e}")
+            continue
+        u = r.usage
+        dump = (u.to_dict() if hasattr(u, "to_dict")
+                else u.model_dump() if hasattr(u, "model_dump") else vars(u))
+        print(f"\n=== {model} / api={which} / effort={effort} ===")
+        print(json.dumps(dump, ensure_ascii=False, indent=2, default=str))
+        rt = _reasoning_tokens(u)
+        tot = _get(u, "total_tokens")
+        print(f"추론 토큰 = {rt} / 전체 토큰 = {tot}")
+        if rt is None:
+            print("→ 추론 토큰 미보고. Task A 만 가능(설정 라벨은 우리가 고르므로 있다).")
+        elif rt == 0:
+            print("→ 0. 이 문항/설정에선 추론이 안 일어났다. effort·문항을 바꿔 재확인.")
+        else:
+            print("→ Task B 가능. 이 값을 회귀 타깃으로 쓴다.")
+        print(f"→ 본캡처: --model {model} --api {which}")
+        return which
+    print(f"[{model}] chat/responses 둘 다 실패.")
+    return None
+
+
+def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
+            include_usage=True, api="chat"):
+    """스트리밍 요청. 벽시계 t_start/t_first_answer/t_end(pcap 정렬용) + 토큰수 반환.
+
+    반환 필드는 groq_capture_run_strict.run_one 과 같은 이름을 쓴다 —
+    parse_pcap.py 가 그 이름으로 읽기 때문이다.
+    """
+    prompt = question + (instr or INSTR) + (" " * pad)
+    max_tok = max_tok or MAX_COMPLETION_TOKENS
+    t0 = time.time(); t_first = None
+    answer_chars = 0; comp_tok = None; think_tok = None; finish = None
+    # 추론 요약이 스트림에 실려 내려오는지 양으로 기록한다. 0 이면 '바이트 신호 없음'의
+    # 직접 근거가 되고, 0 이 아니면 Gemini thoughtSignature 와 같은 누출 경로가 된다.
+    reasoning_chars = 0
+    # 추론 중 빈 keep-alive 청크가 바이트를 밀어올렸을 가능성을 배제하기 위한 대조.
+    chunk_count = 0
+
+    if api == "responses":
+        stream = _stream_responses(client, model, prompt, effort, max_tok)
+    else:
+        stream = _stream_chat(client, model, prompt, effort, max_tok, include_usage)
+
     for chunk in stream:
         t = time.time()
         chunk_count += 1
-        ch = (chunk.choices or [None])[0] if getattr(chunk, "choices", None) else None
-        if ch is not None and getattr(ch, "finish_reason", None):
-            finish = ch.finish_reason
-        delta = getattr(ch, "delta", None) if ch else None
-        txt = getattr(delta, "content", None) if delta else None
-        # 일부 모델/라우터는 추론 요약을 delta.reasoning 으로 따로 흘린다.
-        reasoning = getattr(delta, "reasoning", None) if delta else None
-        if reasoning:
-            reasoning_chars += len(reasoning)
-        if txt:
-            if t_first is None and txt.strip():
-                t_first = t
-            answer_chars += len(txt)
-        u = getattr(chunk, "usage", None)
-        if u is not None:
-            comp_tok = getattr(u, "completion_tokens", None) or comp_tok
-            think_tok = _reasoning_tokens(u) or think_tok
+        usage = None
+        if api == "responses":
+            # 이벤트 종류가 판마다 늘어나므로 이름으로 분기하지 않고 모양으로 집는다.
+            et = str(getattr(chunk, "type", "") or "")
+            d = getattr(chunk, "delta", None)
+            if isinstance(d, str) and d:
+                if "reasoning" in et:
+                    reasoning_chars += len(d)
+                else:
+                    if t_first is None and d.strip():
+                        t_first = t
+                    answer_chars += len(d)
+            resp = getattr(chunk, "response", None)
+            if resp is not None:
+                usage = getattr(resp, "usage", None)
+                finish = getattr(resp, "status", None) or finish
+        else:
+            ch = (chunk.choices or [None])[0] if getattr(chunk, "choices", None) else None
+            if ch is not None and getattr(ch, "finish_reason", None):
+                finish = ch.finish_reason
+            delta = getattr(ch, "delta", None) if ch else None
+            txt = getattr(delta, "content", None) if delta else None
+            # 일부 모델/라우터는 추론 요약을 delta.reasoning 으로 따로 흘린다.
+            reasoning = getattr(delta, "reasoning", None) if delta else None
+            if reasoning:
+                reasoning_chars += len(reasoning)
+            if txt:
+                if t_first is None and txt.strip():
+                    t_first = t
+                answer_chars += len(txt)
+            usage = getattr(chunk, "usage", None)
+        if usage is not None:
+            comp_tok = _output_tokens(usage) or comp_tok
+            think_tok = _reasoning_tokens(usage) or think_tok
     t_end = time.time()
     return {"t_start": t0, "t_first_answer": t_first, "t_end": t_end,
             "app_ttft_ms": round((t_first - t0) * 1000, 1) if t_first else None,
@@ -170,6 +294,12 @@ def main():
                     help="stream_options.include_usage 를 끈다. usage 숫자 자릿수가 "
                          "응답 바이트를 부풀리는 교란의 대조군(HANDOFF 5-5). "
                          "단 추론 토큰 라벨이 안 와서 Task A 전용이 된다")
+    ap.add_argument("--api", default="auto", choices=["auto", "chat", "responses"],
+                    help="어느 엔드포인트로 칠지. auto=chat 먼저 시도하고 실패하면 responses")
+    ap.add_argument("--max-tok", type=int, default=8192,
+                    help="max_completion_tokens / max_output_tokens. 추론 토큰이 "
+                         "여기 포함되므로 xhigh·max 에선 넉넉해야 한다. 모자라면 추론 도중 "
+                         "한계에 닿아 답이 안 나온다(truncated)")
     args = ap.parse_args()
 
     if not os.getenv("OPENAI_API_KEY"):
@@ -184,28 +314,21 @@ def main():
     conds = build_conditions(args.efforts)
 
     if args.probe:
-        # 캡처를 설계하기 전에 반드시 확인할 것: 이 모델이 추론 토큰 수를 돌려주는가.
-        #   돌려준다 -> Task A + Task B(회귀) 둘 다 가능
-        #   안 준다   -> Task A 만 가능
-        r = client.chat.completions.create(
-            model=args.model,
-            messages=[{"role": "user", "content": QUESTIONS[0] + INSTR}],
-            reasoning_effort=conds[-1][1],
-            max_completion_tokens=MAX_COMPLETION_TOKENS,
-        )
-        u = r.usage
-        dump = u.to_dict() if hasattr(u, "to_dict") else (
-            u.model_dump() if hasattr(u, "model_dump") else vars(u))
-        print(json.dumps(dump, ensure_ascii=False, indent=2, default=str))
-        rt = _reasoning_tokens(u)
-        print(f"\n추론 토큰 = {rt}")
-        if rt is None:
-            print("→ 추론 토큰을 안 돌려준다. Task A 만 가능(설정 라벨은 우리가 고르므로 있다).")
-        elif rt == 0:
-            print("→ 0 이다. 이 문항/설정에선 추론이 안 일어났다. effort·문항을 바꿔 재확인.")
-        else:
-            print("→ Task B 가능. 이 값을 회귀 타깃으로 쓴다.")
+        # 캡처를 설계하기 전에 세 가지를 한 번에 가린다.
+        #   (1) 이 모델이 어느 엔드포인트를 받는가 (chat / responses)
+        #   (2) 추론 토큰 수를 usage 에 돌려주는가 -> Task B 가능 여부
+        #   (3) 한 콜이 토큰을 얼마나 먹는가 -> 풀런 예산 추정
+        # --model 에 쉼표를 주면 여러 모델을 한 번에 훑는다(모델당 1콜).
+        for mdl in [m.strip() for m in args.model.split(",") if m.strip()]:
+            probe_one(client, mdl, conds[-1][1], args)
         return
+
+    # 본캡처에서 auto 는 쓰지 않는다 — 콜마다 엔드포인트가 달라지면 트래픽 모양이
+    # 섞여 캡처가 못 쓰게 된다. --probe 가 알려준 값을 명시하도록 강제한다.
+    if args.api == "auto":
+        raise SystemExit("--api chat 또는 --api responses 를 명시할 것. "
+                         "먼저 --probe 로 어느 쪽이 되는지 확인하라.")
+    api = args.api
 
     qs = QUESTIONS[: args.limit] if args.limit else QUESTIONS
     arms = parse_arms(args.arms)
@@ -225,8 +348,9 @@ def main():
             instr, expect, max_tok = build_arm(arm)
             try:
                 m = run_one(client, args.model, qs[qi], effort, pad,
-                            instr=instr, max_tok=max_tok,
-                            include_usage=not args.no_usage); m["error"] = None
+                            instr=instr, max_tok=max(max_tok, args.max_tok),
+                            include_usage=not args.no_usage,
+                            api=api); m["error"] = None
             except Exception as e:
                 m = {"error": f"{type(e).__name__}: {e}"}
             m.update({"idx": i, "order_idx": i, "q_idx": qi, "condition": cond,
@@ -235,7 +359,7 @@ def main():
                       "complied": None if expect is None else m.get("answer_chars") == expect,
                       "service": "openai", "model": args.model, "effort": effort, "rep": rep,
                       "shuffled": not args.no_shuffle,
-                      "include_usage": not args.no_usage})
+                      "include_usage": not args.no_usage, "api": api})
             f.write(json.dumps(m, ensure_ascii=False) + "\n"); f.flush()
             tag = m.get("error") or (
                 f"ttft={m.get('app_ttft_ms')}ms out={m.get('output_tokens')} "
