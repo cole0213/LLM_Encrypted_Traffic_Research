@@ -201,6 +201,43 @@ def _verdict(got, label):
     return f"{label}: 범위 {lo}~{hi} — 쓸 만하다"
 
 
+def screen_questions(client, model, effort, args):
+    """전 문항을 한 설정으로 1콜씩 돌려 '추론을 일으키는 문항'을 선별한다.
+
+    왜 필요한가 — 문항 세트는 2026-09~10 에 Gemini/Groq 기준으로 만들었다. 그 뒤 모델이
+    좋아져서 같은 문항이 너무 쉬워졌다. 실제로 q0(17x23)은 전 설정에서 추론 0,
+    q4(체스 나이트)는 수백 토큰이 나온다. 쉬운 문항이 대부분이면 캡처한 콜의 다수가
+    추론 0 이 되어 라벨이 무너진다 — 돈보다 데이터가 먼저 못 쓰게 된다.
+
+    여기서 걸러낸 문항 번호를 본캡처의 문항 세트로 쓴다.
+    """
+    which = "responses" if args.api == "auto" else args.api
+    print(f"\n=== 문항 선별: {model} / {which} / effort={effort} ===")
+    print(f"{'q':>3}  {'추론':>6}  {'전체':>6}  문항")
+    rows = []
+    for qi, q in enumerate(QUESTIONS):
+        try:
+            u = _probe_call(client, model, q + INSTR, effort, args.max_tok, which)
+            rt = _reasoning_tokens(u) or 0
+            tot = _get(u, "total_tokens")
+        except Exception as e:
+            print(f"{qi:>3}  {'ERR':>6}  {'—':>6}  {type(e).__name__}: {e}")
+            continue
+        rows.append((qi, rt))
+        print(f"{qi:>3}  {rt:>6}  {str(tot):>6}  {q[:48]}")
+        time.sleep(args.sleep)
+
+    hard = [qi for qi, rt in rows if rt > 0]
+    dead = [qi for qi, rt in rows if rt == 0]
+    print(f"\n추론 발생 {len(hard)}/{len(rows)} 문항")
+    print(f"  살아있는 문항: {hard}")
+    print(f"  추론 0 문항  : {dead}")
+    if len(hard) < 10:
+        print("⚠️ 쓸 수 있는 문항이 10개 미만이다. 질문별 교차검증의 독립 표본은 사실상 "
+              "문항 수이므로, 이대로면 일반화를 주장할 수 없다. 어려운 문항을 새로 만들 것.")
+    return hard
+
+
 def probe_one(client, model, efforts, args):
     """모델 1개를 effort × 엔드포인트로 훑어 네 가지를 가린다.
 
@@ -218,7 +255,7 @@ def probe_one(client, model, efforts, args):
       - 문항이 너무 쉬워 모델이 추론을 생략했다 (--probe-q 로 어려운 문항 재확인)
       - reasoning_effort 가 무시되고 있다 (→ 이 모델·엔드포인트는 제외)
     """
-    prompt = QUESTIONS[args.probe_q] + INSTR
+    prompt = QUESTIONS[int(args.probe_q)] + INSTR
     apis = ["chat", "responses"] if args.api == "auto" else [args.api]
     # rows[effort][api] = (추론토큰, 출력토큰, 전체토큰, 에러)
     rows = {}
@@ -346,9 +383,9 @@ def main():
     ap.add_argument("--list", action="store_true", help="사용가능 모델 출력 후 종료")
     ap.add_argument("--probe", action="store_true",
                     help="effort 단계별로 1콜씩 돌려 추론 토큰이 실제로 늘어나는지 본다. 캡처 전 필수")
-    ap.add_argument("--probe-q", type=int, default=0,
+    ap.add_argument("--probe-q", default="0",
                     help="프로브에 쓸 문항 번호. 기본 0(17x23, 쉬움). "
-                         "추론이 0 으로 나오면 어려운 문항으로 바꿔 재확인할 것 "
+                         "'all' 이면 전 문항을 한 단계로 훑어 난도를 선별한다 "
                          "(4=체스 나이트 경로탐색, 9=삼단논법, 16=수열 2^n-1)")
     ap.add_argument("--seed", type=int, default=20261106,
                     help="시행 순서 섞기용 시드(재현 가능하게 고정)")
@@ -397,7 +434,13 @@ def main():
         #   (3) 한 콜이 토큰을 얼마나 먹는가 -> 풀런 예산 추정
         # --model 에 쉼표를 주면 여러 모델을 한 번에 훑는다(모델 × effort 단계 콜).
         efforts = [e for _, e, _ in conds]
-        for mdl in [m.strip() for m in args.model.split(",") if m.strip()]:
+        models = [m.strip() for m in args.model.split(",") if m.strip()]
+        if str(args.probe_q).lower() == "all":
+            # 문항 난도 선별 모드. 설정은 하나만 쓴다(--efforts 의 마지막 값).
+            for mdl in models:
+                screen_questions(client, mdl, efforts[-1], args)
+            return
+        for mdl in models:
             probe_one(client, mdl, efforts, args)
         return
 
