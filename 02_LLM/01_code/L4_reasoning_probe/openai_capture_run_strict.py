@@ -201,41 +201,57 @@ def _verdict(got, label):
     return f"{label}: 범위 {lo}~{hi} — 쓸 만하다"
 
 
-def screen_questions(client, model, effort, args):
-    """전 문항을 한 설정으로 1콜씩 돌려 '추론을 일으키는 문항'을 선별한다.
+# 문항이 쓸 만하다고 보는 최소 '설정 간 추론 토큰 격차'.
+# 왜 이 값인가 — 추론 N 토큰은 대략 4N 바이트의 응답 증가로 나타난다(Gemini 실측에서 유추).
+# 기준 응답이 1,400 바이트 안팎이므로, 격차 100 토큰 ≈ 400 바이트 ≈ 30% 변화라야
+# TLS 레코드 패딩과 망 잡음을 넘어 분류기가 집어낼 수 있다. 20 토큰(≈80B, 6%)으로는 부족하다.
+MIN_SPREAD = 100
 
-    왜 필요한가 — 문항 세트는 2026-09~10 에 Gemini/Groq 기준으로 만들었다. 그 뒤 모델이
-    좋아져서 같은 문항이 너무 쉬워졌다. 실제로 q0(17x23)은 전 설정에서 추론 0,
-    q4(체스 나이트)는 수백 토큰이 나온다. 쉬운 문항이 대부분이면 캡처한 콜의 다수가
-    추론 0 이 되어 라벨이 무너진다 — 돈보다 데이터가 먼저 못 쓰게 된다.
+
+def screen_questions(client, model, efforts, args):
+    """전 문항을 **설정 전 단계로** 돌려 '설정 간 격차가 큰 문항'을 선별한다.
+
+    기준이 "추론 > 0" 이 아니라 **"설정을 바꿨을 때 추론량이 얼마나 벌어지는가"** 인 게
+    핵심이다. 모든 설정에서 20 토큰씩 쓰는 문항은 추론이 '일어나긴' 해도 설정을 구분할
+    수 없어 라벨과 신호가 대응하지 않는다. 탐지 대상은 추론의 유무가 아니라 그 양이다.
+
+    문항 세트는 2026-09~10 에 Gemini/Groq 기준으로 만들었다. 그 뒤 모델이 좋아져
+    대부분이 1단계 계산·암기로 풀려버린다. 실측에서 살아남는 건 탐색·다단계 논리뿐이다
+    (q4 체스 나이트 none=0 -> max=346, 나머지 대부분은 전 단계 20~40).
 
     여기서 걸러낸 문항 번호를 본캡처의 문항 세트로 쓴다.
     """
     which = "responses" if args.api == "auto" else args.api
-    print(f"\n=== 문항 선별: {model} / {which} / effort={effort} ===")
-    print(f"{'q':>3}  {'추론':>6}  {'전체':>6}  문항")
+    print(f"\n=== 문항 선별: {model} / {which} / efforts={','.join(efforts)} ===")
+    hdr = f"{'q':>3}" + "".join(f"{e:>8}" for e in efforts) + f"{'격차':>8}  문항"
+    print(hdr)
     rows = []
     for qi, q in enumerate(QUESTIONS):
-        try:
-            u = _probe_call(client, model, q + INSTR, effort, args.max_tok, which)
-            rt = _reasoning_tokens(u) or 0
-            tot = _get(u, "total_tokens")
-        except Exception as e:
-            print(f"{qi:>3}  {'ERR':>6}  {'—':>6}  {type(e).__name__}: {e}")
-            continue
-        rows.append((qi, rt))
-        print(f"{qi:>3}  {rt:>6}  {str(tot):>6}  {q[:48]}")
-        time.sleep(args.sleep)
+        vals = []
+        for effort in efforts:
+            try:
+                u = _probe_call(client, model, q + INSTR, effort, args.max_tok, which)
+                vals.append(_reasoning_tokens(u) or 0)
+            except Exception:
+                # 지원 안 하는 단계(예: astra 의 none)는 격차 계산에서 빼야 한다.
+                vals.append(None)
+            time.sleep(args.sleep)
+        got = [v for v in vals if v is not None]
+        spread = (max(got) - min(got)) if got else 0
+        rows.append((qi, spread, got))
+        cells = "".join(f"{('—' if v is None else v):>8}" for v in vals)
+        print(f"{qi:>3}{cells}{spread:>8}  {q[:44]}")
 
-    hard = [qi for qi, rt in rows if rt > 0]
-    dead = [qi for qi, rt in rows if rt == 0]
-    print(f"\n추론 발생 {len(hard)}/{len(rows)} 문항")
-    print(f"  살아있는 문항: {hard}")
-    print(f"  추론 0 문항  : {dead}")
-    if len(hard) < 10:
-        print("⚠️ 쓸 수 있는 문항이 10개 미만이다. 질문별 교차검증의 독립 표본은 사실상 "
-              "문항 수이므로, 이대로면 일반화를 주장할 수 없다. 어려운 문항을 새로 만들 것.")
-    return hard
+    rows.sort(key=lambda r: -r[1])
+    good = [qi for qi, sp, _ in rows if sp >= MIN_SPREAD]
+    print(f"\n격차 {MIN_SPREAD} 토큰 이상: {len(good)}/{len(rows)} 문항")
+    print(f"  쓸 문항(격차순): {good}")
+    print("  격차 상위 10:   " + ", ".join(f"q{qi}({sp})" for qi, sp, _ in rows[:10]))
+    if len(good) < 10:
+        print(f"\n⚠️ 쓸 수 있는 문항이 {len(good)}개뿐이다. 질문별 교차검증에서 독립 표본은")
+        print("   사실상 문항 수이므로 이대로는 일반화를 주장할 수 없다.")
+        print("   살아남은 문항의 성격(탐색·열거·다단계 논리)을 본떠 문항을 새로 만들 것.")
+    return good
 
 
 def probe_one(client, model, efforts, args):
@@ -436,9 +452,9 @@ def main():
         efforts = [e for _, e, _ in conds]
         models = [m.strip() for m in args.model.split(",") if m.strip()]
         if str(args.probe_q).lower() == "all":
-            # 문항 난도 선별 모드. 설정은 하나만 쓴다(--efforts 의 마지막 값).
+            # 문항 선별 모드. --efforts 전 단계를 돌려 문항별 '설정 간 격차'를 잰다.
             for mdl in models:
-                screen_questions(client, mdl, efforts[-1], args)
+                screen_questions(client, mdl, efforts, args)
             return
         for mdl in models:
             probe_one(client, mdl, efforts, args)
