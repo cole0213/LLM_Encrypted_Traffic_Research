@@ -19,6 +19,9 @@ screen_qset.py — provider 공통 문항 선별기. "설정 간 추론 토큰 �
   spread   : 설정을 바꿨을 때 추론 토큰의 max - min. 클수록 좋다.
   trunc    : 답이 한 글자도 안 나온 콜 수. 어려운 문항이 작은 모델에서 토큰 한계까지
              가면 여기 잡힌다(Groq 1차 q4 에서 4콜을 날린 그 사고). 0 이어야 쓸 수 있다.
+  nonc     : 답이 한 글자를 넘은 콜 수. 지시는 'A~D 한 글자만' 인데 어긴 경우다.
+             가치 판단 문항에서 모델이 답을 피하고 해명을 쓰면 여기 잡힌다. 길이 통제가
+             깨지므로(답 길이가 조건별로 달라지면 그게 신호가 된다) 0 이어야 쓸 수 있다.
 
 입력: 각 provider 의 API 키 환경변수
       openai=OPENAI_API_KEY / gemini=GEMINI_API_KEY|GOOGLE_API_KEY / groq=GROQ_API_KEY
@@ -148,12 +151,12 @@ def screen(provider, model, qset_name, efforts, sleep, limit=0):
 
     print(f"\n=== {provider} / {model} / qset={qset_name} / {','.join(efforts)} ===")
     print(f"{'q':>3}" + "".join(f"{e:>9}" for e in efforts)
-          + f"{'격차':>7}{'잘림':>5}  문항")
+          + f"{'격차':>7}{'잘림':>5}{'불응':>5}  문항")
 
     rows = []
     for qi, q in enumerate(qs):
         prompt = q + INSTR
-        vals, trunc = [], 0
+        vals, trunc, nonc = [], 0, 0
         for effort in efforts:
             try:
                 rt, nchars = call(client, model, prompt, effort)
@@ -161,25 +164,34 @@ def screen(provider, model, qset_name, efforts, sleep, limit=0):
                 # 답이 한 글자도 없으면 추론이 한계까지 간 것이다. 분석에서 제외 대상.
                 if nchars == 0:
                     trunc += 1
-            except Exception as e:
+                # 한 글자를 넘으면 지시 불응이다. 가치 판단 문항에서 모델이 답을 피하고
+                # 해명을 쓰면 여기 걸린다. 답 길이가 조건별로 달라지면 그 자체가 신호가
+                # 되어 길이 통제가 깨지므로 쓸 수 없는 문항이다.
+                elif nchars > 1:
+                    nonc += 1
+            except Exception:
                 # 지원 안 하는 설정(astra 의 none 등)은 격차 계산에서 빼야 한다.
                 vals.append(None)
             time.sleep(sleep)
         got = [v for v in vals if v is not None]
         spread = (max(got) - min(got)) if got else 0
-        rows.append({"q": qi, "spread": spread, "trunc": trunc,
+        rows.append({"q": qi, "spread": spread, "trunc": trunc, "nonc": nonc,
                      "vals": vals, "text": q})
         cells = "".join(f"{('—' if v is None else v):>9}" for v in vals)
-        print(f"{qi:>3}{cells}{spread:>7}{trunc:>5}  {q[:40]}")
+        print(f"{qi:>3}{cells}{spread:>7}{trunc:>5}{nonc:>5}  {q[:40]}")
 
-    good = [r["q"] for r in rows if r["spread"] >= MIN_SPREAD and r["trunc"] == 0]
-    print(f"\n격차 {MIN_SPREAD}+ 이고 잘림 없음: {len(good)}/{len(rows)}")
+    good = [r["q"] for r in rows
+            if r["spread"] >= MIN_SPREAD and r["trunc"] == 0 and r["nonc"] == 0]
+    print(f"\n격차 {MIN_SPREAD}+ · 잘림 0 · 불응 0: {len(good)}/{len(rows)}")
     print(f"  쓸 문항: {good}")
     top = sorted(rows, key=lambda r: -r["spread"])[:10]
     print("  격차 상위: " + ", ".join(f"q{r['q']}({r['spread']})" for r in top))
     if any(r["trunc"] for r in rows):
         bad = [r["q"] for r in rows if r["trunc"]]
         print(f"  ⚠️ 잘린 문항(이 모델엔 너무 어렵다): {bad}")
+    if any(r["nonc"] for r in rows):
+        bad = [r["q"] for r in rows if r["nonc"]]
+        print(f"  ⚠️ 불응 문항(답을 피하거나 해명을 씀 — 길이 통제 깨짐): {bad}")
 
     outp = Path("out") / f"screen_{provider}_{_slug(model)}_{qset_name}.json"
     outp.parent.mkdir(parents=True, exist_ok=True)
