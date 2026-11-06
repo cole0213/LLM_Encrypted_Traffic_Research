@@ -169,61 +169,81 @@ def _probe_call(client, model, prompt, effort, max_tok, which):
     return r.usage
 
 
-def probe_one(client, model, efforts, args):
-    """모델 1개를 effort 단계별로 찔러 네 가지를 가린다.
+# 동적 범위가 이보다 좁으면 응답 바이트 차이가 수십 바이트에 그친다.
+# 지금 탐지기는 수백~수천 바이트 차이를 보므로 사실상 신호가 없다.
+MIN_USEFUL_RANGE = 50
 
-      (1) 어느 엔드포인트를 받는가 — chat(평평한 reasoning_effort) / responses(중첩)
+
+def _verdict(got, label):
+    """추론 토큰 목록 → 이 엔드포인트가 쓸 만한지 한 줄 판정."""
+    got = [g for g in got if g is not None]
+    if not got:
+        return f"{label}: 추론 토큰 미보고 또는 전부 실패"
+    lo, hi = min(got), max(got)
+    if hi == 0:
+        return f"{label}: 전 단계 추론 0 — 설정이 안 먹거나 문항이 쉽다"
+    if hi - lo < MIN_USEFUL_RANGE:
+        return f"{label}: 범위 {lo}~{hi} 로 너무 좁다 — 캡처해도 신호 없음"
+    return f"{label}: 범위 {lo}~{hi} — 쓸 만하다"
+
+
+def probe_one(client, model, efforts, args):
+    """모델 1개를 effort × 엔드포인트로 훑어 네 가지를 가린다.
+
+      (1) 어느 엔드포인트가 추론을 실제로 돌리는가
       (2) usage 에 추론 토큰을 돌려주는가 → Task B(회귀) 가능 여부
       (3) **effort 를 올리면 추론 토큰이 실제로 늘어나는가** → 설정 축의 성립 여부
       (4) 한 콜이 토큰을 얼마나 먹는가 → 콜 수를 곱하면 풀런 예산
 
-    (3) 이 핵심이다. 추론 토큰이 전 단계에서 0 이면 두 가지 중 하나다:
-      - 문항이 너무 쉬워 모델이 추론을 생략했다 (--probe-q 로 어려운 문항으로 바꿔 재확인)
-      - reasoning_effort 가 무시되고 있다 (→ 이 모델로는 설정 축 실험이 불가능)
-    둘을 가르지 않고 본캡처에 들어가면 수백 콜을 버린다.
+    (1) 을 두 엔드포인트 다 찍어 비교하는 게 핵심이다. 공식 문서가
+    "모델 페이지에 엔드포인트 이름이 보인다고 전부 지원하는 건 아니다" 라고
+    경고하고, 실제로 Chat Completions 는 400 을 내지 않으면서 추론을 건너뛸 수 있다.
+    에러가 안 나니 그대로 수백 콜을 찍고 '신호 없음' 이라는 가짜 결론을 낸다.
+
+    (3) 이 전 단계 0 이면 둘 중 하나다:
+      - 문항이 너무 쉬워 모델이 추론을 생략했다 (--probe-q 로 어려운 문항 재확인)
+      - reasoning_effort 가 무시되고 있다 (→ 이 모델·엔드포인트는 제외)
     """
     prompt = QUESTIONS[args.probe_q] + INSTR
-    tries = ["chat", "responses"] if args.api == "auto" else [args.api]
-    api = None
-    rows = []
+    apis = ["chat", "responses"] if args.api == "auto" else [args.api]
+    # rows[effort][api] = (추론토큰, 출력토큰, 전체토큰, 에러)
+    rows = {}
     for effort in efforts:
-        last_err = None
-        for which in (tries if api is None else [api]):
+        rows[effort] = {}
+        for which in apis:
             try:
                 u = _probe_call(client, model, prompt, effort, args.max_tok, which)
+                rows[effort][which] = (_reasoning_tokens(u), _output_tokens(u),
+                                       _get(u, "total_tokens"), None)
             except Exception as e:
-                last_err = f"{type(e).__name__}: {e}"
-                continue
-            api = which
-            rows.append((effort, _reasoning_tokens(u), _output_tokens(u),
-                         _get(u, "total_tokens"), None))
-            break
-        else:
-            rows.append((effort, None, None, None, last_err))
+                rows[effort][which] = (None, None, None, f"{type(e).__name__}: {e}")
 
-    print(f"\n=== {model}  (q{args.probe_q}, api={api or '실패'}) ===")
-    print(f"{'effort':<8} {'추론토큰':>8} {'출력토큰':>8} {'전체':>8}  비고")
-    for effort, rt, ot, tot, err in rows:
-        if err:
-            # 지원 안 하는 단계는 여기서 걸린다(예: gpt-6.1-sol 의 none).
-            print(f"{effort:<8} {'—':>8} {'—':>8} {'—':>8}  {err[:60]}")
-        else:
-            print(f"{effort:<8} {str(rt):>8} {str(ot):>8} {str(tot):>8}")
+    print(f"\n=== {model}   (q{args.probe_q})")
+    head = f"{'effort':<8}" + "".join(f"{a + ' 추론':>14}{a + ' 전체':>14}" for a in apis)
+    print(head)
+    for effort in efforts:
+        line = f"{effort:<8}"
+        for which in apis:
+            rt, _ot, tot, err = rows[effort][which]
+            # 지원 안 하는 단계·엔드포인트는 여기서 걸린다(예: astra·6.1-sol 의 none).
+            line += f"{('ERR' if err else str(rt)):>14}{('—' if err else str(tot)):>14}"
+        print(line)
+    # 에러는 한 번씩만 풀어서 보여준다(같은 메시지가 단계마다 반복되므로).
+    seen = set()
+    for effort in efforts:
+        for which in apis:
+            err = rows[effort][which][3]
+            if err and err not in seen:
+                seen.add(err)
+                print(f"  [{which}] {err[:140]}")
 
-    got = [rt for _, rt, _, _, err in rows if not err and rt is not None]
-    if not got:
-        print("→ 추론 토큰 미보고. Task A 만 가능.")
-    elif max(got) == 0:
-        print("→ 전 단계 추론 0. 문항이 쉽거나 effort 가 무시된다.")
-        print("   --probe-q 로 더 어려운 문항을 찍어보고, 거기서도 0 이면 이 모델은 제외.")
-    elif max(got) - min(got) < 50:
-        # 동적 범위가 이 정도면 응답 바이트 차이가 수십 바이트에 그친다.
-        # 지금 탐지기는 수백~수천 바이트 차이를 보므로 사실상 신호가 없다.
-        print(f"→ ⚠️ 동적 범위가 {min(got)}~{max(got)} 로 너무 좁다. 본캡처해도 신호가 안 나온다.")
-        print("   더 어려운 문항(--probe-q)이 필요하다.")
-    else:
-        print(f"→ 쓸 만하다. 추론 토큰 {min(got)}~{max(got)}. 본캡처: --model {model} --api {api}")
-    return api
+    for which in apis:
+        print("→ " + _verdict([rows[e][which][0] for e in efforts], which))
+    if len(apis) > 1:
+        best = max(apis, key=lambda a: max(
+            [rows[e][a][0] or 0 for e in efforts] or [0]))
+        print(f"→ 본캡처 후보: --model {model} --api {best}")
+    return rows
 
 
 def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
