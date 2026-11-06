@@ -118,6 +118,20 @@ def _output_tokens(usage):
     return None
 
 
+def _input_tokens(usage):
+    """입력 토큰. Chat Completions 는 prompt_tokens, Responses 는 input_tokens.
+
+    누적 비용 계산에 쓴다. 추론 토큰은 output 쪽에 이미 포함돼 있으므로 따로 더하지 않는다.
+    """
+    if usage is None:
+        return None
+    for k in ("prompt_tokens", "input_tokens"):
+        v = _get(usage, k)
+        if v is not None:
+            return v
+    return None
+
+
 def _stream_chat(client, model, prompt, effort, max_tok, include_usage):
     """Chat Completions 스트림. reasoning_effort 는 평평한 최상위 인자."""
     return client.chat.completions.create(
@@ -256,7 +270,7 @@ def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
     prompt = question + (instr or INSTR) + (" " * pad)
     max_tok = max_tok or MAX_COMPLETION_TOKENS
     t0 = time.time(); t_first = None
-    answer_chars = 0; comp_tok = None; think_tok = None; finish = None
+    answer_chars = 0; comp_tok = None; think_tok = None; in_tok = None; finish = None
     # 추론 요약이 스트림에 실려 내려오는지 양으로 기록한다. 0 이면 '바이트 신호 없음'의
     # 직접 근거가 되고, 0 이 아니면 Gemini thoughtSignature 와 같은 누출 경로가 된다.
     reasoning_chars = 0
@@ -305,12 +319,14 @@ def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
         if usage is not None:
             comp_tok = _output_tokens(usage) or comp_tok
             think_tok = _reasoning_tokens(usage) or think_tok
+            in_tok = _input_tokens(usage) or in_tok
     t_end = time.time()
     return {"t_start": t0, "t_first_answer": t_first, "t_end": t_end,
             "app_ttft_ms": round((t_first - t0) * 1000, 1) if t_first else None,
             "app_total_ms": round((t_end - t0) * 1000, 1),
             "answer_chars": answer_chars,
             "thoughts_tokens": think_tok, "output_tokens": comp_tok,
+            "input_tokens": in_tok,
             "had_reasoning": bool(think_tok), "reasoning_chars": reasoning_chars,
             "chunk_count": chunk_count,
             "finish_reason": finish, "pad_chars": pad,
@@ -344,6 +360,17 @@ def main():
                     help="stream_options.include_usage 를 끈다. usage 숫자 자릿수가 "
                          "응답 바이트를 부풀리는 교란의 대조군(HANDOFF 5-5). "
                          "단 추론 토큰 라벨이 안 와서 Task A 전용이 된다")
+    # --- 예산 가드레일 -------------------------------------------------------
+    # 무료 크레딧이 한정돼 있고 만료일도 있다. 추론 토큰은 설정·문항에 따라 수십 배로
+    # 튀므로 '얼마 나올지'를 미리 알 수 없다. 그래서 돌면서 실제 usage 로 누적 비용을
+    # 계산해 보여주고, 상한을 넘으면 스스로 멈춘다. 중간에 멈춰도 로그는 남으므로
+    # 거기까지의 콜은 버리지 않는다.
+    ap.add_argument("--price-in", type=float, default=None,
+                    help="입력 단가($/1M). 주면 누적 비용을 표시한다")
+    ap.add_argument("--price-out", type=float, default=None,
+                    help="출력 단가($/1M). 추론 토큰이 여기 포함된다")
+    ap.add_argument("--max-spend", type=float, default=None,
+                    help="누적 비용이 이 금액($)을 넘으면 중단한다. 단가 2개와 함께 쓸 것")
     ap.add_argument("--api", default="auto", choices=["auto", "chat", "responses"],
                     help="어느 엔드포인트로 칠지. auto=chat 먼저 시도하고 실패하면 responses")
     ap.add_argument("--max-tok", type=int, default=8192,
@@ -393,6 +420,10 @@ def main():
 
     logp = Path(args.log); logp.parent.mkdir(parents=True, exist_ok=True)
     total = len(trials)
+    # 누적 토큰·비용. 추론량은 설정·문항에 따라 수십 배로 튀어 사전 예측이 안 된다.
+    # 실제 usage 로 누적해 보여주고, 상한을 넘으면 멈춘다(그때까지 로그는 남는다).
+    sum_in = sum_out = 0
+    show_cost = args.price_in is not None and args.price_out is not None
     time.sleep(1.0)
     with open(logp, "w", encoding="utf-8") as f:
         for i, (qi, cond, effort, pad, rep, arm) in enumerate(trials, 1):
@@ -418,9 +449,21 @@ def main():
                 f"chars={m.get('answer_chars')}" + ("" if expect is None else f"/{expect}")
                 + ("" if m.get("complied") is not False else " [불일치]")
                 + (" [잘림]" if m.get("truncated") else ""))
-            print(f"[{i}/{total}] q{qi} {cond:14s} arm={str(arm):<10s} {tag}")
+            sum_in += m.get("input_tokens") or 0
+            sum_out += m.get("output_tokens") or 0
+            cost = ((sum_in * args.price_in + sum_out * args.price_out) / 1e6
+                    if show_cost else None)
+            print(f"[{i}/{total}] q{qi} {cond:14s} arm={str(arm):<10s} {tag}"
+                  + (f"  ${cost:.3f}" if show_cost else ""))
+            if args.max_spend is not None and cost is not None and cost > args.max_spend:
+                print(f"\n[중단] 누적 ${cost:.3f} > 상한 ${args.max_spend:.2f}. "
+                      f"{i}/{total} 콜까지 로그에 남았다.")
+                break
             time.sleep(args.sleep)
     print(f"\n[done] 로그 -> {logp}")
+    print(f"토큰: 입력 {sum_in:,} / 출력 {sum_out:,}"
+          + (f" / 비용 ${(sum_in * args.price_in + sum_out * args.price_out) / 1e6:.3f}"
+             if show_cost else ""))
     print("→ 확인 1: answer_chars 가 조건 무관 고정인지(길이 통제 성공 여부)")
     print("→ 확인 2: truncated=true 건수(추론 폭주로 답이 없던 콜 — 분석서 제외)")
     print("→ 확인 3: thoughts_tokens 가 단계별로 벌어지는지(설정 반영 여부)")
