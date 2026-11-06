@@ -152,52 +152,78 @@ def _stream_responses(client, model, prompt, effort, max_tok):
     )
 
 
-def probe_one(client, model, effort, args):
-    """모델 1개를 1콜로 찔러 세 가지를 가린다.
+def _probe_call(client, model, prompt, effort, max_tok, which):
+    """프로브 1콜. 성공하면 usage, 실패하면 예외를 그대로 올린다."""
+    if which == "chat":
+        r = client.chat.completions.create(
+            model=model,
+            messages=[{"role": "user", "content": prompt}],
+            reasoning_effort=effort,
+            max_completion_tokens=max_tok)
+    else:
+        r = client.responses.create(
+            model=model,
+            input=[{"role": "user", "content": prompt}],
+            reasoning={"effort": effort},
+            max_output_tokens=max_tok)
+    return r.usage
 
-      (1) 어느 엔드포인트를 받는가 — chat(평평한 reasoning_effort) / responses(중첩 reasoning)
+
+def probe_one(client, model, efforts, args):
+    """모델 1개를 effort 단계별로 찔러 네 가지를 가린다.
+
+      (1) 어느 엔드포인트를 받는가 — chat(평평한 reasoning_effort) / responses(중첩)
       (2) usage 에 추론 토큰을 돌려주는가 → Task B(회귀) 가능 여부
-      (3) 한 콜이 토큰을 얼마나 먹는가 → 콜 수를 곱하면 풀런 예산이 나온다
+      (3) **effort 를 올리면 추론 토큰이 실제로 늘어나는가** → 설정 축의 성립 여부
+      (4) 한 콜이 토큰을 얼마나 먹는가 → 콜 수를 곱하면 풀런 예산
 
-    본캡처 전에 반드시 돌릴 것. 모델마다 다를 수 있으므로 쓸 모델 전부 찍어본다.
+    (3) 이 핵심이다. 추론 토큰이 전 단계에서 0 이면 두 가지 중 하나다:
+      - 문항이 너무 쉬워 모델이 추론을 생략했다 (--probe-q 로 어려운 문항으로 바꿔 재확인)
+      - reasoning_effort 가 무시되고 있다 (→ 이 모델로는 설정 축 실험이 불가능)
+    둘을 가르지 않고 본캡처에 들어가면 수백 콜을 버린다.
     """
-    prompt = QUESTIONS[0] + INSTR
+    prompt = QUESTIONS[args.probe_q] + INSTR
     tries = ["chat", "responses"] if args.api == "auto" else [args.api]
-    for which in tries:
-        try:
-            if which == "chat":
-                r = client.chat.completions.create(
-                    model=model,
-                    messages=[{"role": "user", "content": prompt}],
-                    reasoning_effort=effort,
-                    max_completion_tokens=args.max_tok)
-            else:
-                r = client.responses.create(
-                    model=model,
-                    input=[{"role": "user", "content": prompt}],
-                    reasoning={"effort": effort},
-                    max_output_tokens=args.max_tok)
-        except Exception as e:
-            print(f"[{model} / {which}] 실패: {type(e).__name__}: {e}")
-            continue
-        u = r.usage
-        dump = (u.to_dict() if hasattr(u, "to_dict")
-                else u.model_dump() if hasattr(u, "model_dump") else vars(u))
-        print(f"\n=== {model} / api={which} / effort={effort} ===")
-        print(json.dumps(dump, ensure_ascii=False, indent=2, default=str))
-        rt = _reasoning_tokens(u)
-        tot = _get(u, "total_tokens")
-        print(f"추론 토큰 = {rt} / 전체 토큰 = {tot}")
-        if rt is None:
-            print("→ 추론 토큰 미보고. Task A 만 가능(설정 라벨은 우리가 고르므로 있다).")
-        elif rt == 0:
-            print("→ 0. 이 문항/설정에선 추론이 안 일어났다. effort·문항을 바꿔 재확인.")
+    api = None
+    rows = []
+    for effort in efforts:
+        last_err = None
+        for which in (tries if api is None else [api]):
+            try:
+                u = _probe_call(client, model, prompt, effort, args.max_tok, which)
+            except Exception as e:
+                last_err = f"{type(e).__name__}: {e}"
+                continue
+            api = which
+            rows.append((effort, _reasoning_tokens(u), _output_tokens(u),
+                         _get(u, "total_tokens"), None))
+            break
         else:
-            print("→ Task B 가능. 이 값을 회귀 타깃으로 쓴다.")
-        print(f"→ 본캡처: --model {model} --api {which}")
-        return which
-    print(f"[{model}] chat/responses 둘 다 실패.")
-    return None
+            rows.append((effort, None, None, None, last_err))
+
+    print(f"\n=== {model}  (q{args.probe_q}, api={api or '실패'}) ===")
+    print(f"{'effort':<8} {'추론토큰':>8} {'출력토큰':>8} {'전체':>8}  비고")
+    for effort, rt, ot, tot, err in rows:
+        if err:
+            # 지원 안 하는 단계는 여기서 걸린다(예: gpt-6.1-sol 의 none).
+            print(f"{effort:<8} {'—':>8} {'—':>8} {'—':>8}  {err[:60]}")
+        else:
+            print(f"{effort:<8} {str(rt):>8} {str(ot):>8} {str(tot):>8}")
+
+    got = [rt for _, rt, _, _, err in rows if not err and rt is not None]
+    if not got:
+        print("→ 추론 토큰 미보고. Task A 만 가능.")
+    elif max(got) == 0:
+        print("→ 전 단계 추론 0. 문항이 쉽거나 effort 가 무시된다.")
+        print("   --probe-q 로 더 어려운 문항을 찍어보고, 거기서도 0 이면 이 모델은 제외.")
+    elif max(got) - min(got) < 50:
+        # 동적 범위가 이 정도면 응답 바이트 차이가 수십 바이트에 그친다.
+        # 지금 탐지기는 수백~수천 바이트 차이를 보므로 사실상 신호가 없다.
+        print(f"→ ⚠️ 동적 범위가 {min(got)}~{max(got)} 로 너무 좁다. 본캡처해도 신호가 안 나온다.")
+        print("   더 어려운 문항(--probe-q)이 필요하다.")
+    else:
+        print(f"→ 쓸 만하다. 추론 토큰 {min(got)}~{max(got)}. 본캡처: --model {model} --api {api}")
+    return api
 
 
 def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
@@ -283,7 +309,11 @@ def main():
                     help="추론강도 단계(쉼표). 기본 low,medium,high = Groq 과 동일")
     ap.add_argument("--list", action="store_true", help="사용가능 모델 출력 후 종료")
     ap.add_argument("--probe", action="store_true",
-                    help="1콜만 돌려 usage 를 통째로 덤프(추론 토큰 보고 여부 확인). 캡처 전 필수")
+                    help="effort 단계별로 1콜씩 돌려 추론 토큰이 실제로 늘어나는지 본다. 캡처 전 필수")
+    ap.add_argument("--probe-q", type=int, default=0,
+                    help="프로브에 쓸 문항 번호. 기본 0(17x23, 쉬움). "
+                         "추론이 0 으로 나오면 어려운 문항으로 바꿔 재확인할 것 "
+                         "(4=체스 나이트 경로탐색, 9=삼단논법, 16=수열 2^n-1)")
     ap.add_argument("--seed", type=int, default=20261106,
                     help="시행 순서 섞기용 시드(재현 가능하게 고정)")
     ap.add_argument("--arms", default="0",
@@ -318,9 +348,10 @@ def main():
         #   (1) 이 모델이 어느 엔드포인트를 받는가 (chat / responses)
         #   (2) 추론 토큰 수를 usage 에 돌려주는가 -> Task B 가능 여부
         #   (3) 한 콜이 토큰을 얼마나 먹는가 -> 풀런 예산 추정
-        # --model 에 쉼표를 주면 여러 모델을 한 번에 훑는다(모델당 1콜).
+        # --model 에 쉼표를 주면 여러 모델을 한 번에 훑는다(모델 × effort 단계 콜).
+        efforts = [e for _, e, _ in conds]
         for mdl in [m.strip() for m in args.model.split(",") if m.strip()]:
-            probe_one(client, mdl, conds[-1][1], args)
+            probe_one(client, mdl, efforts, args)
         return
 
     # 본캡처에서 auto 는 쓰지 않는다 — 콜마다 엔드포인트가 달라지면 트래픽 모양이
