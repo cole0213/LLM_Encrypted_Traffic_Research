@@ -45,8 +45,18 @@ from openai import OpenAI
 
 # 프로토콜 정의는 Groq 판이 정본이다. 두 provider 가 같은 문항·같은 지시문을 쓰도록 공유한다.
 from groq_capture_run_strict import (
-    QUESTIONS, INSTR, FREE_ARMS, build_arm, parse_arms, MAX_COMPLETION_TOKENS,
+    QUESTIONS as QUESTIONS_BASE, INSTR, FREE_ARMS, build_arm, parse_arms,
+    MAX_COMPLETION_TOKENS,
 )
+from questions_hard import QUESTIONS_HARD
+
+# 문항 세트 두 벌을 둔다. 바꿔치지 않고 **병행**하는 게 중요하다.
+#   base : Gemini/Groq 과 같은 30문항. 교차 비교의 유일한 근거라 건드리면 안 된다.
+#          단 gpt-6 계열에서는 설정 간 추론 격차가 100 이상인 문항이 1/30 뿐이라
+#          탐지 신호는 거의 없을 것으로 예상된다. 그 결과 자체가 보고 대상이다
+#          ("같은 문항·같은 프로토콜인데 최신 모델에서는 추론량이 줄어 탐지가 안 된다").
+#   hard : 2026-11 신설. 탐색·열거·다단계 논리만 모아 격차를 복원한 세트.
+QSETS = {"base": QUESTIONS_BASE, "hard": QUESTIONS_HARD}
 
 # ⚠️ 기본값일 뿐이다. --list 로 실제 사용 가능한 추론 모델을 확인하고 --model 로 지정하라.
 DEFAULT_MODEL = "gpt-6-luna"
@@ -208,7 +218,7 @@ def _verdict(got, label):
 MIN_SPREAD = 100
 
 
-def screen_questions(client, model, efforts, args):
+def screen_questions(client, model, efforts, args, qs):
     """전 문항을 **설정 전 단계로** 돌려 '설정 간 격차가 큰 문항'을 선별한다.
 
     기준이 "추론 > 0" 이 아니라 **"설정을 바꿨을 때 추론량이 얼마나 벌어지는가"** 인 게
@@ -226,7 +236,7 @@ def screen_questions(client, model, efforts, args):
     hdr = f"{'q':>3}" + "".join(f"{e:>8}" for e in efforts) + f"{'격차':>8}  문항"
     print(hdr)
     rows = []
-    for qi, q in enumerate(QUESTIONS):
+    for qi, q in enumerate(qs):
         vals = []
         for effort in efforts:
             try:
@@ -254,7 +264,7 @@ def screen_questions(client, model, efforts, args):
     return good
 
 
-def probe_one(client, model, efforts, args):
+def probe_one(client, model, efforts, args, qs):
     """모델 1개를 effort × 엔드포인트로 훑어 네 가지를 가린다.
 
       (1) 어느 엔드포인트가 추론을 실제로 돌리는가
@@ -271,7 +281,7 @@ def probe_one(client, model, efforts, args):
       - 문항이 너무 쉬워 모델이 추론을 생략했다 (--probe-q 로 어려운 문항 재확인)
       - reasoning_effort 가 무시되고 있다 (→ 이 모델·엔드포인트는 제외)
     """
-    prompt = QUESTIONS[int(args.probe_q)] + INSTR
+    prompt = qs[int(args.probe_q)] + INSTR
     apis = ["chat", "responses"] if args.api == "auto" else [args.api]
     # rows[effort][api] = (추론토큰, 출력토큰, 전체토큰, 에러)
     rows = {}
@@ -399,6 +409,10 @@ def main():
     ap.add_argument("--list", action="store_true", help="사용가능 모델 출력 후 종료")
     ap.add_argument("--probe", action="store_true",
                     help="effort 단계별로 1콜씩 돌려 추론 토큰이 실제로 늘어나는지 본다. 캡처 전 필수")
+    ap.add_argument("--qset", default="base", choices=sorted(QSETS),
+                    help="문항 세트. base=Gemini/Groq 과 같은 30문항(교차비교용), "
+                         "hard=2026-11 신설 고난도 세트(신호 복원용). 둘은 바꿔치는 게 "
+                         "아니라 병행한다 — 세트를 섞으면 provider 비교가 깨진다")
     ap.add_argument("--probe-q", default="0",
                     help="프로브에 쓸 문항 번호. 기본 0(17x23, 쉬움). "
                          "'all' 이면 전 문항을 한 단계로 훑어 난도를 선별한다 "
@@ -442,6 +456,7 @@ def main():
         return
 
     conds = build_conditions(args.efforts)
+    qset = QSETS[args.qset]
 
     if args.probe:
         # 캡처를 설계하기 전에 세 가지를 한 번에 가린다.
@@ -454,10 +469,10 @@ def main():
         if str(args.probe_q).lower() == "all":
             # 문항 선별 모드. --efforts 전 단계를 돌려 문항별 '설정 간 격차'를 잰다.
             for mdl in models:
-                screen_questions(client, mdl, efforts, args)
+                screen_questions(client, mdl, efforts, args, qset)
             return
         for mdl in models:
-            probe_one(client, mdl, efforts, args)
+            probe_one(client, mdl, efforts, args, qset)
         return
 
     # 본캡처에서 auto 는 쓰지 않는다 — 콜마다 엔드포인트가 달라지면 트래픽 모양이
@@ -467,7 +482,7 @@ def main():
                          "먼저 --probe 로 어느 쪽이 되는지 확인하라.")
     api = args.api
 
-    qs = QUESTIONS[: args.limit] if args.limit else QUESTIONS
+    qs = qset[: args.limit] if args.limit else qset
     arms = parse_arms(args.arms)
     trials = [(qi, cond, effort, pad, rep, arm)
               for qi, _ in enumerate(qs)
@@ -499,7 +514,7 @@ def main():
                       # 자유 arm 은 기대 길이가 없어 준수 판정 대상이 아니다(None).
                       "complied": None if expect is None else m.get("answer_chars") == expect,
                       "service": "openai", "model": args.model, "effort": effort, "rep": rep,
-                      "shuffled": not args.no_shuffle,
+                      "shuffled": not args.no_shuffle, "qset": args.qset,
                       "include_usage": not args.no_usage, "api": api})
             f.write(json.dumps(m, ensure_ascii=False) + "\n"); f.flush()
             tag = m.get("error") or (
