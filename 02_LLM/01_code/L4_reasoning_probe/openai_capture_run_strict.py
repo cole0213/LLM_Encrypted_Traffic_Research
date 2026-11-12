@@ -46,9 +46,13 @@ from openai import OpenAI
 # 프로토콜 정의는 Groq 판이 정본이다. 두 provider 가 같은 문항·같은 지시문을 쓰도록 공유한다.
 from groq_capture_run_strict import (
     QUESTIONS as QUESTIONS_BASE, INSTR, FREE_ARMS, build_arm, parse_arms,
-    MAX_COMPLETION_TOKENS,
+    MAX_COMPLETION_TOKENS, select_questions,
 )
 from questions_hard import QUESTIONS_HARD
+try:
+    from questions_all import QUESTIONS_V2_ALL
+except Exception:
+    QUESTIONS_V2_ALL = None
 
 # 문항 세트 두 벌을 둔다. 바꿔치지 않고 **병행**하는 게 중요하다.
 #   base : Gemini/Groq 과 같은 30문항. 교차 비교의 유일한 근거라 건드리면 안 된다.
@@ -56,7 +60,11 @@ from questions_hard import QUESTIONS_HARD
 #          탐지 신호는 거의 없을 것으로 예상된다. 그 결과 자체가 보고 대상이다
 #          ("같은 문항·같은 프로토콜인데 최신 모델에서는 추론량이 줄어 탐지가 안 된다").
 #   hard : 2026-11 신설. 탐색·열거·다단계 논리만 모아 격차를 복원한 세트.
+#   v2   : 2026-11 신설. 솔버 계산 정답 + 정답 없는 갈래 + 증거 추론, 821문항/437템플릿.
+#          템플릿 id 가 붙어 신뢰구간을 템플릿 단위로 묶을 수 있다(questions_all 참조).
 QSETS = {"base": QUESTIONS_BASE, "hard": QUESTIONS_HARD}
+if QUESTIONS_V2_ALL is not None:
+    QSETS["v2"] = QUESTIONS_V2_ALL
 
 # ⚠️ 기본값일 뿐이다. --list 로 실제 사용 가능한 추론 모델을 확인하고 --model 로 지정하라.
 DEFAULT_MODEL = "gpt-6-luna"
@@ -413,6 +421,12 @@ def main():
                     help="문항 세트. base=Gemini/Groq 과 같은 30문항(교차비교용), "
                          "hard=2026-11 신설 고난도 세트(신호 복원용). 둘은 바꿔치는 게 "
                          "아니라 병행한다 — 세트를 섞으면 provider 비교가 깨진다")
+    ap.add_argument("--qfile", default="",
+                    help="선별 결과 JSON. 그 안의 'good' 목록에 든 문항만 캡처한다. "
+                         "콜마다 돈이 나가는 provider 라 특히 중요하다.")
+    ap.add_argument("--sample", type=int, default=0,
+                    help="갈래를 고르게 가로질러 N문항만. 예산이 전수를 못 덮을 때 "
+                         "흩어진 부분집합 대신 완결된 작은 집합을 얻는다")
     ap.add_argument("--probe-q", default="0",
                     help="프로브에 쓸 문항 번호. 기본 0(17x23, 쉬움). "
                          "'all' 이면 전 문항을 한 단계로 훑어 난도를 선별한다 "
@@ -444,11 +458,24 @@ def main():
                     help="max_completion_tokens / max_output_tokens. 추론 토큰이 "
                          "여기 포함되므로 xhigh·max 에선 넉넉해야 한다. 모자라면 추론 도중 "
                          "한계에 닿아 답이 안 나온다(truncated)")
+    ap.add_argument("--base-url", default="",
+                    help="OpenAI 호환 게이트웨이 주소. 예) https://api.baze.co/v1/gateway "
+                         "(비우면 OpenAI 본체)")
+    ap.add_argument("--key-env", default="OPENAI_API_KEY",
+                    help="API 키가 든 환경변수 이름. 게이트웨이면 BAZE_API_KEY 등")
     args = ap.parse_args()
 
-    if not os.getenv("OPENAI_API_KEY"):
-        raise SystemExit("OPENAI_API_KEY 없음")
-    client = OpenAI()
+    # OpenAI 호환 게이트웨이도 같은 러너로 돌린다.
+    # 고려대 세종 BAZE(https://api.baze.co/v1/gateway)가 그 예다. 2026-11-10 측정:
+    #   reasoning_effort 를 받는다 (기본 1,041ms -> low 2,706ms -> high 9,382ms)
+    #   extra_body 의 thinking_config 는 무시한다
+    #   usage 에 추론 토큰이 오지 않는다 -> Task B 라벨이 없다. Task A 전용으로 쓴다.
+    key = os.getenv(args.key_env)
+    if not key:
+        raise SystemExit(f"{args.key_env} 없음")
+    client = OpenAI(api_key=key, base_url=args.base_url) if args.base_url else OpenAI(api_key=key)
+    if args.base_url:
+        print(f"게이트웨이: {args.base_url} (키 {args.key_env})")
 
     if args.list:
         for m in sorted(x.id for x in client.models.list().data):
@@ -482,7 +509,8 @@ def main():
                          "먼저 --probe 로 어느 쪽이 되는지 확인하라.")
     api = args.api
 
-    qs = qset[: args.limit] if args.limit else qset
+    # base/hard 는 템플릿 개념이 없어 문항 하나가 곧 클러스터다. v2 만 템플릿을 가진다.
+    qs, fams, keep = select_questions(args, qset)
     arms = parse_arms(args.arms)
     trials = [(qi, cond, effort, pad, rep, arm)
               for qi, _ in enumerate(qs)
@@ -509,7 +537,12 @@ def main():
                             api=api); m["error"] = None
             except Exception as e:
                 m = {"error": f"{type(e).__name__}: {e}"}
-            m.update({"idx": i, "order_idx": i, "q_idx": qi, "condition": cond,
+            m.update({"idx": i, "order_idx": i,
+                      # 원본 리스트에서의 위치. 잘라낸 위치를 쓰면 문항을 되짚을 수 없다.
+                      "q_idx": keep[qi],
+                      # 클러스터 키 — e2_snr 이 이걸로 묶는다.
+                      "family": fams[qi], "qset": args.qset,
+                      "condition": cond,
                       "arm": arm, "expect_chars": expect,
                       # 자유 arm 은 기대 길이가 없어 준수 판정 대상이 아니다(None).
                       "complied": None if expect is None else m.get("answer_chars") == expect,

@@ -137,6 +137,10 @@ def main():
         stalls = [v for v in iats if v >= STALL_MS]
         rows.append({
             "idx": e["idx"], "q_idx": e["q_idx"], "condition": e["condition"],
+            # 클러스터 키. 파라메트릭 갈래는 한 템플릿의 변형 25개가 서로 닮아
+            # 독립 표본이 아니다. e2_snr 의 질문 단위 재표집이 q_idx 로 묶으면
+            # 신뢰구간이 가짜로 좁아진다. 옛 로그(v2 이전)엔 없으므로 q_idx 로 되돌린다.
+            "family": e.get("family") or f"q{e['q_idx']}",
             "rep": e["rep"],
             "pkt_gap_ms": pkt_gap_ms,                 # ★ 요청→첫응답 패킷 간격
             "up_pkts": len(out), "down_pkts": len(inc),

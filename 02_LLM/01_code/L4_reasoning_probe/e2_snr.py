@@ -39,6 +39,13 @@ import numpy as np
 # 조건 정렬: 얕은 것 → 깊은 것. 서비스마다 있는 것만 사용.
 SHALLOW_ORDER = ["no_think", "think_low"]   # 이 중 존재하는 가장 얕은 것을 shallow로
 DEEP = "think_high"
+# 신호를 재는 피처. 중계 구조에 따라 **어느 피처에 신호가 실리는지가 달라진다**.
+#   직결 API         : pkt_gap_ms (요청 -> 첫 응답 패킷 침묵)
+#   OpenAI 호환 게이트웨이(BAZE) : down_iat_max_ms / stall_total_ms
+#     게이트웨이가 SSE 스트림을 즉시 열어 헤더를 5.6ms 에 보낸다. 그래서 pkt_gap 은
+#     추론과 무관해지고(2026-11-10 실측 low 5.6 vs high 5.7ms), 침묵이 스트림 **안쪽**,
+#     즉 헤더와 첫 콘텐츠 청크 사이로 옮겨간다(low 1,274 vs high 8,080ms, 6.34배).
+# 그래서 고정하지 않고 --feat 으로 바꾼다. 기본값은 직결 기준을 유지한다.
 FEAT = "pkt_gap_ms"
 
 
@@ -114,7 +121,8 @@ def boot_ci_cluster(pairs_a, pairs_b, stat, n=2000, seed=0):
     한 질문의 반복 콜들은 서로 닮아 독립이 아니다. 콜 단위로 재표집하면
     표본이 실제보다 많은 정보를 가진 것처럼 취급돼 구간이 좁게 나온다(과신).
     질문을 통째로 뽑아 그 질문의 콜 전부를 넣는 방식으로 이를 바로잡는다.
-    pairs_* = {q_idx: [값,...]} 형태. stat = auc 또는 cohens_d.
+    pairs_* = {클러스터키: [값,...]} 형태. stat = auc 또는 cohens_d.
+    클러스터키는 family(템플릿). q_idx 가 아니다 — analyze() 주석 참조.
     """
     rng = np.random.default_rng(seed)
     qs = sorted(set(pairs_a) | set(pairs_b))
@@ -152,12 +160,24 @@ def overlap_rate(a, b):
 def analyze(label, csv_path, plot=False):
     rows = load(csv_path)
     byc = {}
-    byq = {}          # {조건: {q_idx: [값,...]}} — 질문 단위 재표집용
+    byq = {}          # {조건: {클러스터: [값,...]}} — 질문 단위 재표집용
+    # 클러스터 키는 family 다(q_idx 가 아니다). v2 문항 세트는 한 템플릿에서
+    # 변형 25개가 나오는데(나이트 a1->h8, c3->f6, ...) 서로 닮아 독립 표본이 아니다.
+    # q_idx 로 묶으면 변형 25개를 독립 클러스터 25개로 세어 신뢰구간이 가짜로 좁아진다.
+    # family 가 없는 옛 CSV 는 q_idx 로 되돌린다(그 세트는 템플릿=문항이라 같은 뜻).
+    n_nofam = 0
     for r in rows:
         byc.setdefault(r["condition"], []).append(r[FEAT])
-        q = r.get("q_idx")
-        if q is not None:
-            byq.setdefault(r["condition"], {}).setdefault(int(q), []).append(r[FEAT])
+        fam = r.get("family")
+        if not fam:
+            q = r.get("q_idx")
+            if q is None:
+                continue
+            fam = f"q{int(q)}"
+            n_nofam += 1
+        byq.setdefault(r["condition"], {}).setdefault(fam, []).append(r[FEAT])
+    if n_nofam:
+        print(f"  [안내] family 열이 없는 행 {n_nofam}건 — q_idx 로 클러스터를 묶었다")
     print(f"\n===== {label}  (n={len(rows)}, {csv_path}) =====")
     print(f"{'condition':11s} {'n':>3s} {'mean':>8s} {'median':>8s} {'std':>8s}")
     for c, vals in byc.items():
@@ -204,19 +224,51 @@ def analyze(label, csv_path, plot=False):
 
 
 def main():
+    # global 은 함수 안에서 FEAT 를 읽기 전에 와야 한다.
+    # 아래 add_argument(default=FEAT) 가 먼저 읽으므로 여기서 선언한다.
+    global FEAT, DEEP, SHALLOW_ORDER
     ap = argparse.ArgumentParser()
     ap.add_argument("data", nargs="*", help="label=경로.csv (여러 개 가능)")
     ap.add_argument("--plot", action="store_true")
+    ap.add_argument("--shallow", default="",
+                    help="얕은 쪽 조건명을 직접 지정. 비우면 SHALLOW_ORDER 에서 자동 선택. "
+                         "예) --shallow think_medium --deep think_high (어려운 쌍)")
+    ap.add_argument("--deep", default="",
+                    help="깊은 쪽 조건명. 비우면 think_high")
+    ap.add_argument("--feat", default=FEAT,
+                    help="신호를 잴 피처. 직결은 pkt_gap_ms, 게이트웨이 데이터는 "
+                         "down_iat_max_ms 를 써야 한다(위 주석 참조)")
     args = ap.parse_args()
+    FEAT = args.feat
+    if FEAT != "pkt_gap_ms":
+        print(f"[피처] {FEAT} 로 잰다 (기본 pkt_gap_ms 아님)")
+    # 비교할 두 조건을 직접 고를 수 있게 한다. 기본값(가장 얕은 것 vs think_high)은
+    # 쉬운 쌍이라 성능이 낙관적으로 나온다. 인접 단계(medium vs high)가 실제 난도다.
+    if args.deep:
+        DEEP = args.deep
+    if args.shallow:
+        SHALLOW_ORDER = [args.shallow]
+    if args.shallow or args.deep:
+        print(f"[조건] {SHALLOW_ORDER[0]} vs {DEEP}")
     pairs = []
     if args.data:
         for item in args.data:
-            label, _, path = item.partition("=")
+            # 'label=경로.csv' 와 맨 '경로.csv' 를 둘 다 받는다.
+            # partition 은 '=' 가 없으면 경로를 빈 문자열로 돌려주는데,
+            # Path("") 는 '.'(현재 디렉터리)로 해석돼 exists() 검사까지 통과한다.
+            # 그래서 open("") 에서야 터진다 — 인자 실수가 엉뚱한 곳에서 드러난다.
+            if "=" in item:
+                label, _, path = item.partition("=")
+            else:
+                path = item
+                label = Path(item).stem      # 파일명을 라벨로 쓴다
+            if not path:
+                print(f"[skip] 경로가 비었다: {item!r}"); continue
             pairs.append((label or "svc", path))
     else:
         pairs = [("service", "out/packet_features.csv")]
     for label, path in pairs:
-        if not Path(path).exists():
+        if not Path(path).is_file():
             print(f"[skip] 파일 없음: {path}"); continue
         analyze(label, path, plot=args.plot)
     print("\n해석: AUC가 0.5에서 멀고 CI 하한이 0.5를 넘으면 = 그 서비스에서 추론깊이가 유의하게 샌다.")

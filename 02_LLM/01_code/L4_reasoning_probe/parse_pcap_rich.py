@@ -151,6 +151,10 @@ def main():
         # --- 기존 parse_pcap.py 와 같은 열 이름 유지(하위 호환) ---
         row = {
             "idx": e["idx"], "q_idx": e["q_idx"], "condition": e["condition"], "rep": e["rep"],
+            # 클러스터 키(템플릿 id). 신뢰구간을 템플릿 단위로 묶는 데 쓴다.
+            # 절대 피처가 아니다 — 아래 feat_cols 제외 목록에 반드시 들어가야 한다.
+            # 템플릿 이름이 분류기 입력이 되면 문항을 통째로 외우게 된다.
+            "family": e.get("family") or f"q{e['q_idx']}",
             "pkt_gap_ms": pkt_gap_ms,
             "up_pkts": len(out), "down_pkts": len(inc),
             "up_bytes": sum(up_sizes), "down_bytes": sum(down_sizes),
@@ -230,7 +234,7 @@ def main():
         w.writerows(rows)
 
     feat_cols = [c for c in cols if c not in
-                 ("idx", "q_idx", "condition", "rep", "app_ttft_ms",
+                 ("idx", "q_idx", "family", "condition", "rep", "app_ttft_ms",
                   "thoughts_tokens", "output_tokens")]
     print(f"\n[out] {outp}  ({len(rows)}행, 피처 {len(feat_cols)}개)")
     print("→ 다음: python3 feature_select.py <label>=" + str(outp))

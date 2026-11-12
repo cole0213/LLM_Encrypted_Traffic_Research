@@ -45,8 +45,14 @@ from pathlib import Path
 
 from groq_capture_run_strict import QUESTIONS as QUESTIONS_BASE, INSTR
 from questions_hard import QUESTIONS_HARD
+from questions_all import QUESTIONS_V2_ALL, FAMILIES_V2_ALL
 
-QSETS = {"base": QUESTIONS_BASE, "hard": QUESTIONS_HARD}
+QSETS = {"base": QUESTIONS_BASE, "hard": QUESTIONS_HARD, "v2": QUESTIONS_V2_ALL}
+
+# 문항 세트별 템플릿 id. 없는 세트는 None — 그때는 문항 하나가 곧 클러스터로 취급된다.
+# v2 는 한 템플릿에서 변형이 여럿 나오므로 선별 결과를 템플릿 단위로도 집계해야
+# '한 템플릿만 잘 돼서 통과 수가 부풀어 보이는' 착시를 피할 수 있다.
+QSET_FAMILIES = {"base": None, "hard": None, "v2": FAMILIES_V2_ALL}
 
 # 문항이 쓸 만하다고 보는 최소 격차(추론 토큰).
 # 근거: 추론 N 토큰 ≈ 4N 바이트 응답 증가(Gemini 3차 실측에서 토큰당 약 3.9 바이트).
@@ -56,6 +62,16 @@ MIN_SPREAD = 100
 
 # 추론이 폭주해 답을 못 낸 콜을 걸러내기 위한 상한. 조건별로 넉넉히 준다.
 MAX_TOK = 8192
+
+# 호출 실패 재시도. 무료 등급 gemini 는 분당 한도에 걸려 연속으로 몇 콜씩 죽는다.
+# 재시도 없이 None 으로 넘기면 그 문항이 '격차 없는 문항'으로 잘못 탈락한다.
+MAX_RETRY = 3
+RETRY_WAIT = 4.0      # 초. 재시도마다 2배씩 늘린다(4 → 8 → 16).
+
+# 연속 실패 중단. 일당 할당량이 바닥나면 재시도를 몇 번 하든 전부 실패한다.
+# 2026-11-10 Gemini 선별이 q135 부근에서 할당량에 걸렸는데, 중단 조건이 없어
+# 남은 680문항을 백오프만 쓰며 6.8시간 태울 참이었다. 그래서 끊는다.
+DEAD_AFTER = 8        # 이만큼 연속으로 '한 설정도 못 잰' 문항이 나오면 중단
 
 DEFAULT_EFFORTS = {
     # OpenAI: none 은 astra·6.1-sol 이 미지원이라 실패가 정상이다(표에 ERR 로 찍힌다).
@@ -142,24 +158,190 @@ def make_client(provider):
     raise SystemExit(f"모르는 provider: {provider}")
 
 
-def screen(provider, model, qset_name, efforts, sleep, limit=0):
+def _group_of(fam):
+    """템플릿 id 에서 갈래 이름을 뽑는다. fermi_007 -> fermi, knight_path -> knight_path.
+
+    페르미·딜레마는 문항 하나하나가 템플릿이라 id 끝에 일련번호가 붙는다(fermi_007).
+    통과율은 갈래 단위로 봐야 뜻이 있으므로 그 번호를 떼고 묶는다.
+    """
+    i = fam.rfind("_")
+    if i > 0 and fam[i + 1:].isdigit():
+        return fam[:i]
+    return fam
+
+
+def _pick(qset_name, limit, sample, families="", skip_done=""):
+    """돌릴 문항을 고른다. 반환은 (원본 q_idx, 문항) 쌍이다.
+
+    q_idx 는 반드시 **원본 리스트에서의 위치**여야 한다. 잘라낸 리스트의 위치를 쓰면
+    FAMILIES 와 어긋나 템플릿 집계와 교집합이 통째로 틀어진다.
+
+    --limit    : 앞에서 N개. 세트 앞쪽이 한 갈래로 쏠려 있으면 그 갈래만 보게 된다.
+    --sample   : 템플릿을 번갈아 돌며 N개. 콜마다 돈이 나가는 provider 에서 전체
+                 그림을 싸게 보려면 이쪽을 쓴다.
+    --families : 특정 템플릿만. 쉼표로 여러 개. 접두사 매칭이라 'fermi' 로
+                 fermi_000~fermi_239 가 전부 잡힌다.
+    --skip-done: 이미 돌린 선별 JSON 경로. 거기서 측정된 문항은 뺀다.
+                 할당량에 걸려 중간에 끊겼을 때 이어서 돌리는 용도다.
+                 (못 잰 문항 incomplete 은 다시 돌린다 — 그게 재시도의 요점이다)
+
+    적용 순서: families 로 거른 뒤 skip_done 을 빼고, 그다음 sample/limit.
+    통과율이 이미 높다고 확인된 갈래를 또 돌리는 건 낭비다 — 2026-11-10 측정에서
+    솔버 갈래는 92~100% 통과라 선별이 캡처보다 비쌌다. 모르는 갈래부터 재라.
+    """
+    qs = QSETS[qset_name]
+    idx = list(range(len(qs)))
+    fam_all = QSET_FAMILIES.get(qset_name)
+
+    if families:
+        if not fam_all:
+            raise SystemExit(f"--families 는 템플릿이 있는 세트에만 쓴다(qset={qset_name})")
+        pats = [p.strip() for p in families.split(",") if p.strip()]
+        idx = [i for i in idx if any(fam_all[i].startswith(p) for p in pats)]
+        if not idx:
+            raise SystemExit(f"--families {families} 에 맞는 문항이 없다")
+        print(f"템플릿 필터: {families} -> {len(idx)}문항")
+
+    if skip_done:
+        prev = json.loads(Path(skip_done).read_text(encoding="utf-8"))
+        # 못 잰 문항(incomplete)은 빼지 않는다. 그게 다시 돌려야 할 것들이다.
+        bad = set(prev.get("incomplete") or [])
+        done = {r["q"] for r in prev.get("rows", [])} - bad
+        before = len(idx)
+        idx = [i for i in idx if i not in done]
+        print(f"이미 측정됨 제외: {skip_done} -> {before} - {before - len(idx)} = {len(idx)}문항")
+    if sample and sample < len(idx):
+        fams = fam_all
+        if fams:
+            buckets = {}
+            for i in idx:
+                buckets.setdefault(fams[i], []).append(i)
+            # 템플릿 단위로만 돌면 안 된다. 갈래마다 템플릿 수가 극단적으로 다르다:
+            #   fermi 는 템플릿 240개(문항 1개씩), alibi 는 템플릿 1개(문항 25개).
+            # 템플릿을 고르게 집으면 fermi 가 표본을 독식하고 alibi·truth_count 같은
+            # 1템플릿 갈래는 0개가 된다(2026-11-10 실제로 그랬다).
+            # 재려는 것은 '갈래별 통과율'이므로 갈래를 먼저 균등하게 나눈다.
+            # 3단: 갈래 -> 그 갈래의 템플릿 -> 그 템플릿의 문항.
+            groups = {}
+            for f, ids in buckets.items():
+                groups.setdefault(_group_of(f), {})[f] = list(ids)
+            picked = []
+            gkeys = sorted(groups)
+            # 갈래를 한 바퀴씩 돌며 하나씩 집는다. 갈래 안에서도 템플릿을 번갈아
+            # 집어 한 템플릿의 변형만 쏠리지 않게 한다.
+            cursor = {g: 0 for g in gkeys}
+            while len(picked) < sample:
+                moved = False
+                for g in gkeys:
+                    if len(picked) >= sample:
+                        break
+                    tks = sorted(groups[g])
+                    if not tks:
+                        continue
+                    # 이 갈래에서 다음 차례 템플릿을 고른다(비어 있으면 건너뛴다).
+                    for _ in range(len(tks)):
+                        t = tks[cursor[g] % len(tks)]
+                        cursor[g] += 1
+                        if groups[g][t]:
+                            picked.append(groups[g][t].pop(0))
+                            moved = True
+                            break
+                if not moved:        # 모든 갈래가 바닥났다
+                    break
+            idx = sorted(picked)
+        else:
+            step = max(1, len(idx) // sample)
+            idx = idx[::step][:sample]
+    elif limit:
+        idx = idx[:limit]
+    return [(i, qs[i]) for i in idx]
+
+
+def _write_result(outp, provider, model, qset_name, efforts, fams,
+                  rows, good, incomplete, err_log, stopped_early):
+    """선별 결과를 파일에 쓴다. 문항마다 호출해 중간에 죽어도 남게 한다.
+
+    왜 매번 쓰나: 끝에 한 번만 쓰면 몇 시간치 호출이 중단 한 번에 사라진다.
+    파일이 작고(수백 KB) 로컬 디스크라 문항당 한 번 써도 비용이 무시할 만하다.
+    """
+    outp.parent.mkdir(parents=True, exist_ok=True)
+    tmp = outp.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(
+        {"provider": provider, "model": model, "qset": qset_name,
+         "efforts": efforts, "min_spread": MIN_SPREAD,
+         "families": fams, "good": good, "rows": rows,
+         "incomplete": incomplete,
+         "errors": [{"q": a, "effort": b, "err": c} for a, b, c in err_log],
+         # 중간에 끊겼는지. True 면 '안 돌린 문항'이지 '격차 없는 문항'이 아니다.
+         "stopped_early": stopped_early,
+         "n_done": len(rows)},
+        ensure_ascii=False, indent=1), encoding="utf-8")
+    # 원자적 교체. 쓰는 도중에 죽어도 기존 파일이 깨지지 않는다.
+    tmp.replace(outp)
+
+
+def screen(provider, model, qset_name, efforts, sleep, limit=0, sample=0,
+           families="", skip_done=""):
     """문항 × 설정을 돌려 문항별 격차를 잰다."""
     client, call = make_client(provider)
-    qs = QSETS[qset_name]
-    if limit:
-        qs = qs[:limit]
+    pairs = _pick(qset_name, limit, sample, families, skip_done)
 
     print(f"\n=== {provider} / {model} / qset={qset_name} / {','.join(efforts)} ===")
-    print(f"{'q':>3}" + "".join(f"{e:>9}" for e in efforts)
+    print(f"문항 {len(pairs)}개 x 설정 {len(efforts)}개 = {len(pairs) * len(efforts)}콜")
+    print(f"{'q':>4}" + "".join(f"{e:>9}" for e in efforts)
           + f"{'격차':>7}{'잘림':>5}{'불응':>5}  문항")
 
     rows = []
-    for qi, q in enumerate(qs):
+    err_log = []          # (q_idx, effort, 사유) — 끝에 요약해서 보여준다
+    dead_streak = 0       # 한 설정도 못 잰 문항이 연달아 몇 개 나왔나
+    stopped_early = False
+    # 템플릿 목록은 루프 안의 증분 저장에서도 쓴다. 루프 뒤에서 정의하면
+    # 첫 문항을 저장할 때 UnboundLocalError 가 난다.
+    fams = QSET_FAMILIES.get(qset_name)
+    outp = Path("out") / f"screen_{provider}_{_slug(model)}_{qset_name}.json"
+    # 아예 지원되지 않는 설정(astra 의 none 등)은 몇 번을 눌러도 실패한다.
+    # 그런 설정에 백오프를 다 쓰면 문항마다 12초씩 날린다(600문항이면 2시간).
+    # 그래서 재시도를 끄되, 조건을 좁힌다: **한 번도 성공한 적 없는** 설정만 끈다.
+    # 레이트리밋은 세 설정을 동시에 죽이므로 '연속 실패'만 보면 멀쩡한 설정까지
+    # 미지원으로 찍혀 남은 run 내내 재시도가 사라진다.
+    fail_streak = {e: 0 for e in efforts}
+    ok_count = {e: 0 for e in efforts}
+    dead_efforts = set()
+    for qi, q in pairs:
         prompt = q + INSTR
         vals, trunc, nonc = [], 0, 0
         for effort in efforts:
-            try:
-                rt, nchars = call(client, model, prompt, effort)
+            rt = nchars = None
+            last_err = None
+            # 호출 실패를 조용히 None 으로 넘기면 안 된다. 2026-11-09 gemini 선별에서
+            # q36-41, q47-50 이 통째로 None 이 되어 격차 0 으로 탈락했는데, 끊긴 자리가
+            # 연속 구간인 것부터가 문항 문제가 아니라 레이트리밋이라는 증거였다.
+            # 에러를 삼키면 '쓸모없는 문항'과 '못 잰 문항'이 구분되지 않는다.
+            # 그래서 재시도하고, 끝내 실패하면 사유를 남긴다.
+            tries = 1 if effort in dead_efforts else MAX_RETRY
+            for attempt in range(tries):
+                try:
+                    rt, nchars = call(client, model, prompt, effort)
+                    last_err = None
+                    break
+                except Exception as e:
+                    last_err = e
+                    if attempt < tries - 1:
+                        # 지수 백오프. 레이트리밋은 조금 기다리면 풀린다.
+                        time.sleep(RETRY_WAIT * (2 ** attempt))
+            if last_err is not None:
+                # 지원 안 하는 설정(astra 의 none 등)도 여기로 온다. 격차 계산에서 뺀다.
+                vals.append(None)
+                err_log.append((qi, effort, f"{type(last_err).__name__}: {last_err}"))
+                fail_streak[effort] += 1
+                if (fail_streak[effort] >= 2 and ok_count[effort] == 0
+                        and effort not in dead_efforts):
+                    dead_efforts.add(effort)
+                    print(f"     [안내] '{effort}' 설정이 연속 2회 실패 — "
+                          f"미지원으로 보고 이후 재시도 생략")
+            else:
+                fail_streak[effort] = 0
+                ok_count[effort] += 1
                 vals.append(rt)
                 # 답이 한 글자도 없으면 추론이 한계까지 간 것이다. 분석에서 제외 대상.
                 if nchars == 0:
@@ -169,19 +351,54 @@ def screen(provider, model, qset_name, efforts, sleep, limit=0):
                 # 되어 길이 통제가 깨지므로 쓸 수 없는 문항이다.
                 elif nchars > 1:
                     nonc += 1
-            except Exception:
-                # 지원 안 하는 설정(astra 의 none 등)은 격차 계산에서 빼야 한다.
-                vals.append(None)
             time.sleep(sleep)
         got = [v for v in vals if v is not None]
         spread = (max(got) - min(got)) if got else 0
         rows.append({"q": qi, "spread": spread, "trunc": trunc, "nonc": nonc,
                      "vals": vals, "text": q})
         cells = "".join(f"{('—' if v is None else v):>9}" for v in vals)
-        print(f"{qi:>3}{cells}{spread:>7}{trunc:>5}{nonc:>5}  {q[:40]}")
+        print(f"{qi:>4}{cells}{spread:>7}{trunc:>5}{nonc:>5}  {q[:40]}", flush=True)
 
+        # 문항마다 저장한다. 끝에 한 번만 쓰면 중단 시 전부 날아간다.
+        _inc = [r["q"] for r in rows if any(v is None for v in r["vals"])]
+        _good = [r["q"] for r in rows
+                 if r["spread"] >= MIN_SPREAD and r["trunc"] == 0
+                 and r["nonc"] == 0 and r["q"] not in _inc]
+        _write_result(outp, provider, model, qset_name, efforts, fams,
+                      rows, _good, _inc, err_log, stopped_early=True)
+
+        # 한 설정도 못 잰 문항이 연달아 나오면 할당량이 바닥난 것이다.
+        # 재시도를 아무리 해도 안 되므로 끊는다. 남은 문항을 백오프로만 태우면
+        # 몇 시간이 날아가고, 그 문항들이 '격차 없음'으로 오해될 수도 있다.
+        if all(v is None for v in vals):
+            dead_streak += 1
+            if dead_streak >= DEAD_AFTER:
+                print(f"\n  [중단] {DEAD_AFTER}문항 연속으로 한 설정도 못 쟀다. "
+                      f"할당량 소진으로 보고 멈춘다.")
+                print(f"         q{qi} 까지 {len(rows)}문항 측정됨. 결과는 저장돼 있다.")
+                stopped_early = True
+                break
+        else:
+            dead_streak = 0
+
+    # 설정을 하나라도 못 잰 행은 격차를 믿을 수 없다. 살아남은 값으로만 min/max 를
+    # 재면 빠진 설정만큼 격차가 작게 나와서 '격차 작은 문항'으로 둔갑한다. 따로 센다.
+    incomplete = [r["q"] for r in rows if any(v is None for v in r["vals"])]
     good = [r["q"] for r in rows
-            if r["spread"] >= MIN_SPREAD and r["trunc"] == 0 and r["nonc"] == 0]
+            if r["spread"] >= MIN_SPREAD and r["trunc"] == 0 and r["nonc"] == 0
+            and r["q"] not in incomplete]
+    if err_log:
+        from collections import Counter as _C
+        n_call = len(pairs) * len(efforts)
+        kinds = _C(e[2].split(":")[0] for e in err_log)
+        print(f"\n  [경고] 호출 실패 {len(err_log)}건 / {n_call}콜 "
+              f"({100.0 * len(err_log) / n_call:.1f}%)")
+        for k, c in kinds.most_common():
+            print(f"     {k}: {c}건")
+        print("     처음 3건: " + " | ".join(
+            f"q{a}/{b} {c[:70]}" for a, b, c in err_log[:3]))
+        print(f"     못 잰 문항 {len(incomplete)}개 — '격차 작음'이 아니라 '못 쟀음'이다: "
+              f"{incomplete[:20]}")
     print(f"\n격차 {MIN_SPREAD}+ · 잘림 0 · 불응 0: {len(good)}/{len(rows)}")
     print(f"  쓸 문항: {good}")
     top = sorted(rows, key=lambda r: -r["spread"])[:10]
@@ -193,12 +410,29 @@ def screen(provider, model, qset_name, efforts, sleep, limit=0):
         bad = [r["q"] for r in rows if r["nonc"]]
         print(f"  ⚠️ 불응 문항(답을 피하거나 해명을 씀 — 길이 통제 깨짐): {bad}")
 
-    outp = Path("out") / f"screen_{provider}_{_slug(model)}_{qset_name}.json"
+    # 템플릿 단위 집계. 한 템플릿의 변형 25개가 통째로 통과하면 문항 수는 25 늘지만
+    # 독립 표본은 1 늘 뿐이다. 두 수를 같이 봐야 세트가 실제로 얼마나 넓은지 안다.
+    if fams:
+        from collections import Counter
+        per = Counter(fams[r["q"]] for r in rows)
+        hit = Counter(fams[q] for q in good)
+        print(f"\n  템플릿 {len(hit)}/{len(per)}개에서 통과 문항이 나왔다")
+        for f, c in sorted(hit.items(), key=lambda z: -z[1])[:12]:
+            print(f"    {f:18s} {c:3d}/{per[f]}")
+        dead = sorted(f for f in per if f not in hit)
+        if dead:
+            shown = ", ".join(dead[:10]) + (" ..." if len(dead) > 10 else "")
+            print(f"    통과 0인 템플릿 {len(dead)}개: {shown}")
+
     outp.parent.mkdir(parents=True, exist_ok=True)
     outp.write_text(json.dumps(
         {"provider": provider, "model": model, "qset": qset_name,
          "efforts": efforts, "min_spread": MIN_SPREAD,
-         "good": good, "rows": rows}, ensure_ascii=False, indent=1), encoding="utf-8")
+         "families": fams, "good": good, "rows": rows,
+         # 못 잰 문항을 기록해 둔다. 다음에 그 문항만 다시 돌리면 된다.
+         "incomplete": incomplete,
+         "errors": [{"q": a, "effort": b, "err": c} for a, b, c in err_log]},
+        ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"  -> {outp}")
     return good
 
@@ -256,7 +490,13 @@ def main():
     ap.add_argument("--efforts", default=None,
                     help="provider 기본값을 쓰려면 비워둘 것")
     ap.add_argument("--sleep", type=float, default=0.5)
-    ap.add_argument("--limit", type=int, default=0, help="앞 N문항만(연습용)")
+    ap.add_argument("--limit", type=int, default=0, help="앞 N문항만(배선 확인용)")
+    ap.add_argument("--sample", type=int, default=0,
+                    help="템플릿을 고르게 가로지르며 N문항만(비용 드는 provider 용)")
+    ap.add_argument("--families", default="",
+                    help="특정 템플릿만 (쉼표 구분, 접두사 매칭). 예) fermi,dilemma")
+    ap.add_argument("--skip-done", default="",
+                    help="이미 돌린 선별 JSON. 거기서 측정된 문항은 뺀다(이어 돌리기)")
     ap.add_argument("--combine", nargs="+", default=None,
                     help="선별 결과 json 들의 교집합을 낸다")
     args = ap.parse_args()
@@ -273,7 +513,8 @@ def main():
     model = args.model or DEFAULT_MODELS[args.provider]
     efforts = [e.strip() for e in
                (args.efforts or DEFAULT_EFFORTS[args.provider]).split(",") if e.strip()]
-    screen(args.provider, model, args.qset, efforts, args.sleep, args.limit)
+    screen(args.provider, model, args.qset, efforts, args.sleep,
+           args.limit, args.sample, args.families, args.skip_done)
 
 
 if __name__ == "__main__":
