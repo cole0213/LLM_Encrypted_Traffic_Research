@@ -1,0 +1,454 @@
+nohup: ignoring input
+
+==================================================
+[05:46:41] 시작: v2rest9  (capture_strict.sh)
+==================================================
+필터: tcp port 443 and ( host 172.217.112.4 or host 172.217.113.4 or host 172.217.114.4 or host 172.217.115.4 or host 172.217.116.4 or host 172.217.117.4 or host 172.217.118.4 or host 172.217.119.4)
+pcap: out/gem_strict_v2rest9_20261119_054641.pcap  log: out/gem_strict_v2rest9_log.jsonl
+tcpdump PID=175701, 2초 워밍업...
+선별 적용: out/qfile_gemini_rest260.json -> 260문항
+문항 260개 / 템플릿 170개 (신뢰구간의 독립 표본 수는 문항이 아니라 템플릿 쪽이다)
+조건: think_low, think_medium, think_high  패딩(공백수): {'think_low': 3, 'think_medium': 0, 'think_high': 2}
+[skip-done] out/gem_strict_v2rest1_log.jsonl: 성공 465줄
+[skip-done] out/gem_strict_v2rest2_log.jsonl: 성공 363줄
+[skip-done] out/gem_strict_v2rest3_log.jsonl: 성공 493줄
+[skip-done] out/gem_strict_v2rest4_log.jsonl: 성공 4줄
+[skip-done] out/gem_strict_v2rest5_log.jsonl: 성공 0줄
+[skip-done] out/gem_strict_v2rest6_log.jsonl: 성공 0줄
+[skip-done] out/gem_strict_v2rest7_log.jsonl: 성공 118줄
+[skip-done] out/gem_strict_v2rest8_log.jsonl: 성공 475줄
+[skip-done] 건너뜀 385칸 / 남은 395칸
+Direct use of automatic function calling (AFC) in Models.generate_content_stream is not recommended. Instead, we recommend to use AFC in Chat.send_message_stream. Similarly, direct use of AFC in Models.generate_content is not recommended. Instead, we recommend to use AFC in Chat.send_message.
+[1/395] q139 think_medium arm=0          ttft=5626.0ms out_tok=1 think=1907 chars=1/1
+[2/395] q139 think_low  arm=0          ttft=57946.3ms out_tok=1 think=None chars=1/1
+[3/395] q259 think_low  arm=0          ttft=1736.0ms out_tok=1 think=None chars=1/1
+[4/395] q259 think_medium arm=0          ttft=3470.8ms out_tok=1 think=1053 chars=1/1
+[5/395] q236 think_high arm=0          ttft=2608.4ms out_tok=1 think=761 chars=1/1
+[6/395] q57 think_low  arm=0          ttft=792.1ms out_tok=1 think=None chars=1/1
+[7/395] q57 think_medium arm=0          ttft=4246.7ms out_tok=1 think=1512 chars=1/1
+[8/395] q247 think_high arm=0          ttft=4823.9ms out_tok=1 think=1558 chars=1/1
+[9/395] q247 think_low  arm=0          ttft=3107.9ms out_tok=1 think=1004 chars=1/1
+[10/395] q124 think_low  arm=0          ttft=923.9ms out_tok=1 think=None chars=1/1
+[11/395] q124 think_high arm=0          ttft=4018.1ms out_tok=1 think=1254 chars=1/1
+[12/395] q218 think_high arm=0          ttft=3349.4ms out_tok=1 think=634 chars=1/1
+[13/395] q218 think_low  arm=0          ttft=1240.4ms out_tok=1 think=None chars=1/1
+[14/395] q227 think_low  arm=0          ttft=762.0ms out_tok=1 think=None chars=1/1
+[15/395] q192 think_medium arm=0          ttft=2851.7ms out_tok=1 think=461 chars=1/1
+[16/395] q192 think_high arm=0          ttft=3439.7ms out_tok=1 think=749 chars=1/1
+[17/395] q74 think_high arm=0          ttft=2396.4ms out_tok=1 think=673 chars=1/1
+[18/395] q74 think_medium arm=0          ttft=3390.2ms out_tok=1 think=362 chars=1/1
+[19/395] q22 think_high arm=0          ttft=21233.3ms out_tok=1 think=7865 chars=1/1
+[20/395] q70 think_low  arm=0          ttft=1833.9ms out_tok=1 think=None chars=1/1
+[21/395] q12 think_low  arm=0          ttft=3462.3ms out_tok=1 think=1225 chars=1/1
+[22/395] q231 think_low  arm=0          ttft=1933.1ms out_tok=1 think=697 chars=1/1
+[23/395] q168 think_low  arm=0          ttft=2612.3ms out_tok=1 think=570 chars=1/1
+[24/395] q168 think_high arm=0          ttft=2342.8ms out_tok=1 think=565 chars=1/1
+[25/395] q31 think_low  arm=0          ttft=3975.8ms out_tok=1 think=1040 chars=1/1
+[26/395] q242 think_low  arm=0          ttft=1096.3ms out_tok=1 think=None chars=1/1
+[27/395] q136 think_medium arm=0          ttft=1861.2ms out_tok=1 think=524 chars=1/1
+[28/395] q110 think_low  arm=0          ttft=819.0ms out_tok=1 think=None chars=1/1
+[29/395] q110 think_high arm=0          ttft=2150.9ms out_tok=1 think=348 chars=1/1
+[30/395] q144 think_low  arm=0          ttft=922.2ms out_tok=1 think=None chars=1/1
+[31/395] q248 think_low  arm=0          ttft=1574.6ms out_tok=1 think=None chars=1/1
+[32/395] q248 think_medium arm=0          ttft=6576.8ms out_tok=1 think=1699 chars=1/1
+[33/395] q30 think_low  arm=0          ttft=5280.0ms out_tok=1 think=637 chars=1/1
+[34/395] q24 think_low  arm=0          ttft=7814.4ms out_tok=1 think=None chars=1/1
+[35/395] q33 think_medium arm=0          ttft=9890.7ms out_tok=1 think=781 chars=1/1
+      재시도 1/3 (ServerError) — 8초 대기
+      재시도 2/3 (ServerError) — 16초 대기
+      재시도 3/3 (ServerError) — 32초 대기
+[36/395] q94 think_medium arm=0          ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+[37/395] q94 think_low  arm=0          ttft=10389.7ms out_tok=1 think=None chars=1/1
+[38/395] q191 think_high arm=0          ttft=14338.3ms out_tok=1 think=2534 chars=1/1
+[39/395] q191 think_low  arm=0          ttft=6548.4ms out_tok=1 think=None chars=1/1
+[40/395] q134 think_medium arm=0          ttft=11829.3ms out_tok=1 think=651 chars=1/1
+[41/395] q134 think_low  arm=0          ttft=6625.7ms out_tok=1 think=None chars=1/1
+[42/395] q149 think_medium arm=0          ttft=9520.6ms out_tok=1 think=608 chars=1/1
+[43/395] q133 think_low  arm=0          ttft=8352.6ms out_tok=1 think=None chars=1/1
+[44/395] q133 think_high arm=0          ttft=7683.5ms out_tok=1 think=491 chars=1/1
+[45/395] q201 think_high arm=0          ttft=9498.3ms out_tok=1 think=847 chars=1/1
+[46/395] q87 think_low  arm=0          ttft=9959.3ms out_tok=1 think=None chars=1/1
+[47/395] q87 think_medium arm=0          ttft=9908.2ms out_tok=1 think=401 chars=1/1
+[48/395] q211 think_medium arm=0          ttft=15326.4ms out_tok=1 think=511 chars=1/1
+[49/395] q211 think_low  arm=0          ttft=10673.6ms out_tok=1 think=None chars=1/1
+[50/395] q77 think_medium arm=0          ttft=7625.1ms out_tok=1 think=403 chars=1/1
+[51/395] q234 think_medium arm=0          ttft=8322.5ms out_tok=1 think=754 chars=1/1
+[52/395] q143 think_low  arm=0          ttft=5998.3ms out_tok=1 think=None chars=1/1
+[53/395] q143 think_medium arm=0          ttft=10713.1ms out_tok=1 think=583 chars=1/1
+[54/395] q92 think_high arm=0          ttft=14159.3ms out_tok=1 think=1980 chars=1/1
+[55/395] q167 think_medium arm=0          ttft=16184.3ms out_tok=1 think=455 chars=1/1
+[56/395] q167 think_high arm=0          ttft=2943.8ms out_tok=1 think=687 chars=1/1
+[57/395] q225 think_high arm=0          ttft=33734.6ms out_tok=1 think=1120 chars=1/1
+[58/395] q20 think_low  arm=0          ttft=3313.9ms out_tok=1 think=943 chars=1/1
+[59/395] q20 think_high arm=0          ttft=20628.4ms out_tok=1 think=7861 chars=1/1
+[60/395] q243 think_low  arm=0          ttft=1750.9ms out_tok=1 think=82 chars=1/1
+[61/395] q243 think_medium arm=0          ttft=1088.5ms out_tok=1 think=164 chars=1/1
+[62/395] q181 think_high arm=0          ttft=5365.2ms out_tok=201 think=815 chars=351/1 [불일치]
+[63/395] q181 think_low  arm=0          ttft=2071.2ms out_tok=1 think=417 chars=1/1
+[64/395] q185 think_medium arm=0          ttft=3162.7ms out_tok=54 think=599 chars=93/1 [불일치]
+[65/395] q6 think_low  arm=0          ttft=4417.6ms out_tok=1 think=1176 chars=1/1
+[66/395] q209 think_low  arm=0          ttft=654.8ms out_tok=1 think=None chars=1/1
+[67/395] q209 think_high arm=0          ttft=3052.9ms out_tok=1 think=644 chars=1/1
+[68/395] q93 think_high arm=0          ttft=5872.0ms out_tok=1 think=804 chars=1/1
+[69/395] q93 think_low  arm=0          ttft=2732.8ms out_tok=1 think=None chars=1/1
+[70/395] q76 think_medium arm=0          ttft=12778.3ms out_tok=1 think=1487 chars=1/1
+[71/395] q5 think_low  arm=0          ttft=1928.8ms out_tok=1 think=None chars=1/1
+[72/395] q5 think_high arm=0          ttft=8283.3ms out_tok=1 think=2639 chars=1/1
+[73/395] q249 think_low  arm=0          ttft=2392.6ms out_tok=1 think=409 chars=1/1
+[74/395] q249 think_high arm=0          ttft=3841.3ms out_tok=1 think=853 chars=1/1
+[75/395] q183 think_high arm=0          ttft=10582.0ms out_tok=234 think=1668 chars=422/1 [불일치]
+[76/395] q183 think_medium arm=0          ttft=7196.4ms out_tok=1 think=669 chars=1/1
+[77/395] q246 think_low  arm=0          ttft=3441.7ms out_tok=1 think=268 chars=1/1
+[78/395] q172 think_medium arm=0          ttft=6256.0ms out_tok=1 think=460 chars=1/1
+[79/395] q172 think_high arm=0          ttft=5974.0ms out_tok=1 think=610 chars=1/1
+[80/395] q25 think_low  arm=0          ttft=6218.3ms out_tok=1 think=None chars=1/1
+[81/395] q25 think_medium arm=0          ttft=15228.7ms out_tok=1 think=2082 chars=1/1
+[82/395] q212 think_low  arm=0          ttft=6061.1ms out_tok=1 think=None chars=1/1
+[83/395] q212 think_medium arm=0          ttft=6567.5ms out_tok=1 think=196 chars=1/1
+[84/395] q85 think_high arm=0          ttft=11396.8ms out_tok=1 think=2072 chars=1/1
+[85/395] q171 think_medium arm=0          ttft=16969.9ms out_tok=1 think=579 chars=1/1
+[86/395] q59 think_high arm=0          ttft=10932.6ms out_tok=1 think=2108 chars=1/1
+[87/395] q59 think_low  arm=0          ttft=5522.4ms out_tok=1 think=None chars=1/1
+[88/395] q193 think_medium arm=0          ttft=8730.7ms out_tok=56 think=651 chars=106/1 [불일치]
+[89/395] q193 think_low  arm=0          ttft=11913.4ms out_tok=41 think=705 chars=76/1 [불일치]
+[90/395] q95 think_medium arm=0          ttft=9500.4ms out_tok=1 think=910 chars=1/1
+[91/395] q95 think_low  arm=0          ttft=7192.9ms out_tok=1 think=None chars=1/1
+[92/395] q90 think_low  arm=0          ttft=6772.7ms out_tok=1 think=None chars=1/1
+[93/395] q235 think_low  arm=0          ttft=7970.0ms out_tok=1 think=501 chars=1/1
+[94/395] q235 think_medium arm=0          ttft=20636.2ms out_tok=1 think=713 chars=1/1
+[95/395] q200 think_medium arm=0          ttft=7507.8ms out_tok=1 think=331 chars=1/1
+[96/395] q200 think_low  arm=0          ttft=7581.0ms out_tok=1 think=None chars=1/1
+[97/395] q199 think_medium arm=0          ttft=7807.1ms out_tok=1 think=658 chars=1/1
+[98/395] q199 think_high arm=0          ttft=11819.5ms out_tok=1 think=735 chars=1/1
+[99/395] q152 think_high arm=0          ttft=11162.0ms out_tok=1 think=1787 chars=1/1
+[100/395] q253 think_medium arm=0          ttft=14750.7ms out_tok=1 think=3253 chars=1/1
+[101/395] q118 think_high arm=0          ttft=1365.7ms out_tok=1 think=318 chars=1/1
+[102/395] q118 think_low  arm=0          ttft=2352.0ms out_tok=1 think=None chars=1/1
+[103/395] q51 think_high arm=0          ttft=21776.8ms out_tok=1 think=7610 chars=1/1
+[104/395] q51 think_low  arm=0          ttft=849.8ms out_tok=1 think=None chars=1/1
+[105/395] q173 think_high arm=0          ttft=6642.0ms out_tok=1 think=682 chars=1/1
+[106/395] q45 think_high arm=0          ttft=5098.3ms out_tok=1 think=979 chars=1/1
+[107/395] q45 think_medium arm=0          ttft=4291.7ms out_tok=1 think=620 chars=1/1
+[108/395] q40 think_high arm=0          ttft=4620.8ms out_tok=1 think=464 chars=1/1
+[109/395] q17 think_high arm=0          ttft=8428.6ms out_tok=1 think=2747 chars=1/1
+[110/395] q42 think_low  arm=0          ttft=4948.1ms out_tok=1 think=346 chars=1/1
+[111/395] q42 think_high arm=0          ttft=4187.7ms out_tok=1 think=944 chars=1/1
+[112/395] q214 think_low  arm=0          ttft=1104.9ms out_tok=1 think=None chars=1/1
+[113/395] q252 think_low  arm=0          ttft=5796.0ms out_tok=1 think=989 chars=1/1
+[114/395] q10 think_high arm=0          ttft=5774.0ms out_tok=1 think=1466 chars=1/1
+[115/395] q10 think_medium arm=0          ttft=4969.5ms out_tok=1 think=1802 chars=1/1
+[116/395] q7 think_medium arm=0          ttft=3173.5ms out_tok=1 think=848 chars=1/1
+[117/395] q7 think_high arm=0          ttft=11333.4ms out_tok=1 think=4368 chars=1/1
+[118/395] q56 think_medium arm=0          ttft=11612.2ms out_tok=1 think=3444 chars=1/1
+[119/395] q48 think_medium arm=0          ttft=10841.2ms out_tok=1 think=3107 chars=1/1
+[120/395] q80 think_medium arm=0          ttft=5774.7ms out_tok=1 think=658 chars=1/1
+[121/395] q129 think_high arm=0          ttft=1658.3ms out_tok=1 think=375 chars=1/1
+[122/395] q129 think_medium arm=0          ttft=4884.8ms out_tok=1 think=295 chars=1/1
+[123/395] q79 think_low  arm=0          ttft=4882.2ms out_tok=1 think=None chars=1/1
+[124/395] q79 think_high arm=0          ttft=8657.6ms out_tok=1 think=1490 chars=1/1
+[125/395] q105 think_low  arm=0          ttft=1499.9ms out_tok=1 think=None chars=1/1
+      재시도 1/3 (ServerError) — 8초 대기
+[126/395] q38 think_low  arm=0          ttft=1061.7ms out_tok=1 think=None chars=1/1
+[127/395] q38 think_high arm=0          ttft=8123.7ms out_tok=1 think=1617 chars=1/1
+[128/395] q147 think_low  arm=0          ttft=5154.9ms out_tok=1 think=None chars=1/1
+[129/395] q41 think_low  arm=0          ttft=5241.6ms out_tok=1 think=332 chars=1/1
+[130/395] q41 think_high arm=0          ttft=5526.1ms out_tok=1 think=599 chars=1/1
+[131/395] q232 think_low  arm=0          ttft=3786.6ms out_tok=1 think=None chars=1/1
+[132/395] q230 think_medium arm=0          ttft=10417.7ms out_tok=1 think=793 chars=1/1
+[133/395] q230 think_high arm=0          ttft=6773.8ms out_tok=1 think=662 chars=1/1
+      재시도 1/3 (ServerError) — 8초 대기
+      재시도 2/3 (ServerError) — 16초 대기
+[134/395] q35 think_medium arm=0          ttft=18255.8ms out_tok=1 think=2108 chars=1/1
+[135/395] q177 think_medium arm=0          ttft=6511.6ms out_tok=1 think=454 chars=1/1
+[136/395] q46 think_medium arm=0          ttft=16058.1ms out_tok=1 think=2606 chars=1/1
+[137/395] q39 think_high arm=0          ttft=8419.1ms out_tok=1 think=1100 chars=1/1
+[138/395] q145 think_medium arm=0          ttft=17155.7ms out_tok=1 think=417 chars=1/1
+[139/395] q145 think_high arm=0          ttft=5177.0ms out_tok=1 think=292 chars=1/1
+[140/395] q154 think_low  arm=0          ttft=4657.9ms out_tok=1 think=None chars=1/1
+[141/395] q154 think_medium arm=0          ttft=6780.7ms out_tok=1 think=513 chars=1/1
+[142/395] q117 think_high arm=0          ttft=16607.6ms out_tok=1 think=796 chars=1/1
+[143/395] q117 think_low  arm=0          ttft=5190.3ms out_tok=1 think=None chars=1/1
+[144/395] q1 think_high arm=0          ttft=9736.6ms out_tok=1 think=2650 chars=1/1
+[145/395] q1 think_medium arm=0          ttft=17212.1ms out_tok=1 think=3503 chars=1/1
+[146/395] q107 think_low  arm=0          ttft=4404.3ms out_tok=1 think=None chars=1/1
+[147/395] q71 think_low  arm=0          ttft=14240.8ms out_tok=1 think=None chars=1/1
+[148/395] q161 think_low  arm=0          ttft=4651.6ms out_tok=1 think=None chars=1/1
+[149/395] q161 think_high arm=0          ttft=18754.0ms out_tok=1 think=472 chars=1/1
+[150/395] q222 think_low  arm=0          ttft=4275.3ms out_tok=1 think=None chars=1/1
+[151/395] q78 think_high arm=0          ttft=7633.9ms out_tok=1 think=1456 chars=1/1
+[152/395] q0 think_low  arm=0          ttft=4428.3ms out_tok=1 think=None chars=1/1
+[153/395] q0 think_medium arm=0          ttft=5341.4ms out_tok=1 think=653 chars=1/1
+[154/395] q55 think_medium arm=0          ttft=6142.8ms out_tok=1 think=659 chars=1/1
+[155/395] q55 think_high arm=0          ttft=6170.0ms out_tok=1 think=767 chars=1/1
+[156/395] q165 think_high arm=0          ttft=8821.5ms out_tok=1 think=822 chars=1/1
+[157/395] q165 think_low  arm=0          ttft=4409.9ms out_tok=1 think=None chars=1/1
+[158/395] q126 think_medium arm=0          ttft=7382.2ms out_tok=1 think=677 chars=1/1
+[159/395] q148 think_low  arm=0          ttft=4533.0ms out_tok=1 think=None chars=1/1
+[160/395] q148 think_high arm=0          ttft=5576.6ms out_tok=1 think=379 chars=1/1
+[161/395] q140 think_high arm=0          ttft=9731.9ms out_tok=1 think=1870 chars=1/1
+[162/395] q140 think_low  arm=0          ttft=4695.0ms out_tok=1 think=None chars=1/1
+[163/395] q120 think_low  arm=0          ttft=4014.6ms out_tok=1 think=None chars=1/1
+      재시도 1/3 (ServerError) — 8초 대기
+[164/395] q18 think_medium arm=0          ttft=6866.9ms out_tok=1 think=604 chars=1/1
+[165/395] q18 think_high arm=0          ttft=29775.8ms out_tok=1 think=8041 chars=1/1
+[166/395] q245 think_high arm=0          ttft=22302.8ms out_tok=1 think=7309 chars=1/1
+[167/395] q245 think_medium arm=0          ttft=26534.5ms out_tok=1 think=4489 chars=1/1
+[168/395] q153 think_high arm=0          ttft=10841.3ms out_tok=1 think=419 chars=1/1
+[169/395] q106 think_high arm=0          ttft=12490.1ms out_tok=1 think=2994 chars=1/1
+[170/395] q106 think_medium arm=0          ttft=7539.5ms out_tok=1 think=1107 chars=1/1
+[171/395] q179 think_medium arm=0          ttft=4704.7ms out_tok=1 think=563 chars=1/1
+[172/395] q179 think_low  arm=0          ttft=1891.5ms out_tok=1 think=None chars=1/1
+[173/395] q27 think_high arm=0          ttft=10199.4ms out_tok=1 think=2150 chars=1/1
+[174/395] q258 think_low  arm=0          ttft=5589.2ms out_tok=1 think=598 chars=1/1
+[175/395] q258 think_high arm=0          ttft=7425.6ms out_tok=1 think=1244 chars=1/1
+[176/395] q52 think_high arm=0          ttft=19295.5ms out_tok=1 think=6533 chars=1/1
+[177/395] q220 think_low  arm=0          ttft=4688.5ms out_tok=1 think=None chars=1/1
+[178/395] q241 think_low  arm=0          ttft=4733.8ms out_tok=1 think=169 chars=1/1
+[179/395] q241 think_high arm=0          ttft=5245.0ms out_tok=1 think=453 chars=1/1
+[180/395] q238 think_medium arm=0          ttft=7898.8ms out_tok=1 think=510 chars=1/1
+[181/395] q238 think_high arm=0          ttft=6794.6ms out_tok=1 think=625 chars=1/1
+[182/395] q190 think_low  arm=0          ttft=10911.6ms out_tok=1 think=None chars=1/1
+[183/395] q62 think_medium arm=0          ttft=9881.8ms out_tok=1 think=2404 chars=1/1
+[184/395] q64 think_high arm=0          ttft=13535.4ms out_tok=1 think=3864 chars=1/1
+[185/395] q64 think_medium arm=0          ttft=18430.8ms out_tok=1 think=6142 chars=1/1
+[186/395] q113 think_low  arm=0          ttft=808.1ms out_tok=1 think=None chars=1/1
+[187/395] q113 think_high arm=0          ttft=6671.2ms out_tok=1 think=1083 chars=1/1
+[188/395] q203 think_low  arm=0          ttft=3844.1ms out_tok=1 think=None chars=1/1
+[189/395] q91 think_high arm=0          ttft=5173.3ms out_tok=1 think=515 chars=1/1
+[190/395] q67 think_low  arm=0          ttft=10493.6ms out_tok=1 think=2466 chars=1/1
+[191/395] q187 think_low  arm=0          ttft=3469.2ms out_tok=1 think=None chars=1/1
+[192/395] q111 think_medium arm=0          ttft=5458.6ms out_tok=1 think=354 chars=1/1
+[193/395] q111 think_high arm=0          ttft=8184.7ms out_tok=1 think=1283 chars=1/1
+[194/395] q84 think_low  arm=0          ttft=4308.1ms out_tok=1 think=None chars=1/1
+[195/395] q84 think_high arm=0          ttft=12725.1ms out_tok=1 think=2994 chars=1/1
+[196/395] q157 think_high arm=0          ttft=5820.6ms out_tok=1 think=444 chars=1/1
+[197/395] q157 think_medium arm=0          ttft=5698.2ms out_tok=1 think=366 chars=1/1
+[198/395] q255 think_medium arm=0          ttft=6463.4ms out_tok=1 think=506 chars=1/1
+[199/395] q255 think_low  arm=0          ttft=5065.9ms out_tok=1 think=409 chars=1/1
+[200/395] q128 think_medium arm=0          ttft=4618.0ms out_tok=1 think=344 chars=1/1
+[201/395] q128 think_high arm=0          ttft=6416.3ms out_tok=1 think=567 chars=1/1
+[202/395] q186 think_low  arm=0          ttft=4183.3ms out_tok=1 think=None chars=1/1
+[203/395] q186 think_medium arm=0          ttft=5423.3ms out_tok=1 think=406 chars=1/1
+[204/395] q204 think_low  arm=0          ttft=4174.8ms out_tok=1 think=None chars=1/1
+[205/395] q109 think_low  arm=0          ttft=3941.6ms out_tok=1 think=None chars=1/1
+[206/395] q135 think_high arm=0          ttft=1553.2ms out_tok=1 think=335 chars=1/1
+[207/395] q135 think_low  arm=0          ttft=3834.2ms out_tok=1 think=None chars=1/1
+[208/395] q97 think_low  arm=0          ttft=8279.8ms out_tok=1 think=1239 chars=1/1
+[209/395] q97 think_high arm=0          ttft=11107.9ms out_tok=1 think=1417 chars=1/1
+[210/395] q256 think_medium arm=0          ttft=6088.6ms out_tok=1 think=944 chars=1/1
+[211/395] q198 think_high arm=0          ttft=6449.7ms out_tok=1 think=650 chars=1/1
+[212/395] q141 think_medium arm=0          ttft=1648.7ms out_tok=1 think=418 chars=1/1
+[213/395] q141 think_high arm=0          ttft=4479.1ms out_tok=1 think=520 chars=1/1
+[214/395] q44 think_medium arm=0          ttft=6164.6ms out_tok=1 think=813 chars=1/1
+[215/395] q44 think_high arm=0          ttft=15847.7ms out_tok=1 think=4527 chars=1/1
+[216/395] q43 think_low  arm=0          ttft=4385.0ms out_tok=1 think=305 chars=1/1
+[217/395] q112 think_medium arm=0          ttft=9403.6ms out_tok=1 think=301 chars=1/1
+[218/395] q112 think_low  arm=0          ttft=2601.9ms out_tok=1 think=None chars=1/1
+[219/395] q99 think_medium arm=0          ttft=5316.2ms out_tok=1 think=735 chars=1/1
+[220/395] q158 think_low  arm=0          ttft=3623.9ms out_tok=1 think=None chars=1/1
+[221/395] q158 think_medium arm=0          ttft=4539.7ms out_tok=1 think=395 chars=1/1
+[222/395] q170 think_low  arm=0          ttft=5518.5ms out_tok=1 think=None chars=1/1
+[223/395] q119 think_medium arm=0          ttft=5640.4ms out_tok=1 think=259 chars=1/1
+[224/395] q119 think_high arm=0          ttft=5027.0ms out_tok=1 think=260 chars=1/1
+[225/395] q206 think_medium arm=0          ttft=7479.9ms out_tok=1 think=403 chars=1/1
+[226/395] q206 think_low  arm=0          ttft=4386.9ms out_tok=1 think=None chars=1/1
+[227/395] q205 think_medium arm=0          ttft=5976.7ms out_tok=1 think=658 chars=1/1
+[228/395] q26 think_high arm=0          ttft=10182.3ms out_tok=1 think=3037 chars=1/1
+[229/395] q26 think_low  arm=0          ttft=3863.0ms out_tok=1 think=None chars=1/1
+[230/395] q103 think_low  arm=0          ttft=7103.3ms out_tok=1 think=None chars=1/1
+[231/395] q254 think_high arm=0          ttft=8801.2ms out_tok=1 think=1389 chars=1/1
+[232/395] q250 think_high arm=0          ttft=23971.1ms out_tok=1 think=7528 chars=1/1
+[233/395] q250 think_medium arm=0          ttft=7280.0ms out_tok=1 think=2664 chars=1/1
+[234/395] q160 think_low  arm=0          ttft=5306.7ms out_tok=1 think=551 chars=1/1
+[235/395] q160 think_high arm=0          ttft=6913.1ms out_tok=1 think=1781 chars=1/1
+[236/395] q130 think_high arm=0          ttft=4598.6ms out_tok=1 think=281 chars=1/1
+[237/395] q14 think_low  arm=0          ttft=4251.7ms out_tok=1 think=None chars=1/1
+[238/395] q14 think_high arm=0          ttft=9116.0ms out_tok=1 think=2092 chars=1/1
+[239/395] q63 think_high arm=0          ttft=3807.1ms out_tok=1 think=1230 chars=1/1
+[240/395] q63 think_medium arm=0          ttft=9173.4ms out_tok=1 think=916 chars=1/1
+[241/395] q217 think_high arm=0          ttft=7702.7ms out_tok=1 think=438 chars=1/1
+[242/395] q217 think_medium arm=0          ttft=5742.4ms out_tok=1 think=284 chars=1/1
+[243/395] q15 think_high arm=0          ttft=7959.9ms out_tok=1 think=1722 chars=1/1
+[244/395] q137 think_low  arm=0          ttft=6562.0ms out_tok=1 think=None chars=1/1
+[245/395] q137 think_high arm=0          ttft=5253.4ms out_tok=1 think=456 chars=1/1
+[246/395] q9 think_high arm=0          ttft=13197.7ms out_tok=1 think=3985 chars=1/1
+[247/395] q226 think_high arm=0          ttft=27682.8ms out_tok=1 think=7781 chars=1/1
+[248/395] q226 think_medium arm=0          ttft=4392.7ms out_tok=1 think=783 chars=1/1
+[249/395] q228 think_high arm=0          ttft=2334.6ms out_tok=1 think=771 chars=1/1
+[250/395] q215 think_high arm=0          ttft=3944.1ms out_tok=1 think=791 chars=1/1
+[251/395] q34 think_medium arm=0          ttft=7588.9ms out_tok=1 think=1306 chars=1/1
+[252/395] q16 think_low  arm=0          ttft=10527.2ms out_tok=1 think=2331 chars=1/1
+[253/395] q16 think_high arm=0          ttft=18438.6ms out_tok=1 think=7864 chars=1/1
+[254/395] q257 think_high arm=0          ttft=5070.3ms out_tok=1 think=979 chars=1/1
+[255/395] q208 think_high arm=0          ttft=2343.8ms out_tok=1 think=367 chars=1/1
+[256/395] q244 think_low  arm=0          ttft=2204.2ms out_tok=1 think=None chars=1/1
+[257/395] q196 think_low  arm=0          ttft=1815.4ms out_tok=1 think=None chars=1/1
+[258/395] q114 think_medium arm=0          ttft=2205.4ms out_tok=1 think=533 chars=1/1
+[259/395] q104 think_high arm=0          ttft=3588.5ms out_tok=1 think=878 chars=1/1
+[260/395] q75 think_medium arm=0          ttft=2952.7ms out_tok=1 think=719 chars=1/1
+[261/395] q163 think_high arm=0          ttft=2875.0ms out_tok=1 think=752 chars=1/1
+[262/395] q142 think_high arm=0          ttft=5757.1ms out_tok=1 think=1548 chars=1/1
+[263/395] q216 think_low  arm=0          ttft=1038.3ms out_tok=1 think=None chars=1/1
+[264/395] q239 think_high arm=0          ttft=2762.4ms out_tok=1 think=682 chars=1/1
+[265/395] q60 think_high arm=0          ttft=17883.8ms out_tok=1 think=7649 chars=1/1
+[266/395] q60 think_medium arm=0          ttft=6603.0ms out_tok=1 think=2894 chars=1/1
+[267/395] q8 think_medium arm=0          ttft=3540.7ms out_tok=1 think=1109 chars=1/1
+[268/395] q8 think_low  arm=0          ttft=957.1ms out_tok=1 think=None chars=1/1
+[269/395] q50 think_low  arm=0          ttft=2964.3ms out_tok=1 think=512 chars=1/1
+[270/395] q50 think_medium arm=0          ttft=7884.3ms out_tok=1 think=2885 chars=1/1
+[271/395] q138 think_high arm=0          ttft=7897.3ms out_tok=1 think=2194 chars=1/1
+[272/395] q138 think_low  arm=0          ttft=1877.9ms out_tok=1 think=None chars=1/1
+[273/395] q146 think_low  arm=0          ttft=1349.5ms out_tok=1 think=None chars=1/1
+[274/395] q88 think_low  arm=0          ttft=1158.5ms out_tok=1 think=None chars=1/1
+[275/395] q88 think_high arm=0          ttft=3537.0ms out_tok=1 think=918 chars=1/1
+[276/395] q11 think_high arm=0          ttft=6936.3ms out_tok=1 think=1866 chars=1/1
+[277/395] q11 think_low  arm=0          ttft=2558.4ms out_tok=1 think=402 chars=1/1
+[278/395] q102 think_high arm=0          ttft=1218.0ms out_tok=1 think=355 chars=1/1
+[279/395] q182 think_high arm=0          ttft=6280.2ms out_tok=1 think=1357 chars=1/1
+[280/395] q182 think_low  arm=0          ttft=1764.1ms out_tok=1 think=None chars=1/1
+[281/395] q37 think_low  arm=0          ttft=2096.7ms out_tok=1 think=None chars=1/1
+[282/395] q65 think_high arm=0          ttft=11377.7ms out_tok=1 think=1594 chars=1/1
+[283/395] q169 think_low  arm=0          ttft=1735.9ms out_tok=1 think=195 chars=1/1
+[284/395] q169 think_high arm=0          ttft=5005.9ms out_tok=1 think=444 chars=1/1
+[285/395] q2 think_high arm=0          ttft=6147.4ms out_tok=1 think=2249 chars=1/1
+[286/395] q89 think_high arm=0          ttft=6560.6ms out_tok=1 think=1906 chars=1/1
+[287/395] q89 think_low  arm=0          ttft=929.2ms out_tok=1 think=None chars=1/1
+[288/395] q121 think_low  arm=0          ttft=1160.0ms out_tok=1 think=None chars=1/1
+[289/395] q58 think_medium arm=0          ttft=6045.8ms out_tok=1 think=2273 chars=1/1
+[290/395] q58 think_high arm=0          ttft=10299.4ms out_tok=1 think=4100 chars=1/1
+[291/395] q150 think_medium arm=0          ttft=2652.8ms out_tok=1 think=373 chars=1/1
+[292/395] q150 think_high arm=0          ttft=2886.6ms out_tok=1 think=485 chars=1/1
+[293/395] q213 think_medium arm=0          ttft=2575.5ms out_tok=1 think=534 chars=1/1
+[294/395] q213 think_high arm=0          ttft=3754.6ms out_tok=1 think=520 chars=1/1
+[295/395] q49 think_low  arm=0          ttft=2486.3ms out_tok=1 think=None chars=1/1
+[296/395] q175 think_low  arm=0          ttft=1913.2ms out_tok=1 think=None chars=1/1
+[297/395] q175 think_medium arm=0          ttft=3195.9ms out_tok=1 think=304 chars=1/1
+[298/395] q98 think_medium arm=0          ttft=7539.8ms out_tok=1 think=1701 chars=1/1
+[299/395] q98 think_low  arm=0          ttft=1201.4ms out_tok=1 think=None chars=1/1
+[300/395] q47 think_high arm=0          ttft=21726.7ms out_tok=1 think=7861 chars=1/1
+[301/395] q101 think_medium arm=0          ttft=2556.3ms out_tok=1 think=886 chars=1/1
+[302/395] q101 think_high arm=0          ttft=3103.2ms out_tok=1 think=722 chars=1/1
+[303/395] q100 think_medium arm=0          ttft=5925.2ms out_tok=1 think=907 chars=1/1
+[304/395] q176 think_high arm=0          ttft=7451.2ms out_tok=1 think=1106 chars=1/1
+[305/395] q176 think_low  arm=0          ttft=3265.9ms out_tok=1 think=None chars=1/1
+[306/395] q125 think_medium arm=0          ttft=16110.7ms out_tok=1 think=617 chars=1/1
+[307/395] q61 think_low  arm=0          ttft=3403.0ms out_tok=1 think=None chars=1/1
+[308/395] q197 think_low  arm=0          ttft=2198.1ms out_tok=1 think=None chars=1/1
+[309/395] q151 think_medium arm=0          ttft=6219.3ms out_tok=1 think=416 chars=1/1
+[310/395] q123 think_low  arm=0          ttft=3715.2ms out_tok=1 think=None chars=1/1
+[311/395] q83 think_low  arm=0          ttft=3995.6ms out_tok=1 think=None chars=1/1
+[312/395] q202 think_medium arm=0          ttft=5363.4ms out_tok=1 think=291 chars=1/1
+[313/395] q202 think_high arm=0          ttft=6657.4ms out_tok=1 think=591 chars=1/1
+[314/395] q66 think_high arm=0          ttft=12646.3ms out_tok=1 think=3014 chars=1/1
+[315/395] q66 think_low  arm=0          ttft=13696.2ms out_tok=1 think=3975 chars=1/1
+[316/395] q108 think_low  arm=0          ttft=891.2ms out_tok=1 think=None chars=1/1
+[317/395] q108 think_high arm=0          ttft=3701.7ms out_tok=1 think=1013 chars=1/1
+[318/395] q116 think_medium arm=0          ttft=4903.3ms out_tok=1 think=1032 chars=1/1
+[319/395] q116 think_high arm=0          ttft=4087.8ms out_tok=1 think=1265 chars=1/1
+[320/395] q159 think_medium arm=0          ttft=2387.1ms out_tok=1 think=530 chars=1/1
+[321/395] q159 think_high arm=0          ttft=2446.0ms out_tok=1 think=654 chars=1/1
+[322/395] q36 think_low  arm=0          ttft=5838.0ms out_tok=1 think=946 chars=1/1
+[323/395] q223 think_medium arm=0          ttft=4483.1ms out_tok=1 think=673 chars=1/1
+[324/395] q13 think_low  arm=0          ttft=3031.3ms out_tok=1 think=None chars=1/1
+[325/395] q13 think_high arm=0          ttft=7732.7ms out_tok=1 think=1923 chars=1/1
+[326/395] q178 think_medium arm=0          ttft=6052.6ms out_tok=1 think=942 chars=1/1
+[327/395] q178 think_low  arm=0          ttft=2709.6ms out_tok=1 think=None chars=1/1
+[328/395] q19 think_high arm=0          ttft=14494.0ms out_tok=1 think=4636 chars=1/1
+[329/395] q19 think_low  arm=0          ttft=3280.0ms out_tok=1 think=None chars=1/1
+[330/395] q86 think_low  arm=0          ttft=3261.1ms out_tok=1 think=None chars=1/1
+[331/395] q32 think_high arm=0          ttft=20683.1ms out_tok=1 think=6905 chars=1/1
+[332/395] q32 think_medium arm=0          ttft=5577.8ms out_tok=1 think=2201 chars=1/1
+[333/395] q240 think_high arm=0          ttft=4923.1ms out_tok=1 think=792 chars=1/1
+[334/395] q240 think_low  arm=0          ttft=3319.3ms out_tok=1 think=771 chars=1/1
+[335/395] q219 think_medium arm=0          ttft=3195.9ms out_tok=1 think=400 chars=1/1
+[336/395] q28 think_medium arm=0          ttft=11410.2ms out_tok=1 think=2487 chars=1/1
+[337/395] q164 think_low  arm=0          ttft=3588.7ms out_tok=1 think=None chars=1/1
+[338/395] q54 think_medium arm=0          ttft=5493.6ms out_tok=1 think=1400 chars=1/1
+      재시도 1/3 (ServerError) — 8초 대기
+[339/395] q194 think_high arm=0          ttft=6577.5ms out_tok=1 think=768 chars=1/1
+[340/395] q4 think_medium arm=0          ttft=8323.6ms out_tok=1 think=1454 chars=1/1
+[341/395] q29 think_high arm=0          ttft=10103.3ms out_tok=1 think=223 chars=1/1
+[342/395] q29 think_low  arm=0          ttft=4325.6ms out_tok=1 think=None chars=1/1
+      재시도 1/3 (ServerError) — 8초 대기
+      재시도 2/3 (ServerError) — 16초 대기
+[343/395] q162 think_high arm=0          ttft=8963.2ms out_tok=1 think=1170 chars=1/1
+[344/395] q131 think_low  arm=0          ttft=3867.7ms out_tok=1 think=None chars=1/1
+[345/395] q131 think_medium arm=0          ttft=9923.0ms out_tok=1 think=814 chars=1/1
+[346/395] q21 think_high arm=0          ttft=14277.8ms out_tok=1 think=4700 chars=1/1
+[347/395] q132 think_high arm=0          ttft=5229.0ms out_tok=1 think=424 chars=1/1
+[348/395] q132 think_medium arm=0          ttft=12345.2ms out_tok=1 think=623 chars=1/1
+[349/395] q96 think_low  arm=0          ttft=2082.2ms out_tok=1 think=None chars=1/1
+[350/395] q96 think_high arm=0          ttft=4591.5ms out_tok=1 think=373 chars=1/1
+[351/395] q73 think_low  arm=0          ttft=3742.8ms out_tok=1 think=None chars=1/1
+[352/395] q53 think_medium arm=0          ttft=20122.9ms out_tok=1 think=6400 chars=1/1
+[353/395] q184 think_high arm=0          ttft=7459.6ms out_tok=1 think=1157 chars=1/1
+[354/395] q184 think_low  arm=0          ttft=3133.0ms out_tok=1 think=None chars=1/1
+[355/395] q115 think_low  arm=0          ttft=5570.5ms out_tok=1 think=None chars=1/1
+[356/395] q115 think_high arm=0          ttft=7048.2ms out_tok=1 think=1071 chars=1/1
+[357/395] q174 think_medium arm=0          ttft=5177.1ms out_tok=1 think=409 chars=1/1
+[358/395] q174 think_low  arm=0          ttft=6559.2ms out_tok=1 think=None chars=1/1
+[359/395] q237 think_medium arm=0          ttft=6049.1ms out_tok=1 think=671 chars=1/1
+[360/395] q224 think_medium arm=0          ttft=6270.7ms out_tok=1 think=774 chars=1/1
+[361/395] q224 think_low  arm=0          ttft=4781.3ms out_tok=1 think=None chars=1/1
+[362/395] q3 think_high arm=0          ttft=6948.2ms out_tok=1 think=1503 chars=1/1
+[363/395] q3 think_medium arm=0          ttft=7379.3ms out_tok=1 think=1217 chars=1/1
+[364/395] q68 think_low  arm=0          ttft=6576.1ms out_tok=1 think=1006 chars=1/1
+[365/395] q195 think_high arm=0          ttft=7844.8ms out_tok=1 think=1200 chars=1/1
+[366/395] q195 think_low  arm=0          ttft=4347.7ms out_tok=1 think=None chars=1/1
+[367/395] q210 think_medium arm=0          ttft=5167.2ms out_tok=1 think=364 chars=1/1
+[368/395] q251 think_low  arm=0          ttft=5633.6ms out_tok=1 think=315 chars=1/1
+[369/395] q156 think_medium arm=0          ttft=11385.1ms out_tok=1 think=1095 chars=1/1
+[370/395] q156 think_low  arm=0          ttft=5467.8ms out_tok=1 think=None chars=1/1
+[371/395] q221 think_medium arm=0          ttft=7992.5ms out_tok=1 think=253 chars=1/1
+[372/395] q221 think_high arm=0          ttft=5413.3ms out_tok=1 think=266 chars=1/1
+[373/395] q188 think_high arm=0          ttft=9776.8ms out_tok=1 think=1489 chars=1/1
+[374/395] q155 think_medium arm=0          ttft=9172.4ms out_tok=1 think=533 chars=1/1
+[375/395] q122 think_medium arm=0          ttft=5616.6ms out_tok=1 think=751 chars=1/1
+[376/395] q122 think_high arm=0          ttft=11755.4ms out_tok=1 think=1364 chars=1/1
+[377/395] q69 think_low  arm=0          ttft=4380.8ms out_tok=1 think=308 chars=1/1
+[378/395] q81 think_low  arm=0          ttft=3824.6ms out_tok=1 think=None chars=1/1
+[379/395] q81 think_medium arm=0          ttft=2866.2ms out_tok=1 think=783 chars=1/1
+[380/395] q127 think_high arm=0          ttft=4379.3ms out_tok=1 think=521 chars=1/1
+[381/395] q127 think_low  arm=0          ttft=3071.1ms out_tok=1 think=None chars=1/1
+[382/395] q229 think_high arm=0          ttft=3432.1ms out_tok=1 think=714 chars=1/1
+[383/395] q166 think_low  arm=0          ttft=1598.9ms out_tok=1 think=None chars=1/1
+[384/395] q23 think_low  arm=0          ttft=5232.6ms out_tok=1 think=None chars=1/1
+[385/395] q23 think_high arm=0          ttft=9546.3ms out_tok=1 think=2570 chars=1/1
+[386/395] q233 think_low  arm=0          ttft=3357.1ms out_tok=1 think=None chars=1/1
+[387/395] q180 think_low  arm=0          ttft=5643.7ms out_tok=1 think=None chars=1/1
+[388/395] q180 think_medium arm=0          ttft=6591.7ms out_tok=1 think=669 chars=1/1
+[389/395] q207 think_low  arm=0          ttft=5870.5ms out_tok=1 think=None chars=1/1
+[390/395] q207 think_medium arm=0          ttft=4450.6ms out_tok=1 think=259 chars=1/1
+[391/395] q189 think_high arm=0          ttft=6785.7ms out_tok=1 think=938 chars=1/1
+[392/395] q72 think_medium arm=0          ttft=5640.9ms out_tok=1 think=586 chars=1/1
+[393/395] q72 think_low  arm=0          ttft=4042.6ms out_tok=1 think=None chars=1/1
+[394/395] q82 think_low  arm=0          ttft=3974.6ms out_tok=1 think=None chars=1/1
+[395/395] q82 think_high arm=0          ttft=6259.5ms out_tok=1 think=474 chars=1/1
+
+[done] 로그 -> out/gem_strict_v2rest9_log.jsonl
+  [경고] 끝내 실패한 콜 1/395 (0.3%) — 그 (문항, 조건, 반복) 칸은 비어 있다
+         쌍 비교는 같은 문항의 두 조건이 다 있어야 성립한다. 분석 전에 짝 없는 행을 걸러라
+→ 확인 1: answer_chars 가 조건 무관 1로 고정됐는지(길이 통제 성공 여부)
+→ 확인 2: truncated=true 가 몇 건인지(추론 폭주로 답이 없던 콜 — 분석서 제외)
+→ 확인 3: 파싱 후 조건별 up_bytes 중앙값이 같은지(요청 크기 통제 성공 여부)
+
+완료. 다음:  python3 parse_pcap.py out/gem_strict_v2rest9_20261119_054641.pcap out/gem_strict_v2rest9_log.jsonl --local-ip 163.152.223.17 --out out/gem_strict2.csv
+[07:02:16] 파싱: out/gem_strict_v2rest9_20261119_054641.pcap
+/usr/local/lib/python3.10/dist-packages/scapy/layers/tls/crypto/groups.py:25: CryptographyDeprecationWarning: Diffie-Hellman over finite fields (FFDH) is deprecated and support will be removed in a future release. Use a more modern key exchange algorithm.
+  from cryptography.hazmat.primitives.asymmetric.dh import DHParameterNumbers
+local IP = 163.152.223.17  (override)
+요청 394개
+pcap 읽는 중...
+패킷 6055개
+
+=== 조건별 패킷 간격(pkt_gap_ms) vs 앱(ttft) ===
+condition     n  pkt_gap중앙  app_ttft중앙  down_bytes중앙 answer_tok
+think_low   144     3902.2      3904.6        1409.0        1.0
+think_high  137     6782.8      6794.6          6956          1
+think_medium 113     6253.3      6463.4          4999          1
+
+[out] out/v2rest9.csv  (394행)
+→ think_high의 pkt_gap이  얕은 조건보다 크면 = 패킷 레벨서도 추론 신호 확인!
+→ answer_tok 이 조건 간 동일하면 = 출력 길이 통제가 토큰 수준에서 성립.
+
+[07:02:17] 전체 종료.

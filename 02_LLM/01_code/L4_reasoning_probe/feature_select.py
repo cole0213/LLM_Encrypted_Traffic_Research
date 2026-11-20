@@ -47,7 +47,10 @@ from sklearn.metrics import accuracy_score
 
 # 라벨이거나 식별자여서 피처로 쓰면 안 되는 열.
 #   app_ttft_ms / thoughts_tokens / output_tokens 는 API 가 알려준 값이라 관측자는 볼 수 없다.
-DROP = {"idx", "q_idx", "condition", "rep",
+# 피처가 아닌 열. 여기 빠뜨리면 숫자가 아닌 열이 float() 로 들어가 0.0 이 되거나 터진다.
+#   family : 템플릿 id(클러스터 키). 피처로 쓰면 문항을 통째로 외운다.
+#   qset   : 문항 세트 이름. 역시 라벨성 메타데이터.
+DROP = {"idx", "q_idx", "family", "qset", "condition", "rep",
         "app_ttft_ms", "thoughts_tokens", "output_tokens",
         "answer_chars", "truncated"}
 KS = [1, 2, 3, 5, 8, 10, 15, 20, 30, 50]

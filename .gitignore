@@ -41,3 +41,6 @@ vendor/
 *.db
 02_LLM/02_literature/papers/state/raw_api/
 01_MachineLearning/
+
+# run_openai_next.sh 가 비용 줄을 읽으려고 만드는 임시 로그 (캡처 중 계속 쓰인다)
+02_LLM/01_code/L4_reasoning_probe/out/.stage_*.log

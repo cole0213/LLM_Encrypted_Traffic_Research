@@ -1,0 +1,98 @@
+
+########## out/gem_v2_merged.csv  [arm=0]  (n=1443) ##########
+
+==========================================================
+[이진: think_low vs think_high] n=936, 질문 479개 (leave-one-question-out)
+  클래스 분포: {'think_low': 475, 'think_high': 461}
+  ※ 26건 제외(토큰 한계 도달 또는 지시 무시)
+  ※ 경고: 아래 (질문, 조건)은 남은 표본이 0 — 해당 회차 평가가 불완전함
+       q191 think_high
+       q192 think_high
+       q194 think_high
+       q197 think_high
+       q241 think_high
+       q568 think_high
+       q569 think_high
+       q574 think_high
+       q576 think_high
+       q578 think_low
+       q581 think_high
+       q583 think_high
+       q586 think_high
+       q600 think_low
+       q602 think_low
+       q605 think_high
+       q607 think_high
+       q612 think_high
+       q618 think_high
+       q620 think_low
+       q628 think_high
+       q783 think_high
+  majority(찍기)      : 0.507
+  length-only(길이만) : 0.507   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.782   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.835   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.895   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.875   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [390  85]
+    think_high  [ 32 429]
+  하향 피처 중요도: down_pkt_mean=0.24, down_bytes=0.22, down_iat_mean_ms=0.12, pkt_gap_ms=0.10, down_pkts=0.10
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_high']:
+    think_low   [403  72]
+    think_high  [ 26 435]
+  피처 중요도: down_bytes=0.21, down_pkt_mean=0.20, down_iat_mean_ms=0.13, pkt_gap_ms=0.10, up_bytes=0.09
+
+==========================================================
+[3클래스: low/med/high] n=1411, 질문 481개 (leave-one-question-out)
+  클래스 분포: {'think_low': 475, 'think_medium': 475, 'think_high': 461}
+  ※ 32건 제외(토큰 한계 도달 또는 지시 무시)
+  ※ 경고: 아래 (질문, 조건)은 남은 표본이 0 — 해당 회차 평가가 불완전함
+       q191 think_medium
+       q191 think_high
+       q192 think_high
+       q194 think_high
+       q197 think_high
+       q241 think_high
+       q568 think_high
+       q569 think_high
+       q574 think_medium
+       q574 think_high
+       q575 think_medium
+       q576 think_high
+       q578 think_low
+       q581 think_high
+       q583 think_high
+       q585 think_low
+       q585 think_high
+       q586 think_high
+       q594 think_medium
+       q600 think_low
+       q602 think_low
+       q605 think_high
+       q607 think_high
+       q610 think_medium
+       q612 think_high
+       q618 think_high
+       q620 think_low
+       q620 think_medium
+       q628 think_high
+       q631 think_low
+       q631 think_high
+       q783 think_high
+  majority(찍기)      : 0.333
+  length-only(길이만) : 0.335   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.534   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.600   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.661   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.629   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [344  98  33]
+    think_medium [ 48 265 162]
+    think_high  [ 14 168 279]
+  하향 피처 중요도: down_bytes=0.20, down_pkt_mean=0.16, pkt_gap_ms=0.14, down_iat_mean_ms=0.11, down_pkt_max=0.09
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_medium', 'think_high']:
+    think_low   [362  81  32]
+    think_medium [ 38 281 156]
+    think_high  [  7 165 289]
+  피처 중요도: down_bytes=0.18, down_pkt_mean=0.16, pkt_gap_ms=0.12, up_bytes=0.10, down_iat_mean_ms=0.10

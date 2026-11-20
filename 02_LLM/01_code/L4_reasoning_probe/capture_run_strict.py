@@ -34,6 +34,13 @@ from google.genai import types
 
 MODEL = "gemini-3.5-flash-lite"
 
+# v2 문항 세트(821문항). 아래 하드코딩 QUESTIONS 는 1~3차와 비교하기 위해 그대로 둔다.
+# --qset v2 로 갈아끼운다. import 실패해도 base 는 돌아가야 하므로 감싼다.
+try:
+    from questions_all import QUESTIONS_V2_ALL, FAMILIES_V2_ALL
+except Exception:          # 모듈이 없거나 문항 생성이 깨진 경우
+    QUESTIONS_V2_ALL, FAMILIES_V2_ALL = None, None
+
 # 객관식 문항: 정답은 한 글자(A/B/C/D). 난도 다양(추론 유발)하되 출력은 항상 1토큰.
 # (짧추/긴추 차이가 답 길이가 아니라 추론 깊이에서만 오도록 출력 완전 고정)
 QUESTIONS = [
@@ -126,6 +133,19 @@ def parse_arms(spec):
         out.append(a if a in FREE_ARMS else int(a))
     return out
 
+# 기본 조건. --efforts 로 바꾼다(build_conditions 참고).
+# 2026-11-13 확인: thinking_level="medium" 도 먹힌다. 같은 문항에서 추론 토큰이
+#   low=0 / medium=822 / high=1862 로 단조 증가했다. 조용히 무시되지 않는다.
+#   BAZE 게이트웨이 캡처가 low,medium,high 라서, 직결도 같은 단계로 맞출 수 있다.
+#   그래야 두 경로를 비교할 때 변수가 '망 경로' 하나만 남는다.
+# 2026-11-13 기본값을 no_think,low,high -> low,medium,high 로 바꿨다.
+#   이유 둘. (1) BAZE 게이트웨이 캡처가 low,medium,high 라 단계를 맞춰야 두 경로
+#   비교에서 변수가 '망 경로' 하나만 남는다. (2) 직결에서 low 는 추론을 거의 안
+#   돌려 no_think 와 구분되지 않는다(추론 토큰 중앙값 0). no_think 를 빼고 medium
+#   을 넣어야 3분류가 실제로 3분류가 된다.
+#   옛 조건으로 돌리려면:  --efforts no_think,low,high
+DEFAULT_EFFORTS = "low,medium,high"
+
 CONDITIONS = [
     ("no_think",   None),
     ("think_low",  {"thinking_level": "low"}),
@@ -144,10 +164,94 @@ CONDITIONS = [
 #     → low vs high 는 정확히 일치(901=901). no 는 21바이트 초과.
 #       max_output_tokens 를 모든 조건에 넣으면서 no_think 에 설정 객체가 새로 생겨
 #       예상보다 바이트가 더 늘었기 때문. 그래서 67 -> 46 으로 내린다.
+# 기준은 'high'(4글자). no_think 의 46 은 thinking_config 객체가 통째로 빠져서
+# 생기는 차이이며 글자수로는 설명되지 않아 실측으로 잡은 값이다.
+PAD_BASE_HIGH = {"no_think": 46}
 PAD_CHARS = {"no_think": 46, "think_low": 1, "think_high": 0}
 
+
+def build_conditions(spec):
+    """'low,medium,high' -> ([(조건명, thinking_config dict|None), ...], 패딩표)
+
+    왜 패딩을 다시 계산하나:
+      요청 크기 누출을 막으려면 조건 간 up_bytes 가 같아야 한다. 그런데 effort
+      문자열 길이가 단계마다 다르다 — low(3) · high(4) · medium(6). 기존 표는
+      high 를 기준(패딩 0)으로 잡은 값이라, medium 이 들어오면 기준이 바뀐다.
+      medium 이 2바이트 더 길므로 나머지가 전부 2씩 더 받아야 한다.
+      no_think 는 설정 객체 자체가 빠지는 별개 사유라 실측값 46 에 그 2를 더한다.
+
+    확인 방법(필수): 캡처 뒤 parse_pcap 산출 CSV 에서 조건별 up_bytes 중앙값이
+      같은지 본다. 다르면 분류기가 추론이 아니라 설정 문자열을 읽는다.
+    """
+    efforts = [e.strip() for e in spec.split(",") if e.strip()]
+    if not efforts:
+        raise SystemExit("--efforts 가 비었다")
+    reals = [e for e in efforts if e != "no_think"]
+    width = max([len(e) for e in reals] + [len("high")])
+    conds, pad = [], {}
+    for e in efforts:
+        if e == "no_think":
+            conds.append(("no_think", None))
+            pad["no_think"] = PAD_BASE_HIGH["no_think"] + (width - len("high"))
+        else:
+            name = f"think_{e}"
+            conds.append((name, {"thinking_level": e}))
+            pad[name] = width - len(e)
+    return conds, pad
+
+
+def load_done(spec):
+    """이미 성공한 (q_idx, 조건, 반복) 집합을 옛 캡처 로그에서 읽는다.
+
+    왜 필요한가:
+      --limit 은 목록 앞에서 N개를 자르는 방식이라, 이어서 돌리면 어제 돈 문항을
+      또 돈다. 481문항을 하루 500콜로 3일에 나눠 담을 때 이대로면 2·3일차 호출이
+      거의 전부 중복이 되어 무료 할당량이 통째로 샌다.
+
+    왜 (문항, 조건, 반복) 단위인가:
+      문항 단위로 건너뛰면, 어제 세 조건 중 둘만 성공한 문항이 영영 안 채워진다.
+      한 칸이라도 비면 그 문항의 쌍 비교(low vs high)가 통째로 못 쓰게 된다.
+
+    error 가 null 인 줄만 센다. 실패한 줄은 안 돈 것으로 보고 다시 돈다.
+    """
+    done = set()
+    for path in [x.strip() for x in spec.split(",") if x.strip()]:
+        f = Path(path)
+        if not f.is_file():
+            raise SystemExit(f"--skip-done: 파일이 없다: {path}")
+        n = 0
+        for line in f.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue          # 중간에 죽어 잘린 마지막 줄
+            if r.get("error") is not None:
+                continue
+            if r.get("q_idx") is None or r.get("condition") is None:
+                continue
+            done.add((r["q_idx"], r["condition"], r.get("rep", 0)))
+            n += 1
+        print(f"[skip-done] {path}: 성공 {n}줄")
+    return done
+
 # 추론 폭주로 한계까지 가면 답이 안 나온다. 한계를 명시하고 그런 콜은 플래그로 걸러낸다.
-MAX_OUTPUT_TOKENS = 2048
+# 2026-11-13 2048 -> 8192.
+#   2048 에서는 medium/high 가 천장에 눌렸다. 5문항 시험 캡처에서 추론 토큰이
+#   1964 / 1965 / 1967 로 3토큰 범위에 뭉쳤고, 한 문항은 high(1681) < medium(1844)
+#   로 역전됐다. 패킷에도 그대로 찍혀 pkt_gap 중앙값이 medium 5264 / high 5414 로
+#   150ms 차이였고 down_bytes 는 medium 9018 > high 8118 로 뒤집혔다.
+#   그 상태로 재면 "medium vs high 구분이 어렵다" 가 모델 특성이 아니라 내가 건
+#   상한의 그림자가 된다. 선별(screen_qset)이 쓰던 8192 에 맞춘다.
+#   무료 등급은 콜 수로 세지 토큰으로 안 세므로 할당량 손해는 없다. 콜당 시간만 는다.
+MAX_OUTPUT_TOKENS = 8192
+
+# 캡처 재시도. 무료 등급 상한(분당 15콜)에 딱 붙여 돌리므로 429 가 수시로 난다.
+# 선별과 달리 캡처는 한 칸이 비면 그 문항의 쌍 비교가 통째로 날아간다.
+CAPTURE_RETRY = 4           # 첫 시도 + 재시도 3회
+CAPTURE_RETRY_WAIT = 8.0    # 초. 8 -> 16 -> 32. API 가 주는 retryDelay 가 5초대다.
 
 
 def run_one(client, question, think, pad, instr=INSTR, max_tok=None):
@@ -226,6 +330,56 @@ def run_one(client, question, think, pad, instr=INSTR, max_tok=None):
     }
 
 
+def _select_questions(args):
+    """--qset / --qfile / --limit 을 풀어 (문항, 템플릿id, 원본번호) 세 줄을 돌려준다.
+
+    세 줄은 길이·순서가 1:1 이다. 원본번호(keep)를 같이 돌려주는 이유:
+      로그의 q_idx 는 **잘라내기 전 원본 리스트에서의 위치**여야 한다. 잘라낸 리스트의
+      위치를 쓰면 나중에 문항 텍스트·템플릿을 되짚을 때 통째로 어긋난다.
+      (screen_qset._pick 도 같은 이유로 원본 번호를 유지한다.)
+
+    템플릿id 가 필요한 이유:
+      파라메트릭 갈래는 한 템플릿에서 변형 25개가 나온다(나이트 a1->h8, c3->f6, ...).
+      서로 닮아 독립 표본이 아니다. e2_snr 의 질문 단위 재표집이 q_idx 로 묶으면
+      변형 25개를 독립 클러스터 25개로 세어 신뢰구간이 가짜로 좁아진다.
+      그래서 로그에 family 를 같이 적어 분석 쪽에서 그걸로 묶게 한다.
+    """
+    if args.qset == "v2":
+        if QUESTIONS_V2_ALL is None:
+            raise SystemExit("questions_all import 실패 — python3 questions_all.py 로 확인하라")
+        base_q, base_f = QUESTIONS_V2_ALL, FAMILIES_V2_ALL
+    else:
+        # base 는 템플릿 개념이 없다. 문항 하나하나가 각자 클러스터다.
+        base_q = QUESTIONS
+        base_f = [f"base_{i:03d}" for i in range(len(QUESTIONS))]
+
+    idx = list(range(len(base_q)))
+
+    if args.qfile:
+        sel = json.loads(Path(args.qfile).read_text(encoding="utf-8"))
+        good = sel.get("good")
+        if not good:
+            raise SystemExit(f"{args.qfile}: 'good' 목록이 비었다 — 선별부터 끝내라")
+        # 선별 JSON 의 qset 과 지금 --qset 이 다르면 번호가 다른 리스트를 가리킨다.
+        if sel.get("qset") and sel["qset"] != args.qset:
+            raise SystemExit(
+                f"선별 파일은 qset={sel['qset']} 인데 --qset {args.qset} 로 돌리려 한다. "
+                "문항 번호가 서로 다른 리스트를 가리켜 전부 어긋난다.")
+        keep_set = set(good)
+        idx = [i for i in idx if i in keep_set]
+        print(f"선별 적용: {args.qfile} -> {len(idx)}문항")
+
+    if args.limit:
+        idx = idx[: args.limit]
+
+    qs = [base_q[i] for i in idx]
+    fams = [base_f[i] for i in idx]
+    n_fam = len(set(fams))
+    print(f"문항 {len(qs)}개 / 템플릿 {n_fam}개 "
+          f"(신뢰구간의 독립 표본 수는 문항이 아니라 템플릿 쪽이다)")
+    return qs, fams, idx
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--repeats", type=int, default=5)
@@ -236,6 +390,24 @@ def main():
                     help="시행 순서 섞기용 시드(재현 가능하게 고정)")
     ap.add_argument("--no-shuffle", action="store_true",
                     help="섞지 않고 예전처럼 순서대로(비교용)")
+    ap.add_argument("--block-shuffle", action="store_true",
+                    help="문항 단위 블록 셔플. 한 문항의 모든 조건을 연달아 찍고, "
+                         "블록 순서와 블록 안 순서만 섞는다. 무작위화 블록 설계라 "
+                         "조건과 시간이 엮이지 않으면서도, 도중에 할당량이 끊겨도 "
+                         "찍힌 문항은 조건이 다 모인다. "
+                         "(전면 셔플은 끊기면 반쪽짜리 문항만 잔뜩 남는다 — "
+                         "2026-11-17 v2rest8 에서 성공 475콜이 완전 문항 30개로만 남았다)")
+    ap.add_argument("--skip-done", default="",
+                    help="이미 돈 캡처 로그(jsonl, 쉼표로 여러 개). 그 안에서 성공한 "
+                         "(문항,조건,반복) 칸은 건너뛴다. 하루 할당량에 나눠 담을 때 필수")
+    ap.add_argument("--efforts", default=DEFAULT_EFFORTS,
+                    help="추론 단계(쉼표). 기본 no_think,low,high. "
+                         "BAZE 게이트웨이 캡처와 맞추려면 low,medium,high")
+    ap.add_argument("--qset", default="base", choices=["base", "v2"],
+                    help="base=하드코딩 30문항(1~3차 비교용), v2=questions_all 821문항")
+    ap.add_argument("--qfile", default="",
+                    help="선별 결과 JSON 경로. 그 안의 'good' 목록에 든 문항만 캡처한다. "
+                         "격차 없는 문항을 캡처하면 라벨만 다르고 신호가 없는 샘플이 된다.")
     ap.add_argument("--arms", default="0",
                     help="응답 길이 arm. 정수=답 뒤에 덧붙일 글자 수(길이 고정), "
                          "free_brief/free_full=길이 통제 없는 자유 응답. "
@@ -247,17 +419,47 @@ def main():
     if not key:
         raise SystemExit("GEMINI_API_KEY 없음")
     client = genai.Client(api_key=key)
-    qs = QUESTIONS[: args.limit] if args.limit else QUESTIONS
+    qs, fams, keep = _select_questions(args)
+    conditions, pad_chars = build_conditions(args.efforts)
+    print(f"조건: {', '.join(c for c, _ in conditions)}  패딩(공백수): {pad_chars}")
 
     # 전체 시행을 만든 뒤 섞는다. 조건 순서가 고정이면 시간 추세가 조건과 엉킨다.
+    # qi 는 잘라낸 리스트의 위치(qs[qi] 로 쓴다). 로그에는 원본 번호 keep[qi] 를 적는다.
     trials = [(qi, cond, think, rep, arm)
               for qi, _ in enumerate(qs)
-              for cond, think in CONDITIONS
+              for cond, think in conditions
               for rep in range(args.repeats)
               for arm in arms]
-    if not args.no_shuffle:
+    if args.skip_done:
+        done = load_done(args.skip_done)
+        before = len(trials)
+        # keep[qi] 가 원본 문항 번호다. 로그의 q_idx 와 같은 기준이어야 한다.
+        trials = [t for t in trials if (keep[t[0]], t[1], t[3]) not in done]
+        print(f"[skip-done] 건너뜀 {before - len(trials)}칸 / 남은 {len(trials)}칸")
+        if not trials:
+            raise SystemExit("[skip-done] 돌 칸이 없다. 이미 다 찍었다.")
+
+    if args.no_shuffle:
+        pass
+    elif args.block_shuffle:
+        # 문항별로 묶어 블록을 만든다. 블록 안(조건·반복·arm)만 섞고, 블록끼리도 섞는다.
+        # 조건이 실행 시각과 체계적으로 엮이지 않으므로 전면 셔플과 같은 보호를 받되,
+        # 중간에 끊겨도 "앞쪽 블록 = 완전한 문항" 이 보장된다.
+        rng = random.Random(args.seed)
+        blocks = {}
+        for t in trials:
+            blocks.setdefault(t[0], []).append(t)
+        order = list(blocks)
+        rng.shuffle(order)
+        trials = []
+        for qi in order:
+            b = blocks[qi]
+            rng.shuffle(b)
+            trials.extend(b)
+    else:
         random.Random(args.seed).shuffle(trials)
 
+    n_failed = [0]        # 끝내 실패한 콜 수. 마지막에 요약한다.
     logp = Path(args.log)
     logp.parent.mkdir(parents=True, exist_ok=True)
     total = len(trials)
@@ -265,15 +467,44 @@ def main():
     with open(logp, "w", encoding="utf-8") as f:
         for i, (qi, cond, think, rep, arm) in enumerate(trials, 1):
             instr, expect, max_tok = build_arm(arm)
-            try:
-                m = run_one(client, qs[qi], think, PAD_CHARS.get(cond, 0),
-                            instr=instr, max_tok=max_tok); m["error"] = None
-            except Exception as e:
-                m = {"error": f"{type(e).__name__}: {e}"}
+            # 재시도. 무료 등급은 분당 15콜이 상한이고 --sleep 4.0 이 정확히 그 상한이라
+            # 여유가 0 이다. 429 가 한 번 나면 그 (문항, 조건, 반복) 칸이 영구히 빈다.
+            # 빈 칸은 쌍 비교(같은 문항의 low vs high)를 통째로 못 쓰게 만든다.
+            #
+            # 캡처에서 재시도가 안전한 이유:
+            #   run_one 이 호출마다 t_start 를 새로 찍는다. parse_pcap 의 창은
+            #   [t_start, t_end + BUFFER_S] 라서 실패한 시도의 패킷은 창 밖에 남는다.
+            #   단 백오프가 BUFFER_S(=1.0초)보다 충분히 길어야 섞이지 않는다.
+            #   그리고 API 가 돌려주는 retryDelay 가 5초대라 8초부터 시작한다.
+            m, last_err = None, None
+            for attempt in range(CAPTURE_RETRY):
+                try:
+                    m = run_one(client, qs[qi], think, pad_chars.get(cond, 0),
+                                instr=instr, max_tok=max_tok)
+                    m["error"] = None
+                    last_err = None
+                    break
+                except Exception as e:
+                    last_err = e
+                    if attempt < CAPTURE_RETRY - 1:
+                        wait = CAPTURE_RETRY_WAIT * (2 ** attempt)
+                        print(f"      재시도 {attempt + 1}/{CAPTURE_RETRY - 1} "
+                              f"({type(e).__name__}) — {wait:.0f}초 대기")
+                        time.sleep(wait)
+            if last_err is not None:
+                m = {"error": f"{type(last_err).__name__}: {last_err}"}
+                n_failed[0] += 1
             # order_idx = 실제 실행 순서. 나중에 시간 추세가 남았는지 확인할 때 쓴다.
             # complied = 지시한 글자 수를 정확히 지켰는가. arm 이 길수록 떨어질 수 있어,
             #   분석에서 쓸 수 있는 유효 표본이 얼마나 남는지 재는 데 쓴다.
-            m.update({"idx": i, "order_idx": i, "q_idx": qi, "condition": cond, "rep": rep,
+            m.update({"idx": i, "order_idx": i,
+                      # 원본 리스트에서의 위치. 잘라낸 위치를 쓰면 문항을 되짚을 수 없다.
+                      "q_idx": keep[qi],
+                      # 클러스터 키. 분석(e2_snr)이 이걸로 묶어야 변형 25개가
+                      # 독립 표본 25개로 둔갑하지 않는다.
+                      "family": fams[qi],
+                      "qset": args.qset,
+                      "condition": cond, "rep": rep,
                       "arm": arm, "expect_chars": expect,
                       # 자유 arm 은 기대 길이가 없으므로 준수 판정 대상이 아니다(None).
                       "complied": None if expect is None else m.get("answer_chars") == expect,
@@ -288,6 +519,12 @@ def main():
             print(f"[{i}/{total}] q{qi} {cond:10s} arm={str(arm):<10s} {tag}")
             time.sleep(args.sleep)
     print(f"\n[done] 로그 -> {logp}")
+    if n_failed[0]:
+        pct = 100.0 * n_failed[0] / total
+        print(f"  [경고] 끝내 실패한 콜 {n_failed[0]}/{total} ({pct:.1f}%) — "
+              f"그 (문항, 조건, 반복) 칸은 비어 있다")
+        print("         쌍 비교는 같은 문항의 두 조건이 다 있어야 성립한다. "
+              "분석 전에 짝 없는 행을 걸러라")
     print("→ 확인 1: answer_chars 가 조건 무관 1로 고정됐는지(길이 통제 성공 여부)")
     print("→ 확인 2: truncated=true 가 몇 건인지(추론 폭주로 답이 없던 콜 — 분석서 제외)")
     print("→ 확인 3: 파싱 후 조건별 up_bytes 중앙값이 같은지(요청 크기 통제 성공 여부)")

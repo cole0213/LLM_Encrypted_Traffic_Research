@@ -1,0 +1,2698 @@
+{
+ "provider": "gemini",
+ "model": "gemini-3.5-flash-lite",
+ "qset": "v2",
+ "efforts": [
+  "no_think",
+  "low",
+  "high"
+ ],
+ "min_spread": 100,
+ "families": [
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "knight_path",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "jug",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "river_cross",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "lattice_block",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "queens_count",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "liar",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "order_line",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "domino_tiling",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "subset_sum",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "hanoi_adjacent",
+  "fermi_000",
+  "fermi_001",
+  "fermi_002",
+  "fermi_003",
+  "fermi_004",
+  "fermi_005",
+  "fermi_006",
+  "fermi_007",
+  "fermi_008",
+  "fermi_009",
+  "fermi_010",
+  "fermi_011",
+  "fermi_012",
+  "fermi_013",
+  "fermi_014",
+  "fermi_015",
+  "fermi_016",
+  "fermi_017",
+  "fermi_018",
+  "fermi_019",
+  "fermi_020",
+  "fermi_021",
+  "fermi_022",
+  "fermi_023",
+  "fermi_024",
+  "fermi_025",
+  "fermi_026",
+  "fermi_027",
+  "fermi_028",
+  "fermi_029",
+  "fermi_030",
+  "fermi_031",
+  "fermi_032",
+  "fermi_033",
+  "fermi_034",
+  "fermi_035",
+  "fermi_036",
+  "fermi_037",
+  "fermi_038",
+  "fermi_039",
+  "fermi_040",
+  "fermi_041",
+  "fermi_042",
+  "fermi_043",
+  "fermi_044",
+  "fermi_045",
+  "fermi_046",
+  "fermi_047",
+  "fermi_048",
+  "fermi_049",
+  "fermi_050",
+  "fermi_051",
+  "fermi_052",
+  "fermi_053",
+  "fermi_054",
+  "fermi_055",
+  "fermi_056",
+  "fermi_057",
+  "fermi_058",
+  "fermi_059",
+  "fermi_060",
+  "fermi_061",
+  "fermi_062",
+  "fermi_063",
+  "fermi_064",
+  "fermi_065",
+  "fermi_066",
+  "fermi_067",
+  "fermi_068",
+  "fermi_069",
+  "fermi_070",
+  "fermi_071",
+  "fermi_072",
+  "fermi_073",
+  "fermi_074",
+  "fermi_075",
+  "fermi_076",
+  "fermi_077",
+  "fermi_078",
+  "fermi_079",
+  "fermi_080",
+  "fermi_081",
+  "fermi_082",
+  "fermi_083",
+  "fermi_084",
+  "fermi_085",
+  "fermi_086",
+  "fermi_087",
+  "fermi_088",
+  "fermi_089",
+  "fermi_090",
+  "fermi_091",
+  "fermi_092",
+  "fermi_093",
+  "fermi_094",
+  "fermi_095",
+  "fermi_096",
+  "fermi_097",
+  "fermi_098",
+  "fermi_099",
+  "fermi_100",
+  "fermi_101",
+  "fermi_102",
+  "fermi_103",
+  "fermi_104",
+  "fermi_105",
+  "fermi_106",
+  "fermi_107",
+  "fermi_108",
+  "fermi_109",
+  "fermi_110",
+  "fermi_111",
+  "fermi_112",
+  "fermi_113",
+  "fermi_114",
+  "fermi_115",
+  "fermi_116",
+  "fermi_117",
+  "fermi_118",
+  "fermi_119",
+  "fermi_120",
+  "fermi_121",
+  "fermi_122",
+  "fermi_123",
+  "fermi_124",
+  "fermi_125",
+  "fermi_126",
+  "fermi_127",
+  "fermi_128",
+  "fermi_129",
+  "fermi_130",
+  "fermi_131",
+  "fermi_132",
+  "fermi_133",
+  "fermi_134",
+  "fermi_135",
+  "fermi_136",
+  "fermi_137",
+  "fermi_138",
+  "fermi_139",
+  "fermi_140",
+  "fermi_141",
+  "fermi_142",
+  "fermi_143",
+  "fermi_144",
+  "fermi_145",
+  "fermi_146",
+  "fermi_147",
+  "fermi_148",
+  "fermi_149",
+  "fermi_150",
+  "fermi_151",
+  "fermi_152",
+  "fermi_153",
+  "fermi_154",
+  "fermi_155",
+  "fermi_156",
+  "fermi_157",
+  "fermi_158",
+  "fermi_159",
+  "fermi_160",
+  "fermi_161",
+  "fermi_162",
+  "fermi_163",
+  "fermi_164",
+  "fermi_165",
+  "fermi_166",
+  "fermi_167",
+  "fermi_168",
+  "fermi_169",
+  "fermi_170",
+  "fermi_171",
+  "fermi_172",
+  "fermi_173",
+  "fermi_174",
+  "fermi_175",
+  "fermi_176",
+  "fermi_177",
+  "fermi_178",
+  "fermi_179",
+  "fermi_180",
+  "fermi_181",
+  "fermi_182",
+  "fermi_183",
+  "fermi_184",
+  "fermi_185",
+  "fermi_186",
+  "fermi_187",
+  "fermi_188",
+  "fermi_189",
+  "fermi_190",
+  "fermi_191",
+  "fermi_192",
+  "fermi_193",
+  "fermi_194",
+  "fermi_195",
+  "fermi_196",
+  "fermi_197",
+  "fermi_198",
+  "fermi_199",
+  "fermi_200",
+  "fermi_201",
+  "fermi_202",
+  "fermi_203",
+  "fermi_204",
+  "fermi_205",
+  "fermi_206",
+  "fermi_207",
+  "fermi_208",
+  "fermi_209",
+  "fermi_210",
+  "fermi_211",
+  "fermi_212",
+  "fermi_213",
+  "fermi_214",
+  "fermi_215",
+  "fermi_216",
+  "fermi_217",
+  "fermi_218",
+  "fermi_219",
+  "fermi_220",
+  "fermi_221",
+  "fermi_222",
+  "fermi_223",
+  "fermi_224",
+  "fermi_225",
+  "fermi_226",
+  "fermi_227",
+  "fermi_228",
+  "fermi_229",
+  "fermi_230",
+  "fermi_231",
+  "fermi_232",
+  "fermi_233",
+  "fermi_234",
+  "fermi_235",
+  "fermi_236",
+  "fermi_237",
+  "dilemma_000",
+  "dilemma_001",
+  "dilemma_002",
+  "dilemma_003",
+  "dilemma_004",
+  "dilemma_005",
+  "dilemma_006",
+  "dilemma_007",
+  "dilemma_008",
+  "dilemma_009",
+  "dilemma_010",
+  "dilemma_011",
+  "dilemma_012",
+  "dilemma_013",
+  "dilemma_014",
+  "dilemma_015",
+  "dilemma_016",
+  "dilemma_017",
+  "dilemma_018",
+  "dilemma_019",
+  "dilemma_020",
+  "dilemma_021",
+  "dilemma_022",
+  "dilemma_023",
+  "dilemma_024",
+  "dilemma_025",
+  "dilemma_026",
+  "dilemma_027",
+  "dilemma_028",
+  "dilemma_029",
+  "dilemma_030",
+  "dilemma_031",
+  "dilemma_032",
+  "dilemma_033",
+  "dilemma_034",
+  "dilemma_035",
+  "dilemma_036",
+  "dilemma_037",
+  "dilemma_038",
+  "dilemma_039",
+  "dilemma_040",
+  "dilemma_041",
+  "dilemma_042",
+  "dilemma_043",
+  "dilemma_044",
+  "dilemma_045",
+  "dilemma_046",
+  "dilemma_047",
+  "dilemma_048",
+  "dilemma_049",
+  "dilemma_050",
+  "dilemma_051",
+  "dilemma_052",
+  "dilemma_053",
+  "dilemma_054",
+  "dilemma_055",
+  "dilemma_056",
+  "dilemma_057",
+  "dilemma_058",
+  "dilemma_059",
+  "dilemma_060",
+  "dilemma_061",
+  "dilemma_062",
+  "dilemma_063",
+  "dilemma_064",
+  "dilemma_065",
+  "dilemma_066",
+  "dilemma_067",
+  "dilemma_068",
+  "dilemma_069",
+  "dilemma_070",
+  "dilemma_071",
+  "dilemma_072",
+  "dilemma_073",
+  "dilemma_074",
+  "dilemma_075",
+  "dilemma_076",
+  "dilemma_077",
+  "dilemma_078",
+  "dilemma_079",
+  "dilemma_080",
+  "dilemma_081",
+  "dilemma_082",
+  "dilemma_083",
+  "dilemma_084",
+  "dilemma_085",
+  "dilemma_086",
+  "dilemma_087",
+  "dilemma_088",
+  "dilemma_089",
+  "dilemma_090",
+  "dilemma_091",
+  "dilemma_092",
+  "dilemma_093",
+  "dilemma_094",
+  "dilemma_095",
+  "dilemma_096",
+  "dilemma_097",
+  "dilemma_098",
+  "dilemma_099",
+  "dilemma_100",
+  "dilemma_101",
+  "dilemma_102",
+  "dilemma_103",
+  "dilemma_104",
+  "dilemma_105",
+  "dilemma_106",
+  "dilemma_107",
+  "dilemma_108",
+  "dilemma_109",
+  "dilemma_110",
+  "dilemma_111",
+  "dilemma_112",
+  "dilemma_113",
+  "dilemma_114",
+  "dilemma_115",
+  "dilemma_116",
+  "dilemma_117",
+  "dilemma_118",
+  "dilemma_119",
+  "dilemma_120",
+  "dilemma_121",
+  "dilemma_122",
+  "dilemma_123",
+  "dilemma_124",
+  "dilemma_125",
+  "dilemma_126",
+  "dilemma_127",
+  "dilemma_128",
+  "dilemma_129",
+  "dilemma_130",
+  "dilemma_131",
+  "dilemma_132",
+  "dilemma_133",
+  "dilemma_134",
+  "dilemma_135",
+  "dilemma_136",
+  "dilemma_137",
+  "dilemma_138",
+  "dilemma_139",
+  "dilemma_140",
+  "dilemma_141",
+  "dilemma_142",
+  "dilemma_143",
+  "dilemma_144",
+  "dilemma_145",
+  "dilemma_146",
+  "dilemma_147",
+  "dilemma_148",
+  "dilemma_149",
+  "dilemma_150",
+  "dilemma_151",
+  "dilemma_152",
+  "counterfactual_000",
+  "counterfactual_001",
+  "counterfactual_002",
+  "counterfactual_003",
+  "counterfactual_004",
+  "counterfactual_005",
+  "counterfactual_006",
+  "counterfactual_007",
+  "counterfactual_008",
+  "counterfactual_009",
+  "counterfactual_010",
+  "counterfactual_011",
+  "counterfactual_012",
+  "counterfactual_013",
+  "counterfactual_014",
+  "counterfactual_015",
+  "counterfactual_016",
+  "counterfactual_017",
+  "counterfactual_018",
+  "counterfactual_019",
+  "counterfactual_020",
+  "counterfactual_021",
+  "counterfactual_022",
+  "counterfactual_023",
+  "counterfactual_024",
+  "counterfactual_025",
+  "counterfactual_026",
+  "counterfactual_027",
+  "counterfactual_028",
+  "counterfactual_029",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "alibi",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "truth_count",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "witness_attr",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "seating_circle",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "age_deduce",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid",
+  "schedule_grid"
+ ],
+ "good": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  31,
+  32,
+  33,
+  34,
+  35,
+  36,
+  37,
+  38,
+  39,
+  40,
+  41,
+  42,
+  43,
+  44,
+  45,
+  46,
+  47,
+  48,
+  49,
+  50,
+  51,
+  52,
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60,
+  61,
+  62,
+  63,
+  64,
+  65,
+  66,
+  67,
+  68,
+  69,
+  70,
+  71,
+  72,
+  73,
+  74,
+  75,
+  76,
+  77,
+  78,
+  79,
+  80,
+  81,
+  82,
+  83,
+  84,
+  85,
+  86,
+  87,
+  88,
+  89,
+  91,
+  92,
+  93,
+  94,
+  95,
+  96,
+  97,
+  98,
+  100,
+  101,
+  102,
+  103,
+  104,
+  106,
+  107,
+  108,
+  109,
+  110,
+  111,
+  112
+ ],
+ "rows": [
+  {
+   "q": 0,
+   "spread": 1133,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1133
+   ],
+   "text": "체스판에서 나이트가 c1에서 h5까지 가는 최소 이동 수는? A) 3 B"
+  },
+  {
+   "q": 1,
+   "spread": 1576,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    320,
+    1576
+   ],
+   "text": "체스판에서 나이트가 h2에서 d8까지 가는 최소 이동 수는? A) 5 B"
+  },
+  {
+   "q": 2,
+   "spread": 2319,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    2319
+   ],
+   "text": "체스판에서 나이트가 g7에서 d7까지 가는 최소 이동 수는? A) 6 B"
+  },
+  {
+   "q": 3,
+   "spread": 1323,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1323
+   ],
+   "text": "체스판에서 나이트가 d6에서 b1까지 가는 최소 이동 수는? A) 1 B"
+  },
+  {
+   "q": 4,
+   "spread": 3065,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3065
+   ],
+   "text": "체스판에서 나이트가 e3에서 h7까지 가는 최소 이동 수는? A) 3 B"
+  },
+  {
+   "q": 5,
+   "spread": 1391,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1391
+   ],
+   "text": "체스판에서 나이트가 b1에서 g3까지 가는 최소 이동 수는? A) 6 B"
+  },
+  {
+   "q": 6,
+   "spread": 5003,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    5003
+   ],
+   "text": "체스판에서 나이트가 e8에서 c6까지 가는 최소 이동 수는? A) 2 B"
+  },
+  {
+   "q": 7,
+   "spread": 3605,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3605
+   ],
+   "text": "체스판에서 나이트가 f8에서 g2까지 가는 최소 이동 수는? A) 6 B"
+  },
+  {
+   "q": 8,
+   "spread": 7049,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    7049
+   ],
+   "text": "체스판에서 나이트가 a7에서 h5까지 가는 최소 이동 수는? A) 5 B"
+  },
+  {
+   "q": 9,
+   "spread": 3100,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3100
+   ],
+   "text": "체스판에서 나이트가 d8에서 g8까지 가는 최소 이동 수는? A) 6 B"
+  },
+  {
+   "q": 10,
+   "spread": 2148,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    2148
+   ],
+   "text": "체스판에서 나이트가 h5에서 b8까지 가는 최소 이동 수는? A) 1 B"
+  },
+  {
+   "q": 11,
+   "spread": 6063,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    1473,
+    6063
+   ],
+   "text": "체스판에서 나이트가 g1에서 g4까지 가는 최소 이동 수는? A) 6 B"
+  },
+  {
+   "q": 12,
+   "spread": 3088,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    2643,
+    3088
+   ],
+   "text": "체스판에서 나이트가 e7에서 a6까지 가는 최소 이동 수는? A) 3 B"
+  },
+  {
+   "q": 13,
+   "spread": 6717,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    6717
+   ],
+   "text": "체스판에서 나이트가 f8에서 b1까지 가는 최소 이동 수는? A) 3 B"
+  },
+  {
+   "q": 14,
+   "spread": 7864,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    7864
+   ],
+   "text": "체스판에서 나이트가 a2에서 h4까지 가는 최소 이동 수는? A) 7 B"
+  },
+  {
+   "q": 15,
+   "spread": 2712,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    2712
+   ],
+   "text": "체스판에서 나이트가 g8에서 h4까지 가는 최소 이동 수는? A) 6 B"
+  },
+  {
+   "q": 16,
+   "spread": 3419,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    2103,
+    3419
+   ],
+   "text": "체스판에서 나이트가 e6에서 d2까지 가는 최소 이동 수는? A) 3 B"
+  },
+  {
+   "q": 17,
+   "spread": 1075,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1075
+   ],
+   "text": "체스판에서 나이트가 g2에서 g7까지 가는 최소 이동 수는? A) 4 B"
+  },
+  {
+   "q": 18,
+   "spread": 3409,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3409
+   ],
+   "text": "체스판에서 나이트가 f5에서 c3까지 가는 최소 이동 수는? A) 4 B"
+  },
+  {
+   "q": 19,
+   "spread": 5100,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    5100
+   ],
+   "text": "체스판에서 나이트가 a4에서 d4까지 가는 최소 이동 수는? A) 1 B"
+  },
+  {
+   "q": 20,
+   "spread": 7864,
+   "trunc": 0,
+   "nonc": 1,
+   "vals": [
+    0,
+    3529,
+    7864
+   ],
+   "text": "체스판에서 나이트가 b4에서 d6까지 가는 최소 이동 수는? A) 4 B"
+  },
+  {
+   "q": 21,
+   "spread": 5048,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    5048
+   ],
+   "text": "체스판에서 나이트가 f1에서 g6까지 가는 최소 이동 수는? A) 2 B"
+  },
+  {
+   "q": 22,
+   "spread": 762,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    762,
+    680
+   ],
+   "text": "체스판에서 나이트가 b1에서 d6까지 가는 최소 이동 수는? A) 1 B"
+  },
+  {
+   "q": 23,
+   "spread": 1994,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1994
+   ],
+   "text": "체스판에서 나이트가 a3에서 d1까지 가는 최소 이동 수는? A) 1 B"
+  },
+  {
+   "q": 24,
+   "spread": 2145,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    2145
+   ],
+   "text": "체스판에서 나이트가 h3에서 f8까지 가는 최소 이동 수는? A) 3 B"
+  },
+  {
+   "q": 25,
+   "spread": 2933,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    2933
+   ],
+   "text": "8리터와 3리터 물통만으로 정확히 1리터를 만드는 최소 조작 횟수는? A"
+  },
+  {
+   "q": 26,
+   "spread": 7860,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    7860
+   ],
+   "text": "17리터와 3리터 물통만으로 정확히 1리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 27,
+   "spread": 1151,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1151
+   ],
+   "text": "16리터와 13리터 물통만으로 정확히 10리터를 만드는 최소 조작 횟수는"
+  },
+  {
+   "q": 28,
+   "spread": 2147,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    987,
+    2147
+   ],
+   "text": "15리터와 11리터 물통만으로 정확히 3리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 29,
+   "spread": 3750,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3750
+   ],
+   "text": "10리터와 3리터 물통만으로 정확히 2리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 30,
+   "spread": 5853,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    858,
+    5853
+   ],
+   "text": "12리터와 7리터 물통만으로 정확히 3리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 31,
+   "spread": 1515,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1515
+   ],
+   "text": "13리터와 6리터 물통만으로 정확히 1리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 32,
+   "spread": 1832,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1832
+   ],
+   "text": "16리터와 6리터 물통만으로 정확히 2리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 33,
+   "spread": 400,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    400
+   ],
+   "text": "11리터와 6리터 물통만으로 정확히 1리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 34,
+   "spread": 2352,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    2352
+   ],
+   "text": "17리터와 6리터 물통만으로 정확히 5리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 35,
+   "spread": 4549,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    4549
+   ],
+   "text": "11리터와 4리터 물통만으로 정확히 2리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 36,
+   "spread": 1257,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1257
+   ],
+   "text": "12리터와 7리터 물통만으로 정확히 4리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 37,
+   "spread": 1572,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1572
+   ],
+   "text": "14리터와 11리터 물통만으로 정확히 5리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 38,
+   "spread": 2215,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    2215
+   ],
+   "text": "13리터와 5리터 물통만으로 정확히 2리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 39,
+   "spread": 1175,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1175
+   ],
+   "text": "14리터와 5리터 물통만으로 정확히 4리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 40,
+   "spread": 1606,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1606
+   ],
+   "text": "8리터와 3리터 물통만으로 정확히 2리터를 만드는 최소 조작 횟수는? A"
+  },
+  {
+   "q": 41,
+   "spread": 1665,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    810,
+    1665
+   ],
+   "text": "15리터와 4리터 물통만으로 정확히 3리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 42,
+   "spread": 2048,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    2048
+   ],
+   "text": "9리터와 5리터 물통만으로 정확히 3리터를 만드는 최소 조작 횟수는? A"
+  },
+  {
+   "q": 43,
+   "spread": 2624,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    224,
+    2624
+   ],
+   "text": "10리터와 4리터 물통만으로 정확히 2리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 44,
+   "spread": 2351,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    1156,
+    2351
+   ],
+   "text": "16리터와 10리터 물통만으로 정확히 8리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 45,
+   "spread": 3261,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3261
+   ],
+   "text": "9리터와 4리터 물통만으로 정확히 3리터를 만드는 최소 조작 횟수는? A"
+  },
+  {
+   "q": 46,
+   "spread": 2130,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    2130
+   ],
+   "text": "11리터와 9리터 물통만으로 정확히 7리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 47,
+   "spread": 1425,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1425
+   ],
+   "text": "14리터와 11리터 물통만으로 정확히 6리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 48,
+   "spread": 4548,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    4548
+   ],
+   "text": "17리터와 4리터 물통만으로 정확히 3리터를 만드는 최소 조작 횟수는?"
+  },
+  {
+   "q": 49,
+   "spread": 5481,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    5481
+   ],
+   "text": "14리터와 13리터 물통만으로 정확히 11리터를 만드는 최소 조작 횟수는"
+  },
+  {
+   "q": 50,
+   "spread": 7770,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    1487,
+    7770
+   ],
+   "text": "선교사 5명과 식인종 2명이 2인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 51,
+   "spread": 6399,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    6399
+   ],
+   "text": "선교사 7명과 식인종 4명이 2인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 52,
+   "spread": 4457,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    720,
+    4457
+   ],
+   "text": "선교사 8명과 식인종 7명이 2인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 53,
+   "spread": 4217,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    1602,
+    4217
+   ],
+   "text": "선교사 4명과 식인종 3명이 2인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 54,
+   "spread": 5223,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    5223
+   ],
+   "text": "선교사 7명과 식인종 4명이 4인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 55,
+   "spread": 7344,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    7344
+   ],
+   "text": "선교사 8명과 식인종 2명이 2인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 56,
+   "spread": 3738,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3738
+   ],
+   "text": "선교사 8명과 식인종 3명이 4인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 57,
+   "spread": 7862,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    255,
+    7862
+   ],
+   "text": "선교사 7명과 식인종 2명이 3인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 58,
+   "spread": 7145,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    1231,
+    7145
+   ],
+   "text": "선교사 8명과 식인종 4명이 4인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 59,
+   "spread": 7860,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    7860
+   ],
+   "text": "선교사 7명과 식인종 3명이 2인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 60,
+   "spread": 7860,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    7860
+   ],
+   "text": "선교사 8명과 식인종 4명이 2인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 61,
+   "spread": 7862,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    643,
+    7862
+   ],
+   "text": "선교사 6명과 식인종 2명이 2인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 62,
+   "spread": 7863,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    970,
+    7863
+   ],
+   "text": "선교사 7명과 식인종 6명이 3인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 63,
+   "spread": 7862,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    364,
+    7862
+   ],
+   "text": "선교사 6명과 식인종 5명이 2인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 64,
+   "spread": 5128,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    1240,
+    5128
+   ],
+   "text": "선교사 5명과 식인종 4명이 4인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 65,
+   "spread": 5329,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    5329
+   ],
+   "text": "선교사 6명과 식인종 6명이 4인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 66,
+   "spread": 7444,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    756,
+    7444
+   ],
+   "text": "선교사 8명과 식인종 3명이 3인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 67,
+   "spread": 5362,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    734,
+    5362
+   ],
+   "text": "선교사 6명과 식인종 3명이 4인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 68,
+   "spread": 7863,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    1472,
+    7863
+   ],
+   "text": "선교사 5명과 식인종 5명이 3인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 69,
+   "spread": 4950,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    4950
+   ],
+   "text": "선교사 5명과 식인종 4명이 3인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 70,
+   "spread": 4881,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    2137,
+    4881
+   ],
+   "text": "선교사 3명과 식인종 2명이 2인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 71,
+   "spread": 6039,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    1193,
+    6039
+   ],
+   "text": "선교사 8명과 식인종 2명이 4인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 72,
+   "spread": 7700,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    875,
+    7700
+   ],
+   "text": "선교사 8명과 식인종 8명이 4인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 73,
+   "spread": 6140,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    6140
+   ],
+   "text": "선교사 5명과 식인종 2명이 3인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 74,
+   "spread": 4217,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    4217
+   ],
+   "text": "선교사 6명과 식인종 2명이 3인승 배로 강을 건넌다. 배에서든 양쪽 기"
+  },
+  {
+   "q": 75,
+   "spread": 1417,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1417
+   ],
+   "text": "6x3 격자에서 (0,0)부터 (6,3)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 76,
+   "spread": 2832,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    2832
+   ],
+   "text": "6x5 격자에서 (0,0)부터 (6,5)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 77,
+   "spread": 3044,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3044
+   ],
+   "text": "6x6 격자에서 (0,0)부터 (6,6)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 78,
+   "spread": 1797,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1797
+   ],
+   "text": "6x4 격자에서 (0,0)부터 (6,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 79,
+   "spread": 1136,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1136
+   ],
+   "text": "4x6 격자에서 (0,0)부터 (4,6)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 80,
+   "spread": 1829,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1829
+   ],
+   "text": "3x4 격자에서 (0,0)부터 (3,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 81,
+   "spread": 3565,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3565
+   ],
+   "text": "6x4 격자에서 (0,0)부터 (6,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 82,
+   "spread": 4609,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    4609
+   ],
+   "text": "6x4 격자에서 (0,0)부터 (6,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 83,
+   "spread": 3559,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3559
+   ],
+   "text": "6x5 격자에서 (0,0)부터 (6,5)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 84,
+   "spread": 3835,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    2940,
+    3835
+   ],
+   "text": "6x4 격자에서 (0,0)부터 (6,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 85,
+   "spread": 981,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    981
+   ],
+   "text": "4x6 격자에서 (0,0)부터 (4,6)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 86,
+   "spread": 501,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    501
+   ],
+   "text": "3x3 격자에서 (0,0)부터 (3,3)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 87,
+   "spread": 4086,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    4086
+   ],
+   "text": "6x4 격자에서 (0,0)부터 (6,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 88,
+   "spread": 1472,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1472
+   ],
+   "text": "6x4 격자에서 (0,0)부터 (6,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 89,
+   "spread": 775,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    775
+   ],
+   "text": "5x4 격자에서 (0,0)부터 (5,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 90,
+   "spread": 1282,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    0,
+    1282
+   ],
+   "text": "4x6 격자에서 (0,0)부터 (4,6)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 91,
+   "spread": 759,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    287,
+    759
+   ],
+   "text": "4x4 격자에서 (0,0)부터 (4,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 92,
+   "spread": 1849,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    1849
+   ],
+   "text": "3x6 격자에서 (0,0)부터 (3,6)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 93,
+   "spread": 3450,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3450
+   ],
+   "text": "6x4 격자에서 (0,0)부터 (6,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 94,
+   "spread": 3736,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3736
+   ],
+   "text": "4x5 격자에서 (0,0)부터 (4,5)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 95,
+   "spread": 4107,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    4107
+   ],
+   "text": "5x6 격자에서 (0,0)부터 (5,6)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 96,
+   "spread": 1624,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    347,
+    1624
+   ],
+   "text": "3x6 격자에서 (0,0)부터 (3,6)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 97,
+   "spread": 4197,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    4197
+   ],
+   "text": "6x4 격자에서 (0,0)부터 (6,4)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 98,
+   "spread": 4053,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    4053
+   ],
+   "text": "3x5 격자에서 (0,0)부터 (3,5)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 99,
+   "spread": 7865,
+   "trunc": 0,
+   "nonc": 1,
+   "vals": [
+    0,
+    0,
+    7865
+   ],
+   "text": "4x5 격자에서 (0,0)부터 (4,5)까지 오른쪽·위로만 이동한다. 교"
+  },
+  {
+   "q": 100,
+   "spread": 276,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    276
+   ],
+   "text": "7x7 체스판에 퀸 7개를 서로 공격받지 않게 놓는 서로 다른 배치의 수"
+  },
+  {
+   "q": 101,
+   "spread": 4230,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    2978,
+    4230
+   ],
+   "text": "5x5 체스판에 퀸 5개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 102,
+   "spread": 7860,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    848,
+    7860
+   ],
+   "text": "7x7 체스판에 퀸 7개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 103,
+   "spread": 7861,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    707,
+    7861
+   ],
+   "text": "8x8 체스판에 퀸 8개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 104,
+   "spread": 6821,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    6821
+   ],
+   "text": "5x5 체스판에 퀸 5개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 105,
+   "spread": 7865,
+   "trunc": 0,
+   "nonc": 1,
+   "vals": [
+    0,
+    949,
+    7865
+   ],
+   "text": "6x6 체스판에 퀸 6개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 106,
+   "spread": 7431,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    876,
+    7431
+   ],
+   "text": "6x6 체스판에 퀸 6개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 107,
+   "spread": 383,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    383
+   ],
+   "text": "9x9 체스판에 퀸 9개를 서로 공격받지 않게 놓는 서로 다른 배치의 수"
+  },
+  {
+   "q": 108,
+   "spread": 7860,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    948,
+    7860
+   ],
+   "text": "9x9 체스판에 퀸 9개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 109,
+   "spread": 3354,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    3354
+   ],
+   "text": "6x6 체스판에 퀸 6개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 110,
+   "spread": 7863,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    7863
+   ],
+   "text": "9x9 체스판에 퀸 9개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 111,
+   "spread": 7865,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    7865
+   ],
+   "text": "7x7 체스판에 퀸 7개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 112,
+   "spread": 7862,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    7862
+   ],
+   "text": "7x7 체스판에 퀸 7개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 113,
+   "spread": 6080,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    1244,
+    7324
+   ],
+   "text": "9x9 체스판에 퀸 9개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 114,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    4738
+   ],
+   "text": "5x5 체스판에 퀸 5개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 115,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "7x7 체스판에 퀸 7개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 116,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "7x7 체스판에 퀸 7개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 117,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "9x9 체스판에 퀸 9개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 118,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "8x8 체스판에 퀸 8개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 119,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "5x5 체스판에 퀸 5개를 서로 공격받지 않게 놓는 서로 다른 배치의 수"
+  },
+  {
+   "q": 120,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "6x6 체스판에 퀸 6개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 121,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "8x8 체스판에 퀸 8개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 122,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "9x9 체스판에 퀸 9개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 123,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "8x8 체스판에 퀸 8개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 124,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "5x5 체스판에 퀸 5개를 서로 공격받지 않게 놓되 첫 번째 행의 퀸은"
+  },
+  {
+   "q": 125,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    634,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"우리 중"
+  },
+  {
+   "q": 126,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"정는 거짓"
+  },
+  {
+   "q": 127,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"우리 중"
+  },
+  {
+   "q": 128,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"우리 중"
+  },
+  {
+   "q": 129,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"우리 중"
+  },
+  {
+   "q": 130,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"정는 정직"
+  },
+  {
+   "q": 131,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    697,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"을는 정직"
+  },
+  {
+   "q": 132,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"우리 중"
+  },
+  {
+   "q": 133,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    1106
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"우리 중"
+  },
+  {
+   "q": 134,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"을는 거짓"
+  },
+  {
+   "q": 135,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    2003
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"우리 중"
+  },
+  {
+   "q": 136,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"정는 정직"
+  },
+  {
+   "q": 137,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"우리 중"
+  },
+  {
+   "q": 138,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"을는 정직"
+  },
+  {
+   "q": 139,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"정는 거짓"
+  },
+  {
+   "q": 140,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"을는 거짓"
+  },
+  {
+   "q": 141,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"을는 정직"
+  },
+  {
+   "q": 142,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    null,
+    null,
+    null
+   ],
+   "text": "정직한 사람은 참만 말하고 거짓말쟁이는 거짓만 말한다. 갑: \"무는 정직"
+  }
+ ],
+ "incomplete": [
+  90,
+  113,
+  114,
+  115,
+  116,
+  117,
+  118,
+  119,
+  120,
+  121,
+  122,
+  123,
+  124,
+  125,
+  126,
+  127,
+  128,
+  129,
+  130,
+  131,
+  132,
+  133,
+  134,
+  135,
+  136,
+  137,
+  138,
+  139,
+  140,
+  141,
+  142
+ ],
+ "errors": [],
+ "recovered_from": "out/screen_gemini_v2_full.log"
+}
