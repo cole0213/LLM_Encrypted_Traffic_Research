@@ -347,6 +347,16 @@ def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
     reasoning_chars = 0
     # 추론 중 빈 keep-alive 청크가 바이트를 밀어올렸을 가능성을 배제하기 위한 대조.
     chunk_count = 0
+    # 암호화된 사고 서명(Responses 의 reasoning item 안 encrypted_content).
+    # Claude 의 thoughtSignature / Gemini 의 signature 와 같은 자리다.
+    #   sig_chars      — 최종본(.done)만 더한 길이. 두 제조사와 바로 비교할 수 있는 값.
+    #   sig_sent_chars — 전선에 실제로 나간 총량. OpenAI 는 같은 추론 내용을
+    #                    .added / .done / response.completed 로 세 번 싣기 때문에
+    #                    sig_chars 의 2~3배가 되고, 이것이 하향 바이트를 설명한다.
+    sig_chars = 0
+    sig_parts = 0
+    sig_sent_chars = 0
+    sig_seen = set()
 
     if api == "responses":
         stream = _stream_responses(client, model, prompt, effort, max_tok)
@@ -368,10 +378,33 @@ def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
                     if t_first is None and d.strip():
                         t_first = t
                     answer_chars += len(d)
+            # 서명은 delta 가 아니라 item 에 실려 온다. 2026-11-20 이전 판은 이걸
+            # 놓쳐 sig_chars 가 항상 0 이었다(openai_sse_probe.py 로 규명).
+            it = getattr(chunk, "item", None)
+            if it is not None and str(getattr(it, "type", "")) == "reasoning":
+                enc = getattr(it, "encrypted_content", None)
+                if enc:
+                    sig_sent_chars += len(enc)
+                    # .added 와 .done 이 서로 다른 blob 을 싣는다(앞부분이 같지 않다).
+                    # 두 제조사와 비교할 '서명 길이'는 최종본만 센다.
+                    if et.endswith(".done"):
+                        iid = str(getattr(it, "id", "") or len(sig_seen))
+                        if iid not in sig_seen:
+                            sig_seen.add(iid)
+                            sig_parts += 1
+                        sig_chars += len(enc)
             resp = getattr(chunk, "response", None)
             if resp is not None:
                 usage = getattr(resp, "usage", None)
                 finish = getattr(resp, "status", None) or finish
+                # response.completed 가 output 전체를 다시 싣는다 — 같은 서명이
+                # 세 번째로 전선을 탄다. 바이트를 설명하려면 이것도 세야 한다.
+                if et.endswith(".completed"):
+                    for o in (getattr(resp, "output", None) or []):
+                        if str(getattr(o, "type", "")) == "reasoning":
+                            e2 = getattr(o, "encrypted_content", None)
+                            if e2:
+                                sig_sent_chars += len(e2)
         else:
             ch = (chunk.choices or [None])[0] if getattr(chunk, "choices", None) else None
             if ch is not None and getattr(ch, "finish_reason", None):
@@ -400,6 +433,9 @@ def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
             "input_tokens": in_tok,
             "had_reasoning": bool(think_tok), "reasoning_chars": reasoning_chars,
             "chunk_count": chunk_count,
+            # parse_pcap.py 가 그대로 CSV 열로 옮긴다.
+            "sig_chars": sig_chars, "sig_parts": sig_parts,
+            "sig_sent_chars": sig_sent_chars,
             "finish_reason": finish, "pad_chars": pad,
             # 답이 한 글자도 안 나왔으면 추론이 한계까지 간 것(Groq 1차 q4 에서 4건 발생).
             "truncated": answer_chars == 0}

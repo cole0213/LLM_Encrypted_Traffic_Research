@@ -180,6 +180,10 @@ def main():
             # 커지는데 텍스트는 안 오는 현상의 유력 원인이라 직접 재서 대조한다.
             "sig_chars": e.get("sig_chars"),
             "sig_parts": e.get("sig_parts"),
+            # OpenAI 는 같은 서명을 .added/.done/response.completed 로 2~3번 보낸다.
+            # 전선 바이트를 설명하는 건 sig_chars 가 아니라 이 '총 전송량'이다.
+            # 다른 provider 로그에는 없으므로 빈칸이 정상.
+            "sig_sent_chars": e.get("sig_sent_chars"),
             "parts_no_text": e.get("parts_no_text"),
         })
 
