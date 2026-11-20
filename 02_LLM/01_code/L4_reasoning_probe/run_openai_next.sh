@@ -54,12 +54,46 @@ fi
 
 # 캡처 한 단계를 돌리고 방금 생긴 pcap 을 CSV 까지 파싱한다.
 #   $1 태그  $2.. 러너 인자
+# ── 전역 예산 ─────────────────────────────────────────────────────
+# 러너의 --max-spend 는 '캡처 하나' 안에서만 센다. 캡처가 9개면 상한도 9개라
+# 합계가 통제되지 않는다. 여기서 캡처마다 실제 비용을 읽어 누적하고, 전역 상한을
+# 넘으면 남은 캡처를 통째로 건너뛴다. 비용은 추정하지 말고 막으라는 원칙의 연장이다.
+#   BUDGET=12 bash run_openai_next.sh 2
+SPENT=0
+BUDGET="${BUDGET:-8.0}"
+echo "[전역 예산] \$$BUDGET (BUDGET 환경변수로 변경)"
+
+# 캡처 한 단계를 돌리고, 비용을 누적한 뒤, 방금 생긴 pcap 을 CSV 까지 파싱한다.
+#   $1 태그  $2.. 러너 인자
 stage() {
   local tag="$1"; shift
+  # 시작 전에 전역 상한을 확인한다. 이미 넘었으면 콜을 한 개도 안 보낸다.
+  if awk "BEGIN{exit !($SPENT >= $BUDGET)}"; then
+    echo "[예산중단] 누적 \$$SPENT >= 전역 상한 \$$BUDGET — $tag 건너뜀"
+    return
+  fi
   echo; echo "=================================================="
-  echo "[$(date +%H:%M:%S)] 시작: $tag"
+  echo "[$(date +%H:%M:%S)] 시작: $tag   (누적 \$$SPENT / \$$BUDGET)"
   echo "=================================================="
-  if bash openai_capture_strict.sh "$tag" "$@"; then
+  local tmp="out/.stage_${tag}.log"
+  # tee 로 흘려보내면서 같은 내용을 파일에도 남겨 비용 줄을 읽는다.
+  # 파이프를 쓰면 $? 가 tee 의 것이 되므로 PIPESTATUS 로 러너의 종료코드를 본다.
+  bash openai_capture_strict.sh "$tag" "$@" 2>&1 | tee "$tmp"
+  local rc=${PIPESTATUS[0]}
+
+  # 러너가 마지막에 찍는 "토큰: ... / 비용 $X" 줄에서 금액을 뽑는다.
+  local c
+  c=$(sed -n 's/.*비용 \$\([0-9.]*\).*/\1/p' "$tmp" | tail -1)
+  if [ -n "$c" ]; then
+    SPENT=$(awk "BEGIN{printf \"%.4f\", $SPENT + $c}")
+    echo "[비용] $tag \$$c  →  누적 \$$SPENT / \$$BUDGET"
+  else
+    # 금액을 못 읽으면 누적이 멈춰 상한이 무의미해진다. 조용히 넘어가면 안 된다.
+    echo "[경고] $tag 비용 줄을 못 읽었다. 누적에 반영되지 않았다 — 전역 상한이 느슨해진다."
+  fi
+  rm -f "$tmp"
+
+  if [ "$rc" -eq 0 ]; then
     local pcap
     pcap=$(ls -t out/openai_strict_${tag}_*.pcap 2>/dev/null | head -1)
     if [ -n "$pcap" ]; then
@@ -70,12 +104,19 @@ stage() {
       echo "[경고] $tag pcap 을 못 찾았다."
     fi
   else
-    echo "[실패] $tag 단계가 비정상 종료. 다음 단계로 넘어간다."
+    echo "[실패] $tag 단계가 비정상 종료(코드 $rc). 다음 단계로 넘어간다."
   fi
 }
 
 want() { [ $# -eq 0 ] && return 0; case " $PICK " in *" $1 "*) return 0;; *) return 1;; esac; }
 PICK="${*:-}"
+
+# 모델 하나만 먼저 돌려 실제 단가를 보고 싶을 때 쓴다. 자유응답 arm 은 출력 토큰이
+# 얼마나 불어날지 추정이 가장 불확실하므로, 제일 싼 luna 로 먼저 재는 편이 안전하다.
+#   ONLY=luna bash run_openai_next.sh 2
+#   ONLY="terra sol" bash run_openai_next.sh 2
+only() { case " ${ONLY:-luna terra sol} " in *" $1 "*) return 0;; *) return 1;; esac; }
+[ -n "${ONLY:-}" ] && echo "[모델 제한] $ONLY"
 
 EFF="low,medium,high,xhigh,max"
 COMMON="--qset v2 --api responses --sleep 3 --block-shuffle"
@@ -115,6 +156,7 @@ if want 2; then
     IFS='|' read -r M PI PO C0 CB CF NICK <<EOF
 $spec
 EOF
+    only "$NICK" || continue
     stage "len0_${NICK}"     --model "$M" $COMMON --qfile out/qfile_oai_aug.json \
       --efforts $EFF --repeats 1 --arms 0 \
       --price-in "$PI" --price-out "$PO" --max-spend "$C0"
