@@ -409,6 +409,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--repeats", type=int, default=3)
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--floor", type=int, default=8,
+                    help="--sample 과 함께 쓴다. 갈래마다 최소 이만큼은 남긴다. "
+                         "기본 8 은 갈래 19개와 곱해져 152문항 바닥을 만든다 — "
+                         "작은 탐침에는 1 을 줘라.")
     ap.add_argument("--sleep", type=float, default=3.0)
     ap.add_argument("--log", default="out/openai_log_strict.jsonl")
     ap.add_argument("--model", default=DEFAULT_MODEL)
@@ -437,6 +441,13 @@ def main():
                     help="응답 길이 arm. 정수=덧붙일 글자 수(길이 고정), free_brief/free_full=자유 응답")
     ap.add_argument("--no-shuffle", action="store_true",
                     help="섞지 않고 순서대로(비교용)")
+    ap.add_argument("--block-shuffle", action="store_true",
+                    help="문항 단위 블록 셔플. 한 문항의 모든 조건을 연달아 찍고, "
+                         "블록 순서와 블록 안 순서만 섞는다. 무작위화 블록 설계라 "
+                         "조건과 시간이 엮이지 않으면서도, --max-spend 나 네트워크로 "
+                         "도중에 끊겨도 찍힌 문항은 조건이 다 모인다. "
+                         "(전면 셔플은 끊기면 반쪽짜리 문항만 잔뜩 남는다 — "
+                         "2026-11-17 Gemini v2rest8 에서 성공 475콜이 완전 문항 30개로만 남았다)")
     ap.add_argument("--no-usage", action="store_true",
                     help="stream_options.include_usage 를 끈다. usage 숫자 자릿수가 "
                          "응답 바이트를 부풀리는 교란의 대조군(HANDOFF 5-5). "
@@ -452,6 +463,9 @@ def main():
                     help="출력 단가($/1M). 추론 토큰이 여기 포함된다")
     ap.add_argument("--max-spend", type=float, default=None,
                     help="누적 비용이 이 금액($)을 넘으면 중단한다. 단가 2개와 함께 쓸 것")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="콜을 한 개도 보내지 않고 문항수·콜수·실행순서·비용상한만 찍고 끝낸다. "
+                         "유료 provider 에서는 본 실행 전에 항상 이걸 먼저 돌려라")
     ap.add_argument("--api", default="auto", choices=["auto", "chat", "responses"],
                     help="어느 엔드포인트로 칠지. auto=chat 먼저 시도하고 실패하면 responses")
     ap.add_argument("--max-tok", type=int, default=8192,
@@ -517,7 +531,22 @@ def main():
               for cond, effort, pad in conds
               for rep in range(args.repeats)
               for arm in arms]
-    if not args.no_shuffle:
+    if args.no_shuffle:
+        pass
+    elif args.block_shuffle:
+        # 문항별로 묶어 블록을 만든다. 블록 안(조건·반복·arm)만 섞고, 블록끼리도 섞는다.
+        rng = random.Random(args.seed)
+        blocks = {}
+        for t in trials:
+            blocks.setdefault(t[0], []).append(t)
+        order = list(blocks)
+        rng.shuffle(order)
+        trials = []
+        for qi in order:
+            b = blocks[qi]
+            rng.shuffle(b)
+            trials.extend(b)
+    else:
         random.Random(args.seed).shuffle(trials)
 
     logp = Path(args.log); logp.parent.mkdir(parents=True, exist_ok=True)
@@ -526,6 +555,32 @@ def main():
     # 실제 usage 로 누적해 보여주고, 상한을 넘으면 멈춘다(그때까지 로그는 남는다).
     sum_in = sum_out = 0
     show_cost = args.price_in is not None and args.price_out is not None
+    # 단가가 없으면 cost 가 계속 None 이라 아래 상한 검사(cost is not None)가
+    # 통째로 건너뛰어진다. --max-spend 를 걸어둔 줄 알고 밤새 돌리면 상한 없이
+    # 전량이 나간다. Anthropic 판은 여기서 죽는데 이쪽만 빠져 있었다(2026-11-19 발견).
+    if args.max_spend is not None and not show_cost:
+        raise SystemExit("--max-spend 를 쓰려면 --price-in 과 --price-out 을 같이 줘야 한다. "
+                         "단가 없이는 누적 비용을 셀 수 없어 상한이 조용히 무시된다.")
+
+    # --dry-run: 콜을 한 개도 안 보내고 계획만 보여주고 끝낸다. 크레딧이 한정된
+    # provider 에서 "--sample 30 줬는데 760콜이 잡혔다"(2026-11-18) 같은 사고를
+    # 돈 쓰기 전에 잡는 유일한 수단이다. 블록 셔플이 실제로 문항을 묶는지도 여기서 보인다.
+    if args.dry_run:
+        print(f"\n[dry-run] 콜을 보내지 않는다. 문항 {len(qs)}개 / 총 {total}콜")
+        print(f"모델 {args.model} / 엔드포인트 {api} / 로그 {args.log}")
+        print("앞 12콜 순서 (q번호 / 조건):")
+        for i, (qi, cond, *_r) in enumerate(trials[:12], 1):
+            print(f"  [{i}] q{keep[qi]:<5d} {cond}")
+        blk = {}
+        for t in trials:
+            blk[t[0]] = blk.get(t[0], 0) + 1
+        print(f"문항당 콜 수: {sorted(set(blk.values()))}")
+        if show_cost:
+            hi = (total * (200 * args.price_in + args.max_tok * args.price_out)) / 1e6
+            print(f"비용 상한(모든 콜이 max_tok {args.max_tok} 를 다 쓴 최악치): ${hi:.2f}")
+            print("  ※ 실제는 이보다 훨씬 작다. 상한이 예산을 넘으면 --max-spend 를 꼭 걸어라.")
+        return
+
     time.sleep(1.0)
     with open(logp, "w", encoding="utf-8") as f:
         for i, (qi, cond, effort, pad, rep, arm) in enumerate(trials, 1):

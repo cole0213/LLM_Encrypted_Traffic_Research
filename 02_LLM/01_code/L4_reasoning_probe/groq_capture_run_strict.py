@@ -279,7 +279,11 @@ def select_questions(args, base_q):
             #   바닥(FLOOR)  : 갈래마다 최소 이만큼 — 검증된 갈래가 사라지지 않게
             #   나머지       : 템플릿 수에 비례 배분 — 템플릿 많은 갈래가 표본을 더 가져감
             # 갈래 안에서는 **새 템플릿을 먼저** 고르고, 템플릿이 바닥나야 변형을 추가한다.
-            FLOOR = 8
+            # 갈래별 최소 보장 문항수. 기본 8 이지만 --floor 로 낮출 수 있다.
+            #   콜마다 돈이 나가는 provider 에서 작은 탐침을 돌릴 때, 기본값 8 은
+            #   갈래 19개 x 8 = 152문항으로 --sample 을 통째로 무시해버린다.
+            #   (2026-11-18: --sample 30 을 줬는데 760콜이 잡혔다.)
+            FLOOR = max(1, int(getattr(args, "floor", 8) or 8))
             def _group(f):
                 i = f.rfind("_")
                 return f[:i] if (i > 0 and f[i + 1:].isdigit()) else f

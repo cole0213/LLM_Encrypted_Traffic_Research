@@ -267,11 +267,15 @@ def run_all(rows):
     shallow = "no_think" if "no_think" in conds else ("think_low" if "think_low" in conds else None)
     if shallow and "think_high" in conds:
         run(rows, [shallow, "think_high"], f"이진: {shallow} vs think_high")
-    # 3클래스: Gemini(no/low/high) 우선, 없으면 Groq gpt-oss(low/med/high). 먼저 맞는 것 하나.
+    # 3클래스: Gemini(no/low/high) 우선, 없으면 low/medium/high. 먼저 맞는 것 하나.
+    #   think_medium 은 2026-11-13 이후 capture_run_strict.py 가 쓰는 이름이고,
+    #   think_med 는 그 이전 Groq gpt-oss CSV 의 이름이다. 둘 다 받는다.
     for triple in (["no_think", "think_low", "think_high"],
+                   ["think_low", "think_medium", "think_high"],
                    ["think_low", "think_med", "think_high"]):
         if all(c in conds for c in triple):
-            nice = {"no_think": "no", "think_low": "low", "think_med": "med", "think_high": "high"}
+            nice = {"no_think": "no", "think_low": "low", "think_medium": "med",
+                    "think_med": "med", "think_high": "high"}
             short = "/".join(nice.get(t, t) for t in triple)
             run(rows, triple, f"3클래스: {short}")
             break

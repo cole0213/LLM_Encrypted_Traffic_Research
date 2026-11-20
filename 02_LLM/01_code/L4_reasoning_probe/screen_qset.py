@@ -45,14 +45,27 @@ from pathlib import Path
 
 from groq_capture_run_strict import QUESTIONS as QUESTIONS_BASE, INSTR
 from questions_hard import QUESTIONS_HARD
-from questions_all import QUESTIONS_V2_ALL, FAMILIES_V2_ALL
+from questions_all import QUESTIONS_V2_ALL, FAMILIES_V2_ALL, ANSWERS_V2_ALL
+# 2026-11-17 추가. 경량 모델이 왜 추론을 더 쓰는지(능력 차이 vs 예산 매핑)를
+# 가르는 대조군. 한 걸음이면 끝나는 문항만 들었다.
+from questions_trivial import (QUESTIONS_TRIVIAL, FAMILIES_TRIVIAL,
+                               ANSWERS_TRIVIAL)
 
-QSETS = {"base": QUESTIONS_BASE, "hard": QUESTIONS_HARD, "v2": QUESTIONS_V2_ALL}
+QSETS = {"base": QUESTIONS_BASE, "hard": QUESTIONS_HARD, "v2": QUESTIONS_V2_ALL,
+         "trivial": QUESTIONS_TRIVIAL}
 
 # 문항 세트별 템플릿 id. 없는 세트는 None — 그때는 문항 하나가 곧 클러스터로 취급된다.
 # v2 는 한 템플릿에서 변형이 여럿 나오므로 선별 결과를 템플릿 단위로도 집계해야
 # '한 템플릿만 잘 돼서 통과 수가 부풀어 보이는' 착시를 피할 수 있다.
-QSET_FAMILIES = {"base": None, "hard": None, "v2": FAMILIES_V2_ALL}
+QSET_FAMILIES = {"base": None, "hard": None, "v2": FAMILIES_V2_ALL,
+                 "trivial": FAMILIES_TRIVIAL}
+
+# 세트별 정답 글자. 없는 세트는 None — 그때는 정답률을 못 낸다.
+# v2 의 "정답 없는 갈래"(딜레마·페르미 등)는 원소가 None 이라 그 문항만 집계에서 빠진다.
+# 2026-11-17 추가. 그 전까지 선별기는 답 글자를 버려서, 모델이 추론을 안 쓰고도
+# 맞혔는지("성능이 좋아 생략")와 그냥 틀렸는지를 구분할 수 없었다.
+QSET_ANSWERS = {"base": None, "hard": None, "v2": ANSWERS_V2_ALL,
+                "trivial": ANSWERS_TRIVIAL}
 
 # 문항이 쓸 만하다고 보는 최소 격차(추론 토큰).
 # 근거: 추론 N 토큰 ≈ 4N 바이트 응답 증가(Gemini 3차 실측에서 토큰당 약 3.9 바이트).
@@ -80,12 +93,16 @@ DEFAULT_EFFORTS = {
     "gemini": "no_think,low,high",
     # Groq(gpt-oss): 추론 off 모드가 없어 3단 그라데이션뿐이다.
     "groq": "low,medium,high",
+    # Anthropic: output_config.effort 5단. Opus 5.5 는 추론을 끌 수 없어
+    #   none 에 해당하는 조건이 아예 없다.
+    "anthropic": "low,medium,high,xhigh,max",
 }
 
 DEFAULT_MODELS = {
     "openai": "gpt-6-luna",
     "gemini": "gemini-3.5-flash-lite",
     "groq": "openai/gpt-oss-20b",
+    "anthropic": "claude-opus-5-5",
 }
 
 
@@ -98,8 +115,18 @@ def _get(obj, name):
     return getattr(obj, name, None)
 
 
+def _letter(txt):
+    """응답에서 답 글자(A~D)를 뽑는다. 못 찾으면 None.
+
+    INSTR 이 한 글자만 내라고 못박았지만 모델이 어기는 일이 있다(nonc 로 세는 그것).
+    그때도 첫 글자를 집어 두면 '불응했지만 답은 맞았다'를 따로 볼 수 있다.
+    """
+    m = re.search(r"[A-Da-d]", txt or "")
+    return m.group(0).upper() if m else None
+
+
 # ── provider 별 1콜 ────────────────────────────────────────────────────────
-# 전부 (추론토큰, 답글자수) 를 돌려준다. 실패하면 예외를 그대로 올린다.
+# 전부 (추론토큰, 답글자수, 답글자) 를 돌려준다. 실패하면 예외를 그대로 올린다.
 
 def _call_openai(client, model, prompt, effort):
     """Responses API. chat 은 max 를 안 받고 astra 에서 범위도 좁아 이쪽으로 통일했다."""
@@ -108,7 +135,7 @@ def _call_openai(client, model, prompt, effort):
         reasoning={"effort": effort}, max_output_tokens=MAX_TOK)
     rt = _get(_get(r.usage, "output_tokens_details"), "reasoning_tokens")
     txt = getattr(r, "output_text", None) or ""
-    return (rt or 0), len(txt.strip())
+    return (rt or 0), len(txt.strip()), _letter(txt)
 
 
 def _call_gemini(client, model, prompt, effort):
@@ -122,7 +149,33 @@ def _call_gemini(client, model, prompt, effort):
     um = getattr(r, "usage_metadata", None)
     rt = _get(um, "thoughts_token_count")
     txt = getattr(r, "text", None) or ""
-    return (rt or 0), len(txt.strip())
+    return (rt or 0), len(txt.strip()), _letter(txt)
+
+
+def _call_anthropic(client, model, prompt, effort):
+    """Messages API. 추론 단계는 reasoning_effort 가 아니라 output_config.effort 다.
+
+    thinking 은 Opus 5.5 에서 끌 수 없고 adaptive 가 기본 — 판 간 차이를 없애려고
+    명시한다. usage 의 추론 토큰 필드명이 문서에 없어서 후보를 전부 훑는다.
+    후보에 하나도 없으면 None 을 올려 호출부가 '라벨 없음'으로 처리하게 한다.
+    """
+    r = client.messages.create(
+        model=model, max_tokens=MAX_TOK,
+        thinking={"type": "adaptive"},
+        output_config={"effort": effort},
+        messages=[{"role": "user", "content": prompt}])
+    u = r.usage
+    rt = None
+    for k in ("thinking_tokens", "reasoning_tokens", "thought_tokens",
+              "output_thinking_tokens", "reasoning_output_tokens"):
+        v = _get(u, k)
+        if v is not None:
+            rt = v
+            break
+    # 본문 텍스트만 모은다. thinking 블록은 답이 아니다.
+    txt = "".join(_get(b, "text") or "" for b in (r.content or [])
+                  if str(_get(b, "type")) == "text")
+    return (rt or 0), len(txt.strip()), _letter(txt)
 
 
 def _call_groq(client, model, prompt, effort):
@@ -134,7 +187,7 @@ def _call_groq(client, model, prompt, effort):
     u = r.usage
     rt = _get(_get(u, "completion_tokens_details"), "reasoning_tokens")
     txt = (r.choices[0].message.content or "") if r.choices else ""
-    return (rt or 0), len(txt.strip())
+    return (rt or 0), len(txt.strip()), _letter(txt)
 
 
 def make_client(provider):
@@ -155,6 +208,11 @@ def make_client(provider):
             raise SystemExit("GROQ_API_KEY 없음")
         from groq import Groq
         return Groq(api_key=os.getenv("GROQ_API_KEY")), _call_groq
+    if provider == "anthropic":
+        if not os.getenv("ANTHROPIC_API_KEY"):
+            raise SystemExit("ANTHROPIC_API_KEY 없음")
+        import anthropic
+        return anthropic.Anthropic(), _call_anthropic
     raise SystemExit(f"모르는 provider: {provider}")
 
 
@@ -298,6 +356,7 @@ def screen(provider, model, qset_name, efforts, sleep, limit=0, sample=0,
     # 템플릿 목록은 루프 안의 증분 저장에서도 쓴다. 루프 뒤에서 정의하면
     # 첫 문항을 저장할 때 UnboundLocalError 가 난다.
     fams = QSET_FAMILIES.get(qset_name)
+    golds = QSET_ANSWERS.get(qset_name)
     outp = Path("out") / f"screen_{provider}_{_slug(model)}_{qset_name}.json"
     # 아예 지원되지 않는 설정(astra 의 none 등)은 몇 번을 눌러도 실패한다.
     # 그런 설정에 백오프를 다 쓰면 문항마다 12초씩 날린다(600문항이면 2시간).
@@ -309,9 +368,9 @@ def screen(provider, model, qset_name, efforts, sleep, limit=0, sample=0,
     dead_efforts = set()
     for qi, q in pairs:
         prompt = q + INSTR
-        vals, trunc, nonc = [], 0, 0
+        vals, answers, trunc, nonc = [], [], 0, 0
         for effort in efforts:
-            rt = nchars = None
+            rt = nchars = ans = None
             last_err = None
             # 호출 실패를 조용히 None 으로 넘기면 안 된다. 2026-11-09 gemini 선별에서
             # q36-41, q47-50 이 통째로 None 이 되어 격차 0 으로 탈락했는데, 끊긴 자리가
@@ -321,7 +380,7 @@ def screen(provider, model, qset_name, efforts, sleep, limit=0, sample=0,
             tries = 1 if effort in dead_efforts else MAX_RETRY
             for attempt in range(tries):
                 try:
-                    rt, nchars = call(client, model, prompt, effort)
+                    rt, nchars, ans = call(client, model, prompt, effort)
                     last_err = None
                     break
                 except Exception as e:
@@ -332,6 +391,7 @@ def screen(provider, model, qset_name, efforts, sleep, limit=0, sample=0,
             if last_err is not None:
                 # 지원 안 하는 설정(astra 의 none 등)도 여기로 온다. 격차 계산에서 뺀다.
                 vals.append(None)
+                answers.append(None)
                 err_log.append((qi, effort, f"{type(last_err).__name__}: {last_err}"))
                 fail_streak[effort] += 1
                 if (fail_streak[effort] >= 2 and ok_count[effort] == 0
@@ -343,6 +403,7 @@ def screen(provider, model, qset_name, efforts, sleep, limit=0, sample=0,
                 fail_streak[effort] = 0
                 ok_count[effort] += 1
                 vals.append(rt)
+                answers.append(ans)
                 # 답이 한 글자도 없으면 추론이 한계까지 간 것이다. 분석에서 제외 대상.
                 if nchars == 0:
                     trunc += 1
@@ -354,8 +415,9 @@ def screen(provider, model, qset_name, efforts, sleep, limit=0, sample=0,
             time.sleep(sleep)
         got = [v for v in vals if v is not None]
         spread = (max(got) - min(got)) if got else 0
+        gold = golds[qi] if golds else None
         rows.append({"q": qi, "spread": spread, "trunc": trunc, "nonc": nonc,
-                     "vals": vals, "text": q})
+                     "vals": vals, "ans": answers, "gold": gold, "text": q})
         cells = "".join(f"{('—' if v is None else v):>9}" for v in vals)
         print(f"{qi:>4}{cells}{spread:>7}{trunc:>5}{nonc:>5}  {q[:40]}", flush=True)
 

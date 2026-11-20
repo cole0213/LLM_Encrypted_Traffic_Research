@@ -1,0 +1,296 @@
+{
+ "provider": "openai",
+ "model": "gpt-6.1-terra",
+ "qset": "trivial",
+ "efforts": [
+  "low",
+  "medium",
+  "high",
+  "xhigh",
+  "max"
+ ],
+ "min_spread": 100,
+ "families": [
+  "arith_add",
+  "arith_sub",
+  "arith_mul",
+  "arith_div",
+  "arith_add2",
+  "fact_capital",
+  "fact_water",
+  "fact_week",
+  "fact_year",
+  "fact_day",
+  "fact_tri",
+  "fact_alpha"
+ ],
+ "good": [],
+ "rows": [
+  {
+   "q": 0,
+   "spread": 23,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    23
+   ],
+   "ans": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "gold": "B",
+   "text": "3 + 4 는 얼마인가? A) 5 B) 7 C) 9 D) 12"
+  },
+  {
+   "q": 1,
+   "spread": 22,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    22
+   ],
+   "ans": [
+    "C",
+    "C",
+    "C",
+    "C",
+    "C"
+   ],
+   "gold": "C",
+   "text": "10 - 6 은 얼마인가? A) 2 B) 3 C) 4 D) 6"
+  },
+  {
+   "q": 2,
+   "spread": 63,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    63
+   ],
+   "ans": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "gold": "B",
+   "text": "2 x 5 는 얼마인가? A) 7 B) 10 C) 12 D) 25"
+  },
+  {
+   "q": 3,
+   "spread": 30,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    30
+   ],
+   "ans": [
+    "C",
+    "C",
+    "C",
+    "C",
+    "C"
+   ],
+   "gold": "C",
+   "text": "100 을 4 로 나누면 얼마인가? A) 20 B) 24 C) 25 D) 40"
+  },
+  {
+   "q": 4,
+   "spread": 38,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    38
+   ],
+   "ans": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "gold": "B",
+   "text": "8 + 8 은 얼마인가? A) 14 B) 16 C) 18 D) 64"
+  },
+  {
+   "q": 5,
+   "spread": 33,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    33
+   ],
+   "ans": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "gold": "B",
+   "text": "대한민국의 수도는 어디인가? A) 부산 B) 서울 C) 인천 D) 대구"
+  },
+  {
+   "q": 6,
+   "spread": 37,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    37
+   ],
+   "ans": [
+    "C",
+    "C",
+    "C",
+    "C",
+    "C"
+   ],
+   "gold": "C",
+   "text": "물의 화학식은 무엇인가? A) CO2 B) O2 C) H2O D) NaCl"
+  },
+  {
+   "q": 7,
+   "spread": 37,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    37
+   ],
+   "ans": [
+    "C",
+    "C",
+    "C",
+    "C",
+    "C"
+   ],
+   "gold": "C",
+   "text": "한 주는 며칠인가? A) 5일 B) 6일 C) 7일 D) 10일"
+  },
+  {
+   "q": 8,
+   "spread": 0,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "ans": [
+    "C",
+    "C",
+    "C",
+    "C",
+    "C"
+   ],
+   "gold": "C",
+   "text": "1년은 몇 개월인가? A) 10개월 B) 11개월 C) 12개월 D) 24개월"
+  },
+  {
+   "q": 9,
+   "spread": 21,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    21
+   ],
+   "ans": [
+    "D",
+    "D",
+    "D",
+    "D",
+    "D"
+   ],
+   "gold": "D",
+   "text": "하루는 몇 시간인가? A) 12시간 B) 18시간 C) 20시간 D) 24시간"
+  },
+  {
+   "q": 10,
+   "spread": 30,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    30
+   ],
+   "ans": [
+    "A",
+    "A",
+    "A",
+    "A",
+    "A"
+   ],
+   "gold": "A",
+   "text": "삼각형의 변은 몇 개인가? A) 3개 B) 4개 C) 5개 D) 6개"
+  },
+  {
+   "q": 11,
+   "spread": 61,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    0,
+    61
+   ],
+   "ans": [
+    "A",
+    "A",
+    "A",
+    "A",
+    "A"
+   ],
+   "gold": "A",
+   "text": "영어 알파벳의 첫 글자는 무엇인가? A) A B) B C) Y D) Z"
+  }
+ ],
+ "incomplete": [],
+ "errors": []
+}

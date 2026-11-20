@@ -1,0 +1,1068 @@
+nohup: ignoring input
+필터: tcp port 443 and ( host 160.79.104.10)
+pcap: out/anthropic_strict_opus250_20261118_182111.pcap  log: out/anthropic_strict_opus250_log.jsonl
+tcpdump PID=171233, 2초 워밍업...
+선별 적용: out/qfile_anth250.json -> 250문항
+문항 250개 / 템플릿 221개 (신뢰구간의 독립 표본 수는 문항이 아니라 템플릿 쪽이다)
+문항 250개 / 템플릿 221개
+조건: think_low, think_medium, think_high, think_xhigh, think_max  패딩(공백수): {'think_low': 3, 'think_medium': 0, 'think_high': 2, 'think_xhigh': 1, 'think_max': 3}
+총 1250콜
+[1/1250] q430 think_low      ttft=3621.8ms out=251 think=248 sig=1568 chars=1/1 $0.01
+[2/1250] q430 think_xhigh    ttft=13249.2ms out=1254 think=1251 sig=4672 chars=1/1 $0.03
+[3/1250] q430 think_medium   ttft=3652.1ms out=295 think=292 sig=1628 chars=1/1 $0.04
+[4/1250] q430 think_max      ttft=77023.0ms out=7922 think=7919 sig=25380 chars=1/1 $0.20
+[5/1250] q430 think_high     ttft=8172.2ms out=707 think=704 sig=2868 chars=1/1 $0.21
+[6/1250] q441 think_low      ttft=1040.1ms out=46 think=43 sig=920 chars=1/1 $0.21
+[7/1250] q441 think_medium   ttft=2068.7ms out=130 think=127 sig=1188 chars=1/1 $0.22
+[8/1250] q441 think_xhigh    ttft=2937.8ms out=177 think=174 sig=1392 chars=1/1 $0.22
+[9/1250] q441 think_max      ttft=10979.3ms out=932 think=929 sig=3780 chars=1/1 $0.24
+[10/1250] q441 think_high     ttft=2066.5ms out=143 think=140 sig=1224 chars=1/1 $0.24
+[11/1250] q371 think_max      ttft=33285.1ms out=3419 think=3416 sig=10680 chars=1/1 $0.31
+[12/1250] q371 think_low      ttft=2333.6ms out=172 think=169 sig=1208 chars=1/1 $0.31
+[13/1250] q371 think_medium   ttft=5459.9ms out=445 think=442 sig=1860 chars=1/1 $0.32
+[14/1250] q371 think_xhigh    ttft=9665.6ms out=889 think=886 sig=3220 chars=1/1 $0.34
+[15/1250] q371 think_high     ttft=4323.4ms out=367 think=364 sig=1688 chars=1/1 $0.35
+[16/1250] q573 think_low      ttft=2676.3ms out=552 think=149 sig=1444 chars=417/1 [불일치] $0.36
+[17/1250] q573 think_max      ttft=24865.7ms out=2583 think=2348 sig=10700 chars=231/1 [불일치] $0.41
+[18/1250] q573 think_medium   ttft=3377.6ms out=740 think=201 sig=1672 chars=531/1 [불일치] $0.43
+[19/1250] q573 think_xhigh    ttft=3507.5ms out=580 think=276 sig=2060 chars=313/1 [불일치] $0.44
+[20/1250] q573 think_high     ttft=3326.4ms out=710 think=213 sig=1712 chars=507/1 [불일치] $0.45
+[21/1250] q426 think_max      ttft=9360.6ms out=905 think=902 sig=3984 chars=1/1 $0.47
+[22/1250] q426 think_medium   ttft=1423.3ms out=24 think=21 sig=852 chars=1/1 $0.47
+[23/1250] q426 think_low      ttft=735.1ms out=3 think=0 sig=0 chars=1/1 $0.47
+[24/1250] q426 think_high     ttft=1434.4ms out=42 think=39 sig=900 chars=1/1 $0.48
+[25/1250] q426 think_xhigh    ttft=1299.6ms out=42 think=39 sig=900 chars=1/1 $0.48
+[26/1250] q622 think_medium   ttft=3273.8ms out=228 think=225 sig=1788 chars=1/1 $0.48
+[27/1250] q622 think_max      ttft=9034.7ms out=729 think=726 sig=3804 chars=1/1 $0.50
+[28/1250] q622 think_low      ttft=2171.3ms out=94 think=91 sig=1160 chars=1/1 $0.50
+[29/1250] q622 think_high     ttft=3943.1ms out=271 think=268 sig=1896 chars=1/1 $0.51
+[30/1250] q622 think_xhigh    ttft=5272.1ms out=392 think=389 sig=2432 chars=1/1 $0.51
+[31/1250] q235 think_low      ttft=2162.7ms out=158 think=155 sig=1176 chars=1/1 $0.52
+[32/1250] q235 think_max      ttft=11159.9ms out=1221 think=1218 sig=4488 chars=1/1 $0.54
+[33/1250] q235 think_xhigh    ttft=2830.2ms out=249 think=246 sig=1364 chars=1/1 $0.55
+[34/1250] q235 think_high     ttft=2950.4ms out=225 think=222 sig=1392 chars=1/1 $0.55
+[35/1250] q235 think_medium   ttft=2986.0ms out=243 think=240 sig=1432 chars=1/1 $0.56
+[36/1250] q577 think_high     ttft=2891.3ms out=853 think=197 sig=1684 chars=651/1 [불일치] $0.58
+[37/1250] q577 think_max      ttft=18310.9ms out=1653 think=1650 sig=8088 chars=1/1 $0.61
+[38/1250] q577 think_medium   ttft=2001.2ms out=748 think=137 sig=1420 chars=611/1 [불일치] $0.63
+[39/1250] q577 think_xhigh    ttft=5296.7ms out=866 think=432 sig=2728 chars=444/1 [불일치] $0.64
+[40/1250] q577 think_low      ttft=2210.9ms out=746 think=122 sig=1332 chars=614/1 [불일치] $0.66
+[41/1250] q604 think_high     ttft=3271.1ms out=649 think=225 sig=1764 chars=429/1 [불일치] $0.67
+[42/1250] q604 think_medium   ttft=4322.6ms out=666 think=318 sig=2128 chars=353/1 [불일치] $0.69
+[43/1250] q604 think_xhigh    ttft=5741.8ms out=468 think=465 sig=2768 chars=1/1 $0.70
+[44/1250] q604 think_max      ttft=10909.8ms out=978 think=975 sig=4976 chars=1/1 $0.72
+[45/1250] q604 think_low      ttft=3961.9ms out=263 think=260 sig=1872 chars=1/1 $0.72
+[46/1250] q597 think_medium   ttft=2628.7ms out=196 think=193 sig=1704 chars=1/1 $0.73
+[47/1250] q597 think_high     ttft=4917.6ms out=375 think=372 sig=2484 chars=1/1 $0.73
+[48/1250] q597 think_low      ttft=2100.9ms out=124 think=121 sig=1372 chars=1/1 $0.74
+[49/1250] q597 think_xhigh    ttft=3983.8ms out=275 think=272 sig=2072 chars=1/1 $0.74
+[50/1250] q597 think_max      ttft=15807.3ms out=1435 think=1432 sig=7292 chars=1/1 $0.77
+[51/1250] q704 think_high     ttft=1581.8ms out=122 think=119 sig=1124 chars=1/1 $0.78
+[52/1250] q704 think_medium   ttft=1680.8ms out=122 think=119 sig=1140 chars=1/1 $0.78
+[53/1250] q704 think_max      ttft=4040.1ms out=416 think=413 sig=2028 chars=1/1 $0.79
+[54/1250] q704 think_xhigh    ttft=1884.5ms out=120 think=117 sig=1144 chars=1/1 $0.79
+[55/1250] q704 think_low      ttft=1537.4ms out=101 think=98 sig=1080 chars=1/1 $0.79
+[56/1250] q135 think_low      ttft=1649.1ms out=100 think=97 sig=1148 chars=1/1 $0.80
+[57/1250] q135 think_medium   ttft=1833.4ms out=148 think=145 sig=1256 chars=1/1 $0.80
+[58/1250] q135 think_xhigh    ttft=2380.3ms out=186 think=183 sig=1352 chars=1/1 $0.81
+[59/1250] q135 think_high     ttft=2084.3ms out=146 think=143 sig=1276 chars=1/1 $0.81
+[60/1250] q135 think_max      ttft=3479.6ms out=363 think=360 sig=1924 chars=1/1 $0.82
+[61/1250] q438 think_medium   ttft=1070.5ms out=36 think=33 sig=860 chars=1/1 $0.82
+[62/1250] q438 think_low      ttft=1276.6ms out=35 think=32 sig=860 chars=1/1 $0.82
+[63/1250] q438 think_high     ttft=1056.5ms out=36 think=33 sig=860 chars=1/1 $0.82
+[64/1250] q438 think_xhigh    ttft=1205.2ms out=70 think=67 sig=972 chars=1/1 $0.82
+[65/1250] q438 think_max      ttft=1634.3ms out=143 think=140 sig=1192 chars=1/1 $0.83
+[66/1250] q411 think_max      ttft=11437.7ms out=1112 think=1109 sig=4468 chars=1/1 $0.85
+[67/1250] q411 think_medium   ttft=2248.7ms out=171 think=168 sig=1304 chars=1/1 $0.85
+[68/1250] q411 think_xhigh    ttft=2992.6ms out=255 think=252 sig=1652 chars=1/1 $0.86
+[69/1250] q411 think_low      ttft=2259.5ms out=163 think=160 sig=1296 chars=1/1 $0.86
+[70/1250] q411 think_high     ttft=2544.8ms out=172 think=169 sig=1268 chars=1/1 $0.87
+[71/1250] q558 think_medium   ttft=1827.0ms out=667 think=124 sig=1340 chars=534/1 [불일치] $0.88
+[72/1250] q558 think_xhigh    ttft=3875.5ms out=808 think=266 sig=1924 chars=537/1 [불일치] $0.90
+[73/1250] q558 think_low      ttft=1773.8ms out=523 think=119 sig=1312 chars=403/1 [불일치] $0.91
+[74/1250] q558 think_high     ttft=3185.4ms out=725 think=186 sig=1664 chars=532/1 [불일치] $0.92
+[75/1250] q558 think_max      ttft=44043.4ms out=4648 think=4052 sig=16176 chars=585/1 [불일치] $1.02
+[76/1250] q458 think_high     ttft=1247.7ms out=45 think=42 sig=956 chars=1/1 $1.02
+[77/1250] q458 think_xhigh    ttft=1076.4ms out=42 think=39 sig=932 chars=1/1 $1.02
+[78/1250] q458 think_max      ttft=1908.4ms out=133 think=130 sig=1272 chars=1/1 $1.02
+[79/1250] q458 think_low      ttft=961.1ms out=3 think=0 sig=0 chars=1/1 $1.02
+[80/1250] q458 think_medium   ttft=1467.1ms out=45 think=42 sig=936 chars=1/1 $1.02
+[81/1250] q584 think_high     ttft=2532.3ms out=623 think=157 sig=1516 chars=463/1 [불일치] $1.04
+[82/1250] q584 think_xhigh    ttft=3327.1ms out=726 think=237 sig=1896 chars=484/1 [불일치] $1.05
+[83/1250] q584 think_low      ttft=2008.6ms out=632 think=121 sig=1336 chars=510/1 [불일치] $1.06
+[84/1250] q584 think_medium   ttft=2664.8ms out=609 think=174 sig=1628 chars=432/1 [불일치] $1.08
+[85/1250] q584 think_max      ttft=18155.0ms out=1715 think=1583 sig=7428 chars=126/1 [불일치] $1.11
+[86/1250] q781 think_low      ttft=1335.8ms out=78 think=75 sig=960 chars=1/1 $1.11
+[87/1250] q781 think_max      ttft=2311.2ms out=236 think=233 sig=1328 chars=1/1 $1.12
+[88/1250] q781 think_xhigh    ttft=1862.1ms out=123 think=120 sig=1060 chars=1/1 $1.12
+[89/1250] q781 think_high     ttft=1392.5ms out=96 think=93 sig=988 chars=1/1 $1.12
+[90/1250] q781 think_medium   ttft=1381.4ms out=82 think=79 sig=952 chars=1/1 $1.13
+[91/1250] q754 think_max      ttft=2542.1ms out=248 think=245 sig=1456 chars=1/1 $1.13
+[92/1250] q754 think_high     ttft=1423.7ms out=111 think=108 sig=1052 chars=1/1 $1.14
+[93/1250] q754 think_medium   ttft=1625.1ms out=116 think=113 sig=1076 chars=1/1 $1.14
+[94/1250] q754 think_low      ttft=1519.9ms out=111 think=108 sig=1044 chars=1/1 $1.14
+[95/1250] q754 think_xhigh    ttft=1556.2ms out=138 think=135 sig=1128 chars=1/1 $1.14
+[96/1250] q422 think_max      ttft=4884.3ms out=470 think=467 sig=2204 chars=1/1 $1.15
+[97/1250] q422 think_xhigh    ttft=2898.5ms out=200 think=197 sig=1392 chars=1/1 $1.16
+[98/1250] q422 think_low      ttft=1984.2ms out=112 think=109 sig=1104 chars=1/1 $1.16
+[99/1250] q422 think_high     ttft=2176.2ms out=144 think=141 sig=1200 chars=1/1 $1.16
+[100/1250] q422 think_medium   ttft=1413.3ms out=78 think=75 sig=1004 chars=1/1 $1.17
+[101/1250] q234 think_high     ttft=2714.5ms out=223 think=220 sig=1368 chars=1/1 $1.17
+[102/1250] q234 think_medium   ttft=3739.1ms out=334 think=331 sig=1616 chars=1/1 $1.18
+[103/1250] q234 think_max      ttft=4144.6ms out=469 think=466 sig=1964 chars=1/1 $1.19
+[104/1250] q234 think_low      ttft=2002.6ms out=136 think=133 sig=1112 chars=1/1 $1.19
+[105/1250] q234 think_xhigh    ttft=2847.4ms out=269 think=266 sig=1416 chars=1/1 $1.20
+[106/1250] q443 think_xhigh    ttft=3373.5ms out=323 think=320 sig=1768 chars=1/1 $1.21
+[107/1250] q443 think_low      ttft=2530.7ms out=189 think=186 sig=1320 chars=1/1 $1.21
+[108/1250] q443 think_medium   ttft=1791.8ms out=122 think=119 sig=1116 chars=1/1 $1.21
+[109/1250] q443 think_high     ttft=2007.1ms out=139 think=136 sig=1188 chars=1/1 $1.22
+[110/1250] q443 think_max      ttft=7646.9ms out=723 think=720 sig=2988 chars=1/1 $1.23
+[111/1250] q429 think_low      ttft=4924.4ms out=379 think=376 sig=1836 chars=1/1 $1.24
+[112/1250] q429 think_xhigh    ttft=6521.4ms out=583 think=580 sig=2528 chars=1/1 $1.25
+[113/1250] q429 think_max      ttft=64871.4ms out=6607 think=6604 sig=21972 chars=1/1 $1.38
+[114/1250] q429 think_high     ttft=5305.1ms out=435 think=432 sig=2036 chars=1/1 $1.39
+[115/1250] q429 think_medium   ttft=3910.7ms out=360 think=357 sig=1860 chars=1/1 $1.40
+[116/1250] q368 think_high     ttft=1748.9ms out=100 think=97 sig=1056 chars=1/1 $1.40
+[117/1250] q368 think_max      ttft=4858.6ms out=428 think=425 sig=2052 chars=1/1 $1.41
+[118/1250] q368 think_xhigh    ttft=1849.6ms out=136 think=133 sig=1164 chars=1/1 $1.42
+[119/1250] q368 think_medium   ttft=2862.1ms out=199 think=196 sig=1276 chars=1/1 $1.42
+[120/1250] q368 think_low      ttft=1652.7ms out=106 think=103 sig=1052 chars=1/1 $1.42
+[121/1250] q561 think_xhigh    ttft=4280.3ms out=321 think=318 sig=2124 chars=1/1 $1.43
+[122/1250] q561 think_low      ttft=591.7ms out=3 think=0 sig=0 chars=1/1 $1.43
+[123/1250] q561 think_high     ttft=2664.7ms out=187 think=184 sig=1548 chars=1/1 $1.43
+[124/1250] q561 think_medium   ttft=3094.0ms out=231 think=228 sig=1736 chars=1/1 $1.44
+[125/1250] q561 think_max      ttft=13492.9ms out=1203 think=1200 sig=5764 chars=1/1 $1.46
+[126/1250] q437 think_high     ttft=1884.5ms out=86 think=83 sig=1048 chars=1/1 $1.47
+[127/1250] q437 think_low      ttft=1894.0ms out=59 think=56 sig=952 chars=1/1 $1.47
+[128/1250] q437 think_medium   ttft=1678.3ms out=83 think=80 sig=1040 chars=1/1 $1.47
+[129/1250] q437 think_max      ttft=4236.6ms out=329 think=326 sig=1748 chars=1/1 $1.48
+[130/1250] q437 think_xhigh    ttft=1829.3ms out=102 think=99 sig=1100 chars=1/1 $1.48
+[131/1250] q571 think_medium   ttft=1818.3ms out=656 think=112 sig=1300 chars=538/1 [불일치] $1.49
+[132/1250] q571 think_max      ttft=29156.6ms out=3622 think=2716 sig=10404 chars=876/1 [불일치] $1.57
+[133/1250] q571 think_xhigh    ttft=4836.0ms out=904 think=314 sig=2192 chars=571/1 [불일치] $1.58
+[134/1250] q571 think_high     ttft=2816.7ms out=777 think=185 sig=1640 chars=579/1 [불일치] $1.60
+[135/1250] q571 think_low      ttft=2196.5ms out=685 think=94 sig=1216 chars=576/1 [불일치] $1.61
+[136/1250] q424 think_high     ttft=3254.6ms out=223 think=220 sig=1568 chars=1/1 $1.62
+[137/1250] q424 think_low      ttft=2732.0ms out=233 think=230 sig=1576 chars=1/1 $1.62
+[138/1250] q424 think_medium   ttft=2852.4ms out=220 think=217 sig=1556 chars=1/1 $1.63
+[139/1250] q424 think_max      ttft=52746.1ms out=5018 think=5015 sig=17744 chars=1/1 $1.73
+[140/1250] q424 think_xhigh    ttft=4307.3ms out=317 think=314 sig=1860 chars=1/1 $1.74
+[141/1250] q392 think_max      ttft=9134.9ms out=886 think=883 sig=3572 chars=1/1 $1.75
+[142/1250] q392 think_high     ttft=3019.2ms out=206 think=203 sig=1456 chars=1/1 $1.76
+[143/1250] q392 think_xhigh    ttft=2772.2ms out=229 think=226 sig=1464 chars=1/1 $1.76
+[144/1250] q392 think_medium   ttft=2671.0ms out=185 think=182 sig=1324 chars=1/1 $1.77
+[145/1250] q392 think_low      ttft=1855.2ms out=130 think=127 sig=1172 chars=1/1 $1.77
+[146/1250] q611 think_medium   ttft=2933.9ms out=599 think=173 sig=1556 chars=423/1 [불일치] $1.78
+[147/1250] q611 think_low      ttft=1843.7ms out=634 think=101 sig=1248 chars=525/1 [불일치] $1.80
+[148/1250] q611 think_high     ttft=3052.3ms out=689 think=197 sig=1696 chars=486/1 [불일치] $1.81
+[149/1250] q611 think_max      ttft=11658.5ms out=981 think=978 sig=4996 chars=1/1 $1.83
+[150/1250] q611 think_xhigh    ttft=3703.2ms out=758 think=291 sig=2068 chars=461/1 [불일치] $1.85
+[151/1250] q60 think_high     ttft=13893.3ms out=1351 think=1348 sig=4196 chars=1/1 $1.87
+[152/1250] q60 think_medium   ttft=18523.3ms out=1804 think=1801 sig=5428 chars=1/1 $1.91
+[153/1250] q60 think_low      ttft=16340.2ms out=1440 think=1437 sig=4992 chars=1/1 $1.94
+[154/1250] q60 think_max      ttft=Nonems out=8192 think=8192 sig=21084 chars=0/1 [불일치] [잘림] $2.11
+[155/1250] q60 think_xhigh    ttft=12889.7ms out=1314 think=1311 sig=4492 chars=1/1 $2.13
+[156/1250] q567 think_high     ttft=2497.2ms out=635 think=158 sig=1512 chars=472/1 [불일치] $2.15
+[157/1250] q567 think_medium   ttft=1933.4ms out=804 think=117 sig=1308 chars=680/1 [불일치] $2.16
+[158/1250] q567 think_max      ttft=36814.9ms out=3960 think=3431 sig=13524 chars=527/1 [불일치] $2.24
+[159/1250] q567 think_low      ttft=2371.5ms out=739 think=132 sig=1408 chars=607/1 [불일치] $2.26
+[160/1250] q567 think_xhigh    ttft=3254.5ms out=909 think=194 sig=1676 chars=699/1 [불일치] $2.28
+[161/1250] q468 think_low      ttft=1530.9ms out=74 think=71 sig=1020 chars=1/1 $2.28
+[162/1250] q468 think_medium   ttft=1886.1ms out=117 think=114 sig=1136 chars=1/1 $2.28
+[163/1250] q468 think_high     ttft=1934.5ms out=136 think=133 sig=1172 chars=1/1 $2.28
+[164/1250] q468 think_xhigh    ttft=1785.7ms out=143 think=140 sig=1252 chars=1/1 $2.29
+[165/1250] q468 think_max      ttft=3305.6ms out=318 think=315 sig=1872 chars=1/1 $2.29
+[166/1250] q395 think_medium   ttft=1288.9ms out=42 think=39 sig=904 chars=1/1 $2.29
+[167/1250] q395 think_high     ttft=1471.2ms out=57 think=54 sig=944 chars=1/1 $2.30
+[168/1250] q395 think_low      ttft=1549.4ms out=57 think=54 sig=940 chars=1/1 $2.30
+[169/1250] q395 think_max      ttft=2637.9ms out=197 think=194 sig=1380 chars=1/1 $2.30
+[170/1250] q395 think_xhigh    ttft=1265.6ms out=42 think=39 sig=896 chars=1/1 $2.30
+[171/1250] q59 think_high     ttft=8530.1ms out=786 think=783 sig=2936 chars=1/1 $2.32
+[172/1250] q59 think_medium   ttft=16036.0ms out=1588 think=1585 sig=4848 chars=1/1 $2.35
+[173/1250] q59 think_xhigh    ttft=33848.0ms out=3823 think=3820 sig=10260 chars=1/1 $2.43
+[174/1250] q59 think_low      ttft=7937.3ms out=703 think=700 sig=2728 chars=1/1 $2.44
+[175/1250] q59 think_max      ttft=19536.8ms out=2295 think=2292 sig=6212 chars=1/1 $2.49
+[176/1250] q459 think_high     ttft=3394.0ms out=257 think=254 sig=1408 chars=1/1 $2.50
+[177/1250] q459 think_low      ttft=2372.7ms out=172 think=169 sig=1200 chars=1/1 $2.50
+[178/1250] q459 think_max      ttft=29196.2ms out=3058 think=3055 sig=9544 chars=1/1 $2.56
+[179/1250] q459 think_xhigh    ttft=3898.2ms out=380 think=377 sig=1680 chars=1/1 $2.57
+[180/1250] q459 think_medium   ttft=3019.6ms out=216 think=213 sig=1300 chars=1/1 $2.57
+[181/1250] q460 think_xhigh    ttft=1473.4ms out=55 think=52 sig=900 chars=1/1 $2.58
+[182/1250] q460 think_low      ttft=1401.6ms out=51 think=48 sig=880 chars=1/1 $2.58
+[183/1250] q460 think_medium   ttft=1530.5ms out=58 think=55 sig=908 chars=1/1 $2.58
+[184/1250] q460 think_max      ttft=2770.3ms out=202 think=199 sig=1296 chars=1/1 $2.58
+[185/1250] q460 think_high     ttft=1325.4ms out=57 think=54 sig=908 chars=1/1 $2.59
+[186/1250] q453 think_xhigh    ttft=4177.7ms out=403 think=400 sig=1992 chars=1/1 $2.59
+[187/1250] q453 think_max      ttft=14990.5ms out=1532 think=1529 sig=5740 chars=1/1 $2.63
+[188/1250] q453 think_high     ttft=3260.2ms out=265 think=262 sig=1560 chars=1/1 $2.63
+[189/1250] q453 think_medium   ttft=2971.3ms out=227 think=224 sig=1452 chars=1/1 $2.64
+[190/1250] q453 think_low      ttft=2563.1ms out=161 think=158 sig=1252 chars=1/1 $2.64
+[191/1250] q160 think_max      ttft=2337.6ms out=179 think=176 sig=1268 chars=1/1 $2.64
+[192/1250] q160 think_high     ttft=1771.8ms out=85 think=82 sig=1012 chars=1/1 $2.65
+[193/1250] q160 think_low      ttft=1501.6ms out=76 think=73 sig=972 chars=1/1 $2.65
+[194/1250] q160 think_medium   ttft=1540.6ms out=85 think=82 sig=988 chars=1/1 $2.65
+[195/1250] q160 think_xhigh    ttft=1667.1ms out=89 think=86 sig=1024 chars=1/1 $2.65
+[196/1250] q457 think_low      ttft=1374.2ms out=3 think=0 sig=0 chars=1/1 $2.65
+[197/1250] q457 think_high     ttft=640.8ms out=3 think=0 sig=0 chars=1/1 $2.65
+[198/1250] q457 think_xhigh    ttft=1477.8ms out=25 think=22 sig=876 chars=1/1 $2.65
+[199/1250] q457 think_medium   ttft=1064.2ms out=3 think=0 sig=0 chars=1/1 $2.66
+[200/1250] q457 think_max      ttft=1579.6ms out=77 think=74 sig=1048 chars=1/1 $2.66
+[201/1250] q668 think_xhigh    ttft=2086.2ms out=73 think=70 sig=1056 chars=1/1 $2.66
+[202/1250] q668 think_high     ttft=1799.4ms out=49 think=46 sig=972 chars=1/1 $2.66
+[203/1250] q668 think_max      ttft=4693.9ms out=382 think=379 sig=2396 chars=1/1 $2.67
+[204/1250] q668 think_low      ttft=1363.6ms out=3 think=0 sig=0 chars=1/1 $2.67
+[205/1250] q668 think_medium   ttft=1805.3ms out=54 think=51 sig=996 chars=1/1 $2.67
+[206/1250] q388 think_medium   ttft=3001.8ms out=217 think=214 sig=1416 chars=1/1 $2.68
+[207/1250] q388 think_max      ttft=8990.7ms out=855 think=852 sig=3508 chars=1/1 $2.69
+[208/1250] q388 think_xhigh    ttft=3669.9ms out=265 think=262 sig=1584 chars=1/1 $2.70
+[209/1250] q388 think_low      ttft=2508.9ms out=154 think=151 sig=1252 chars=1/1 $2.70
+[210/1250] q388 think_high     ttft=2168.2ms out=154 think=151 sig=1284 chars=1/1 $2.71
+[211/1250] q590 think_low      ttft=2917.5ms out=178 think=175 sig=1520 chars=1/1 $2.71
+[212/1250] q590 think_medium   ttft=4386.9ms out=318 think=315 sig=2116 chars=1/1 $2.72
+[213/1250] q590 think_max      ttft=12356.5ms out=1092 think=1089 sig=5424 chars=1/1 $2.74
+[214/1250] q590 think_high     ttft=3339.1ms out=225 think=222 sig=1644 chars=1/1 $2.74
+[215/1250] q590 think_xhigh    ttft=5428.9ms out=373 think=370 sig=2400 chars=1/1 $2.75
+[216/1250] q372 think_medium   ttft=3082.0ms out=235 think=232 sig=1408 chars=1/1 $2.76
+[217/1250] q372 think_high     ttft=2959.4ms out=200 think=197 sig=1304 chars=1/1 $2.76
+[218/1250] q372 think_xhigh    ttft=2405.9ms out=166 think=163 sig=1216 chars=1/1 $2.77
+[219/1250] q372 think_low      ttft=2251.3ms out=118 think=115 sig=1116 chars=1/1 $2.77
+[220/1250] q372 think_max      ttft=30170.2ms out=3047 think=3044 sig=10440 chars=1/1 $2.83
+[221/1250] q82 think_xhigh    ttft=3518.2ms out=408 think=405 sig=1464 chars=1/1 $2.84
+[222/1250] q82 think_max      ttft=6781.1ms out=862 think=859 sig=2444 chars=1/1 $2.86
+[223/1250] q82 think_high     ttft=2901.0ms out=284 think=281 sig=1320 chars=1/1 $2.86
+[224/1250] q82 think_low      ttft=2876.8ms out=284 think=281 sig=1308 chars=1/1 $2.87
+[225/1250] q82 think_medium   ttft=2814.4ms out=263 think=260 sig=1248 chars=1/1 $2.87
+[226/1250] q805 think_max      ttft=2820.6ms out=287 think=284 sig=1328 chars=1/1 $2.88
+[227/1250] q805 think_xhigh    ttft=2134.2ms out=182 think=179 sig=1228 chars=1/1 $2.89
+[228/1250] q805 think_high     ttft=2302.0ms out=184 think=181 sig=1212 chars=1/1 $2.89
+[229/1250] q805 think_medium   ttft=2259.3ms out=153 think=150 sig=1112 chars=1/1 $2.89
+[230/1250] q805 think_low      ttft=2238.9ms out=155 think=152 sig=1124 chars=1/1 $2.90
+[231/1250] q393 think_medium   ttft=1861.5ms out=88 think=85 sig=1076 chars=1/1 $2.90
+[232/1250] q393 think_max      ttft=10255.2ms out=1031 think=1028 sig=4232 chars=1/1 $2.92
+[233/1250] q393 think_low      ttft=1795.7ms out=89 think=86 sig=1080 chars=1/1 $2.92
+[234/1250] q393 think_high     ttft=1746.0ms out=104 think=101 sig=1144 chars=1/1 $2.93
+[235/1250] q393 think_xhigh    ttft=1837.6ms out=124 think=121 sig=1192 chars=1/1 $2.93
+[236/1250] q407 think_high     ttft=1746.3ms out=111 think=108 sig=1096 chars=1/1 $2.93
+[237/1250] q407 think_medium   ttft=1951.3ms out=98 think=95 sig=1040 chars=1/1 $2.93
+[238/1250] q407 think_xhigh    ttft=3025.3ms out=257 think=254 sig=1520 chars=1/1 $2.94
+[239/1250] q407 think_max      ttft=4136.1ms out=381 think=378 sig=1920 chars=1/1 $2.95
+[240/1250] q407 think_low      ttft=2031.8ms out=144 think=141 sig=1188 chars=1/1 $2.95
+[241/1250] q421 think_medium   ttft=3049.0ms out=256 think=253 sig=1444 chars=1/1 $2.96
+[242/1250] q421 think_low      ttft=2468.3ms out=198 think=195 sig=1280 chars=1/1 $2.96
+[243/1250] q421 think_xhigh    ttft=3340.3ms out=282 think=279 sig=1496 chars=1/1 $2.97
+[244/1250] q421 think_high     ttft=3074.9ms out=265 think=262 sig=1464 chars=1/1 $2.97
+[245/1250] q421 think_max      ttft=7967.7ms out=805 think=802 sig=3064 chars=1/1 $2.99
+[246/1250] q386 think_medium   ttft=1652.6ms out=52 think=49 sig=988 chars=1/1 $2.99
+[247/1250] q386 think_max      ttft=3798.8ms out=316 think=313 sig=1796 chars=1/1 $3.00
+[248/1250] q386 think_xhigh    ttft=1661.8ms out=57 think=54 sig=1000 chars=1/1 $3.00
+[249/1250] q386 think_high     ttft=1618.5ms out=60 think=57 sig=1008 chars=1/1 $3.00
+[250/1250] q386 think_low      ttft=1649.7ms out=68 think=65 sig=1000 chars=1/1 $3.00
+[251/1250] q618 think_high     ttft=4689.6ms out=372 think=369 sig=2436 chars=1/1 $3.01
+[252/1250] q618 think_medium   ttft=4689.2ms out=602 think=313 sig=2144 chars=295/1 [불일치] $3.02
+[253/1250] q618 think_low      ttft=2226.5ms out=560 think=96 sig=1216 chars=466/1 [불일치] $3.03
+[254/1250] q618 think_xhigh    ttft=6592.0ms out=940 think=524 sig=3096 chars=418/1 [불일치] $3.05
+[255/1250] q618 think_max      ttft=22056.4ms out=1955 think=1952 sig=9256 chars=1/1 $3.09
+[256/1250] q229 think_xhigh    ttft=3927.2ms out=377 think=374 sig=1700 chars=1/1 $3.10
+[257/1250] q229 think_max      ttft=7417.6ms out=817 think=814 sig=3024 chars=1/1 $3.12
+[258/1250] q229 think_low      ttft=2923.9ms out=222 think=219 sig=1356 chars=1/1 $3.12
+[259/1250] q229 think_high     ttft=3253.8ms out=272 think=269 sig=1452 chars=1/1 $3.13
+[260/1250] q229 think_medium   ttft=2114.1ms out=162 think=159 sig=1224 chars=1/1 $3.13
+[261/1250] q398 think_medium   ttft=1059.3ms out=34 think=31 sig=872 chars=1/1 $3.14
+[262/1250] q398 think_max      ttft=2583.3ms out=203 think=200 sig=1440 chars=1/1 $3.14
+[263/1250] q398 think_low      ttft=616.2ms out=3 think=0 sig=0 chars=1/1 $3.14
+[264/1250] q398 think_high     ttft=1242.0ms out=39 think=36 sig=884 chars=1/1 $3.14
+[265/1250] q398 think_xhigh    ttft=1169.3ms out=34 think=31 sig=880 chars=1/1 $3.14
+[266/1250] q508 think_medium   ttft=1660.9ms out=720 think=97 sig=1220 chars=618/1 [불일치] $3.16
+[267/1250] q508 think_max      ttft=60858.4ms out=6317 think=5639 sig=21820 chars=662/1 [불일치] $3.28
+[268/1250] q508 think_low      ttft=1985.7ms out=620 think=113 sig=1320 chars=508/1 [불일치] $3.30
+[269/1250] q508 think_high     ttft=2045.1ms out=785 think=139 sig=1440 chars=636/1 [불일치] $3.31
+[270/1250] q508 think_xhigh    ttft=2981.4ms out=725 think=197 sig=1728 chars=528/1 [불일치] $3.33
+[271/1250] q383 think_max      ttft=10570.6ms out=939 think=936 sig=4032 chars=1/1 $3.35
+[272/1250] q383 think_medium   ttft=2065.5ms out=144 think=141 sig=1236 chars=1/1 $3.35
+[273/1250] q383 think_high     ttft=2715.2ms out=192 think=189 sig=1392 chars=1/1 $3.35
+[274/1250] q383 think_low      ttft=2201.8ms out=136 think=133 sig=1244 chars=1/1 $3.36
+[275/1250] q383 think_xhigh    ttft=2782.3ms out=207 think=204 sig=1444 chars=1/1 $3.36
+[276/1250] q134 think_max      ttft=3941.5ms out=394 think=391 sig=1796 chars=1/1 $3.37
+[277/1250] q134 think_high     ttft=2842.4ms out=253 think=250 sig=1408 chars=1/1 $3.38
+[278/1250] q134 think_medium   ttft=2945.3ms out=297 think=294 sig=1508 chars=1/1 $3.38
+[279/1250] q134 think_low      ttft=2566.5ms out=223 think=220 sig=1312 chars=1/1 $3.39
+[280/1250] q134 think_xhigh    ttft=2710.2ms out=294 think=291 sig=1496 chars=1/1 $3.40
+[281/1250] q612 think_high     ttft=4383.1ms out=688 think=299 sig=2096 chars=391/1 [불일치] $3.41
+[282/1250] q612 think_max      ttft=42401.6ms out=3845 think=3842 sig=17236 chars=1/1 $3.49
+[283/1250] q612 think_xhigh    ttft=10504.8ms out=868 think=865 sig=4416 chars=1/1 $3.51
+[284/1250] q612 think_medium   ttft=6461.7ms out=812 think=480 sig=2864 chars=341/1 [불일치] $3.52
+[285/1250] q612 think_low      ttft=4064.8ms out=653 think=275 sig=1952 chars=385/1 [불일치] $3.54
+[286/1250] q416 think_medium   ttft=4162.5ms out=284 think=281 sig=1696 chars=1/1 $3.54
+[287/1250] q416 think_high     ttft=2887.3ms out=258 think=255 sig=1580 chars=1/1 $3.55
+[288/1250] q416 think_low      ttft=2806.7ms out=163 think=160 sig=1320 chars=1/1 $3.55
+[289/1250] q416 think_xhigh    ttft=3986.6ms out=317 think=314 sig=1776 chars=1/1 $3.56
+[290/1250] q416 think_max      ttft=29609.1ms out=2830 think=2827 sig=9796 chars=1/1 $3.62
+[291/1250] q363 think_low      ttft=3349.9ms out=255 think=252 sig=1488 chars=1/1 $3.62
+[292/1250] q363 think_xhigh    ttft=5743.1ms out=526 think=523 sig=2308 chars=1/1 $3.63
+[293/1250] q363 think_max      ttft=21767.6ms out=2251 think=2248 sig=7860 chars=1/1 $3.68
+[294/1250] q363 think_high     ttft=3772.1ms out=311 think=308 sig=1648 chars=1/1 $3.68
+[295/1250] q363 think_medium   ttft=6138.0ms out=586 think=583 sig=2420 chars=1/1 $3.70
+[296/1250] q594 think_low      ttft=1825.2ms out=652 think=96 sig=1220 chars=549/1 [불일치] $3.71
+[297/1250] q594 think_medium   ttft=1691.0ms out=683 think=92 sig=1216 chars=582/1 [불일치] $3.72
+[298/1250] q594 think_high     ttft=2403.1ms out=639 think=144 sig=1456 chars=490/1 [불일치] $3.74
+[299/1250] q594 think_max      ttft=22282.7ms out=2714 think=2090 sig=8212 chars=619/1 [불일치] $3.79
+[300/1250] q594 think_xhigh    ttft=2392.9ms out=742 think=164 sig=1548 chars=573/1 [불일치] $3.81
+[301/1250] q464 think_low      ttft=1677.1ms out=89 think=86 sig=1056 chars=1/1 $3.81
+[302/1250] q464 think_xhigh    ttft=2098.3ms out=150 think=147 sig=1240 chars=1/1 $3.81
+[303/1250] q464 think_medium   ttft=2133.1ms out=137 think=134 sig=1208 chars=1/1 $3.82
+[304/1250] q464 think_high     ttft=2013.4ms out=127 think=124 sig=1152 chars=1/1 $3.82
+[305/1250] q464 think_max      ttft=3990.2ms out=355 think=352 sig=1888 chars=1/1 $3.83
+[306/1250] q390 think_max      ttft=3087.5ms out=270 think=267 sig=1472 chars=1/1 $3.83
+[307/1250] q390 think_low      ttft=1951.7ms out=123 think=120 sig=1048 chars=1/1 $3.84
+[308/1250] q390 think_xhigh    ttft=1853.9ms out=132 think=129 sig=1104 chars=1/1 $3.84
+[309/1250] q390 think_high     ttft=2217.9ms out=132 think=129 sig=1068 chars=1/1 $3.84
+[310/1250] q390 think_medium   ttft=1895.9ms out=123 think=120 sig=1064 chars=1/1 $3.84
+[311/1250] q583 think_low      ttft=1639.2ms out=626 think=73 sig=1128 chars=552/1 [불일치] $3.86
+[312/1250] q583 think_medium   ttft=1990.1ms out=586 think=104 sig=1276 chars=476/1 [불일치] $3.87
+[313/1250] q583 think_xhigh    ttft=2489.6ms out=710 think=173 sig=1600 chars=529/1 [불일치] $3.88
+[314/1250] q583 think_max      ttft=29666.3ms out=3138 think=2757 sig=11060 chars=369/1 [불일치] $3.95
+[315/1250] q583 think_high     ttft=2119.8ms out=601 think=112 sig=1312 chars=480/1 [불일치] $3.96
+[316/1250] q602 think_high     ttft=3370.5ms out=634 think=258 sig=1900 chars=378/1 [불일치] $3.97
+[317/1250] q602 think_medium   ttft=2923.6ms out=778 think=214 sig=1784 chars=554/1 [불일치] $3.99
+[318/1250] q602 think_max      ttft=60235.8ms out=6545 think=5882 sig=22416 chars=663/1 [불일치] $4.12
+[319/1250] q602 think_xhigh    ttft=4241.0ms out=844 think=290 sig=2012 chars=549/1 [불일치] $4.14
+[320/1250] q602 think_low      ttft=2276.5ms out=654 think=150 sig=1440 chars=511/1 [불일치] $4.15
+[321/1250] q184 think_low      ttft=5553.1ms out=571 think=568 sig=2176 chars=1/1 $4.16
+[322/1250] q184 think_xhigh    ttft=6517.2ms out=729 think=726 sig=2520 chars=1/1 $4.18
+[323/1250] q184 think_medium   ttft=8139.2ms out=745 think=742 sig=2960 chars=1/1 $4.19
+[324/1250] q184 think_high     ttft=6322.6ms out=685 think=682 sig=2420 chars=1/1 $4.21
+[325/1250] q184 think_max      ttft=45131.9ms out=5438 think=5435 sig=15144 chars=1/1 $4.32
+[326/1250] q608 think_high     ttft=3126.9ms out=197 think=194 sig=1532 chars=1/1 $4.32
+[327/1250] q608 think_xhigh    ttft=3705.4ms out=315 think=312 sig=1964 chars=1/1 $4.33
+[328/1250] q608 think_low      ttft=2370.1ms out=165 think=162 sig=1432 chars=1/1 $4.33
+[329/1250] q608 think_max      ttft=8094.1ms out=748 think=745 sig=3604 chars=1/1 $4.35
+[330/1250] q608 think_medium   ttft=2196.5ms out=158 think=155 sig=1376 chars=1/1 $4.35
+[331/1250] q570 think_xhigh    ttft=6249.7ms out=907 think=492 sig=2928 chars=424/1 [불일치] $4.37
+[332/1250] q570 think_high     ttft=6038.4ms out=896 think=436 sig=2700 chars=466/1 [불일치] $4.39
+[333/1250] q570 think_max      ttft=11235.8ms out=959 think=956 sig=4960 chars=1/1 $4.41
+[334/1250] q570 think_medium   ttft=2420.5ms out=638 think=150 sig=1448 chars=495/1 [불일치] $4.42
+[335/1250] q570 think_low      ttft=1968.5ms out=589 think=113 sig=1292 chars=477/1 [불일치] $4.43
+[336/1250] q365 think_xhigh    ttft=1623.3ms out=98 think=95 sig=1112 chars=1/1 $4.44
+[337/1250] q365 think_max      ttft=9666.4ms out=950 think=947 sig=3840 chars=1/1 $4.45
+[338/1250] q365 think_high     ttft=1285.5ms out=75 think=72 sig=1040 chars=1/1 $4.46
+[339/1250] q365 think_medium   ttft=1347.9ms out=86 think=83 sig=1068 chars=1/1 $4.46
+[340/1250] q365 think_low      ttft=1599.2ms out=90 think=87 sig=1088 chars=1/1 $4.46
+[341/1250] q36 think_max      ttft=23614.6ms out=3080 think=3077 sig=7964 chars=1/1 $4.52
+[342/1250] q36 think_xhigh    ttft=6956.3ms out=692 think=689 sig=2256 chars=1/1 $4.54
+[343/1250] q36 think_medium   ttft=5822.2ms out=534 think=531 sig=2056 chars=1/1 $4.55
+[344/1250] q36 think_high     ttft=7449.8ms out=771 think=768 sig=2396 chars=1/1 $4.56
+[345/1250] q36 think_low      ttft=3337.0ms out=334 think=331 sig=1496 chars=1/1 $4.57
+[346/1250] q428 think_max      ttft=Nonems out=8192 think=8192 sig=26492 chars=0/1 [불일치] [잘림] $4.74
+[347/1250] q428 think_medium   ttft=6063.3ms out=507 think=504 sig=2396 chars=1/1 $4.75
+[348/1250] q428 think_high     ttft=7676.9ms out=634 think=631 sig=2752 chars=1/1 $4.76
+[349/1250] q428 think_xhigh    ttft=27396.9ms out=2569 think=2566 sig=8976 chars=1/1 $4.81
+[350/1250] q428 think_low      ttft=3797.5ms out=262 think=259 sig=1552 chars=1/1 $4.82
+[351/1250] q446 think_low      ttft=1953.5ms out=139 think=136 sig=1100 chars=1/1 $4.82
+[352/1250] q446 think_max      ttft=2926.1ms out=259 think=256 sig=1472 chars=1/1 $4.83
+[353/1250] q446 think_medium   ttft=1952.0ms out=121 think=118 sig=1076 chars=1/1 $4.83
+[354/1250] q446 think_xhigh    ttft=2096.2ms out=139 think=136 sig=1180 chars=1/1 $4.83
+[355/1250] q446 think_high     ttft=2487.1ms out=136 think=133 sig=1136 chars=1/1 $4.84
+[356/1250] q616 think_medium   ttft=5497.9ms out=761 think=393 sig=2468 chars=367/1 [불일치] $4.85
+[357/1250] q616 think_low      ttft=1960.4ms out=605 think=116 sig=1304 chars=487/1 [불일치] $4.86
+[358/1250] q616 think_max      ttft=11510.9ms out=995 think=992 sig=4988 chars=1/1 $4.88
+[359/1250] q616 think_high     ttft=3003.0ms out=661 think=204 sig=1732 chars=451/1 [불일치] $4.90
+[360/1250] q616 think_xhigh    ttft=7073.2ms out=524 think=521 sig=3004 chars=1/1 $4.91
+[361/1250] q723 think_max      ttft=3559.4ms out=269 think=266 sig=1640 chars=1/1 $4.91
+[362/1250] q723 think_xhigh    ttft=2338.3ms out=116 think=113 sig=1124 chars=1/1 $4.92
+[363/1250] q723 think_high     ttft=2342.4ms out=117 think=114 sig=1088 chars=1/1 $4.92
+[364/1250] q723 think_medium   ttft=2169.7ms out=100 think=97 sig=1096 chars=1/1 $4.92
+[365/1250] q723 think_low      ttft=2807.8ms out=95 think=92 sig=1068 chars=1/1 $4.93
+[366/1250] q569 think_max      ttft=20313.8ms out=2400 think=1809 sig=7704 chars=592/1 [불일치] $4.98
+[367/1250] q569 think_low      ttft=1752.0ms out=489 think=76 sig=1152 chars=411/1 [불일치] $4.99
+[368/1250] q569 think_xhigh    ttft=3132.0ms out=684 think=176 sig=1596 chars=505/1 [불일치] $5.00
+[369/1250] q569 think_high     ttft=2695.1ms out=735 think=152 sig=1512 chars=573/1 [불일치] $5.02
+[370/1250] q569 think_medium   ttft=2099.5ms out=717 think=127 sig=1360 chars=581/1 [불일치] $5.03
+[371/1250] q804 think_max      ttft=3024.9ms out=296 think=293 sig=1424 chars=1/1 $5.04
+[372/1250] q804 think_high     ttft=1862.3ms out=150 think=147 sig=1124 chars=1/1 $5.04
+[373/1250] q804 think_medium   ttft=1809.5ms out=130 think=127 sig=1092 chars=1/1 $5.04
+[374/1250] q804 think_xhigh    ttft=2293.1ms out=225 think=222 sig=1260 chars=1/1 $5.05
+[375/1250] q804 think_low      ttft=2041.2ms out=144 think=141 sig=1148 chars=1/1 $5.05
+[376/1250] q379 think_high     ttft=3921.6ms out=326 think=323 sig=1916 chars=1/1 $5.06
+[377/1250] q379 think_xhigh    ttft=4734.3ms out=404 think=401 sig=2120 chars=1/1 $5.07
+[378/1250] q379 think_low      ttft=2817.9ms out=222 think=219 sig=1520 chars=1/1 $5.07
+[379/1250] q379 think_medium   ttft=3469.3ms out=287 think=284 sig=1672 chars=1/1 $5.08
+[380/1250] q379 think_max      ttft=10356.6ms out=1007 think=1004 sig=4272 chars=1/1 $5.10
+[381/1250] q447 think_max      ttft=Nonems out=8192 think=8192 sig=27760 chars=0/1 [불일치] [잘림] $5.26
+[382/1250] q447 think_xhigh    ttft=7723.7ms out=701 think=698 sig=2848 chars=1/1 $5.28
+[383/1250] q447 think_high     ttft=6301.7ms out=475 think=472 sig=2116 chars=1/1 $5.29
+[384/1250] q447 think_medium   ttft=2982.9ms out=208 think=205 sig=1364 chars=1/1 $5.29
+[385/1250] q447 think_low      ttft=5264.1ms out=438 think=435 sig=1948 chars=1/1 $5.30
+[386/1250] q404 think_medium   ttft=1901.6ms out=114 think=111 sig=1120 chars=1/1 $5.31
+[387/1250] q404 think_low      ttft=1564.6ms out=101 think=98 sig=1048 chars=1/1 $5.31
+[388/1250] q404 think_xhigh    ttft=2156.7ms out=177 think=174 sig=1296 chars=1/1 $5.31
+[389/1250] q404 think_max      ttft=5822.5ms out=540 think=537 sig=2556 chars=1/1 $5.32
+[390/1250] q404 think_high     ttft=1566.5ms out=107 think=104 sig=1092 chars=1/1 $5.33
+[391/1250] q431 think_medium   ttft=1747.4ms out=68 think=65 sig=1004 chars=1/1 $5.33
+[392/1250] q431 think_low      ttft=1240.4ms out=40 think=37 sig=912 chars=1/1 $5.33
+[393/1250] q431 think_high     ttft=1911.6ms out=135 think=132 sig=1180 chars=1/1 $5.33
+[394/1250] q431 think_max      ttft=3901.3ms out=357 think=354 sig=1896 chars=1/1 $5.34
+[395/1250] q431 think_xhigh    ttft=1418.1ms out=83 think=80 sig=1020 chars=1/1 $5.34
+[396/1250] q408 think_xhigh    ttft=1535.0ms out=133 think=130 sig=1208 chars=1/1 $5.34
+[397/1250] q408 think_max      ttft=3981.3ms out=376 think=373 sig=1984 chars=1/1 $5.35
+[398/1250] q408 think_high     ttft=1801.5ms out=83 think=80 sig=1036 chars=1/1 $5.35
+[399/1250] q408 think_low      ttft=1339.9ms out=75 think=72 sig=1008 chars=1/1 $5.36
+[400/1250] q408 think_medium   ttft=1302.9ms out=79 think=76 sig=1012 chars=1/1 $5.36
+[401/1250] q572 think_high     ttft=1750.4ms out=714 think=98 sig=1252 chars=618/1 [불일치] $5.37
+[402/1250] q572 think_medium   ttft=2094.7ms out=740 think=114 sig=1304 chars=624/1 [불일치] $5.39
+[403/1250] q572 think_max      ttft=49043.3ms out=5213 think=4574 sig=16896 chars=634/1 [불일치] $5.49
+[404/1250] q572 think_xhigh    ttft=2741.4ms out=789 think=165 sig=1536 chars=623/1 [불일치] $5.51
+[405/1250] q572 think_low      ttft=1942.7ms out=599 think=92 sig=1188 chars=504/1 [불일치] $5.52
+[406/1250] q405 think_xhigh    ttft=1608.4ms out=30 think=27 sig=872 chars=1/1 $5.52
+[407/1250] q405 think_max      ttft=1982.9ms out=92 think=89 sig=1092 chars=1/1 $5.52
+[408/1250] q405 think_high     ttft=1137.1ms out=3 think=0 sig=0 chars=1/1 $5.53
+[409/1250] q405 think_medium   ttft=1104.6ms out=3 think=0 sig=0 chars=1/1 $5.53
+[410/1250] q405 think_low      ttft=1150.0ms out=3 think=0 sig=0 chars=1/1 $5.53
+[411/1250] q498 think_max      ttft=9834.7ms out=817 think=814 sig=3972 chars=1/1 $5.54
+[412/1250] q498 think_medium   ttft=1995.2ms out=99 think=96 sig=1172 chars=1/1 $5.55
+[413/1250] q498 think_xhigh    ttft=2466.8ms out=191 think=188 sig=1580 chars=1/1 $5.55
+[414/1250] q498 think_low      ttft=1697.2ms out=73 think=70 sig=1084 chars=1/1 $5.55
+[415/1250] q498 think_high     ttft=2327.0ms out=131 think=128 sig=1304 chars=1/1 $5.55
+[416/1250] q623 think_max      ttft=22384.5ms out=2018 think=2015 sig=8580 chars=1/1 $5.60
+[417/1250] q623 think_high     ttft=5806.3ms out=417 think=414 sig=2436 chars=1/1 $5.60
+[418/1250] q623 think_xhigh    ttft=8546.4ms out=681 think=678 sig=3628 chars=1/1 $5.62
+[419/1250] q623 think_medium   ttft=6116.1ms out=436 think=433 sig=2648 chars=1/1 $5.63
+[420/1250] q623 think_low      ttft=4444.9ms out=321 think=318 sig=2168 chars=1/1 $5.63
+[421/1250] q378 think_xhigh    ttft=1822.0ms out=117 think=114 sig=1244 chars=1/1 $5.64
+[422/1250] q378 think_medium   ttft=1254.1ms out=41 think=38 sig=904 chars=1/1 $5.64
+[423/1250] q378 think_high     ttft=1101.9ms out=31 think=28 sig=880 chars=1/1 $5.64
+[424/1250] q378 think_low      ttft=1099.3ms out=33 think=30 sig=884 chars=1/1 $5.64
+[425/1250] q378 think_max      ttft=4419.0ms out=444 think=441 sig=2396 chars=1/1 $5.65
+[426/1250] q699 think_low      ttft=2043.7ms out=131 think=128 sig=1124 chars=1/1 $5.65
+[427/1250] q699 think_high     ttft=2304.7ms out=149 think=146 sig=1224 chars=1/1 $5.66
+[428/1250] q699 think_xhigh    ttft=2136.5ms out=168 think=165 sig=1232 chars=1/1 $5.66
+[429/1250] q699 think_max      ttft=4227.7ms out=417 think=414 sig=1864 chars=1/1 $5.67
+[430/1250] q699 think_medium   ttft=2461.2ms out=150 think=147 sig=1208 chars=1/1 $5.67
+[431/1250] q578 think_medium   ttft=3829.0ms out=289 think=286 sig=1988 chars=1/1 $5.68
+[432/1250] q578 think_low      ttft=4917.6ms out=736 think=327 sig=2188 chars=408/1 [불일치] $5.70
+[433/1250] q578 think_high     ttft=8707.1ms out=673 think=670 sig=3552 chars=1/1 $5.71
+[434/1250] q578 think_xhigh    ttft=6429.0ms out=522 think=519 sig=2952 chars=1/1 $5.72
+[435/1250] q578 think_max      ttft=14261.2ms out=1330 think=1327 sig=6252 chars=1/1 $5.75
+[436/1250] q626 think_low      ttft=2594.8ms out=612 think=111 sig=1300 chars=499/1 [불일치] $5.76
+[437/1250] q626 think_xhigh    ttft=7336.9ms out=1048 think=590 sig=3324 chars=455/1 [불일치] $5.78
+[438/1250] q626 think_max      ttft=40311.7ms out=3617 think=3614 sig=15980 chars=1/1 $5.86
+[439/1250] q626 think_medium   ttft=2542.9ms out=611 think=136 sig=1424 chars=474/1 [불일치] $5.87
+[440/1250] q626 think_high     ttft=2793.5ms out=751 think=186 sig=1644 chars=555/1 [불일치] $5.88
+[441/1250] q364 think_xhigh    ttft=1480.3ms out=86 think=83 sig=1048 chars=1/1 $5.89
+[442/1250] q364 think_medium   ttft=1793.8ms out=115 think=112 sig=1148 chars=1/1 $5.89
+[443/1250] q364 think_high     ttft=1664.1ms out=90 think=87 sig=1052 chars=1/1 $5.89
+[444/1250] q364 think_max      ttft=3764.4ms out=349 think=346 sig=1960 chars=1/1 $5.90
+[445/1250] q364 think_low      ttft=1511.1ms out=66 think=63 sig=980 chars=1/1 $5.90
+[446/1250] q417 think_max      ttft=15495.8ms out=1586 think=1583 sig=5624 chars=1/1 $5.93
+[447/1250] q417 think_xhigh    ttft=2782.7ms out=185 think=182 sig=1224 chars=1/1 $5.94
+[448/1250] q417 think_medium   ttft=2388.0ms out=171 think=168 sig=1216 chars=1/1 $5.94
+[449/1250] q417 think_low      ttft=2915.7ms out=191 think=188 sig=1220 chars=1/1 $5.94
+[450/1250] q417 think_high     ttft=2748.6ms out=231 think=228 sig=1392 chars=1/1 $5.95
+[451/1250] q613 think_max      ttft=49898.8ms out=4547 think=4544 sig=19628 chars=1/1 $6.04
+[452/1250] q613 think_xhigh    ttft=7484.5ms out=562 think=559 sig=3196 chars=1/1 $6.05
+[453/1250] q613 think_low      ttft=3017.3ms out=555 think=153 sig=1480 chars=406/1 [불일치] $6.06
+[454/1250] q613 think_high     ttft=7122.4ms out=797 think=432 sig=2580 chars=369/1 [불일치] $6.08
+[455/1250] q613 think_medium   ttft=4142.2ms out=403 think=259 sig=1936 chars=144/1 [불일치] $6.09
+[456/1250] q10 think_xhigh    ttft=2911.0ms out=249 think=246 sig=1380 chars=1/1 $6.09
+[457/1250] q10 think_medium   ttft=2360.3ms out=184 think=181 sig=1236 chars=1/1 $6.10
+[458/1250] q10 think_high     ttft=2326.8ms out=173 think=170 sig=1216 chars=1/1 $6.10
+[459/1250] q10 think_max      ttft=3409.1ms out=335 think=332 sig=1588 chars=1/1 $6.11
+[460/1250] q10 think_low      ttft=2170.2ms out=160 think=157 sig=1112 chars=1/1 $6.11
+[461/1250] q442 think_xhigh    ttft=5699.0ms out=487 think=484 sig=2140 chars=1/1 $6.12
+[462/1250] q442 think_max      ttft=31612.6ms out=3275 think=3272 sig=10828 chars=1/1 $6.19
+[463/1250] q442 think_medium   ttft=3602.8ms out=289 think=286 sig=1536 chars=1/1 $6.19
+[464/1250] q442 think_low      ttft=3314.6ms out=278 think=275 sig=1512 chars=1/1 $6.20
+[465/1250] q442 think_high     ttft=3488.6ms out=276 think=273 sig=1556 chars=1/1 $6.21
+[466/1250] q108 think_medium   ttft=2175.0ms out=131 think=128 sig=1148 chars=1/1 $6.21
+[467/1250] q108 think_xhigh    ttft=3332.3ms out=238 think=235 sig=1428 chars=1/1 $6.22
+[468/1250] q108 think_high     ttft=3760.8ms out=331 think=328 sig=1728 chars=1/1 $6.22
+[469/1250] q108 think_max      ttft=Nonems out=8192 think=8192 sig=18992 chars=0/1 [불일치] [잘림] $6.39
+[470/1250] q108 think_low      ttft=2299.5ms out=140 think=137 sig=1176 chars=1/1 $6.39
+[471/1250] q418 think_max      ttft=1284.8ms out=42 think=39 sig=944 chars=1/1 $6.39
+[472/1250] q418 think_medium   ttft=1341.9ms out=22 think=19 sig=860 chars=1/1 $6.39
+[473/1250] q418 think_high     ttft=1258.0ms out=22 think=19 sig=860 chars=1/1 $6.39
+[474/1250] q418 think_low      ttft=999.4ms out=3 think=0 sig=0 chars=1/1 $6.39
+[475/1250] q418 think_xhigh    ttft=1267.9ms out=35 think=32 sig=912 chars=1/1 $6.40
+[476/1250] q208 think_xhigh    ttft=4196.5ms out=401 think=398 sig=1664 chars=1/1 $6.40
+[477/1250] q208 think_max      ttft=6175.7ms out=671 think=668 sig=2196 chars=1/1 $6.42
+[478/1250] q208 think_low      ttft=3631.8ms out=306 think=303 sig=1456 chars=1/1 $6.42
+[479/1250] q208 think_medium   ttft=2908.3ms out=242 think=239 sig=1272 chars=1/1 $6.43
+[480/1250] q208 think_high     ttft=3858.6ms out=319 think=316 sig=1480 chars=1/1 $6.44
+[481/1250] q465 think_max      ttft=17648.3ms out=1750 think=1747 sig=6168 chars=1/1 $6.47
+[482/1250] q465 think_xhigh    ttft=6081.6ms out=481 think=478 sig=2084 chars=1/1 $6.48
+[483/1250] q465 think_high     ttft=3529.9ms out=289 think=286 sig=1584 chars=1/1 $6.49
+[484/1250] q465 think_medium   ttft=3249.4ms out=219 think=216 sig=1456 chars=1/1 $6.49
+[485/1250] q465 think_low      ttft=3068.9ms out=246 think=243 sig=1456 chars=1/1 $6.50
+[486/1250] q410 think_xhigh    ttft=3995.4ms out=311 think=308 sig=1736 chars=1/1 $6.51
+[487/1250] q410 think_max      ttft=10941.9ms out=1063 think=1060 sig=4056 chars=1/1 $6.53
+[488/1250] q410 think_medium   ttft=3729.9ms out=298 think=295 sig=1668 chars=1/1 $6.53
+[489/1250] q410 think_low      ttft=4241.2ms out=285 think=282 sig=1612 chars=1/1 $6.54
+[490/1250] q410 think_high     ttft=4021.0ms out=318 think=315 sig=1772 chars=1/1 $6.55
+[491/1250] q667 think_medium   ttft=2712.4ms out=144 think=141 sig=1352 chars=1/1 $6.55
+[492/1250] q667 think_low      ttft=1786.7ms out=96 think=93 sig=1140 chars=1/1 $6.55
+[493/1250] q667 think_high     ttft=2268.2ms out=144 think=141 sig=1356 chars=1/1 $6.56
+[494/1250] q667 think_xhigh    ttft=3029.9ms out=191 think=188 sig=1596 chars=1/1 $6.56
+[495/1250] q667 think_max      ttft=7554.1ms out=625 think=622 sig=3368 chars=1/1 $6.57
+[496/1250] q375 think_max      ttft=2295.4ms out=134 think=131 sig=1224 chars=1/1 $6.58
+[497/1250] q375 think_medium   ttft=1130.8ms out=3 think=0 sig=0 chars=1/1 $6.58
+[498/1250] q375 think_low      ttft=1141.1ms out=3 think=0 sig=0 chars=1/1 $6.58
+[499/1250] q375 think_high     ttft=1103.3ms out=3 think=0 sig=0 chars=1/1 $6.58
+[500/1250] q375 think_xhigh    ttft=1406.8ms out=32 think=29 sig=876 chars=1/1 $6.58
+[501/1250] q435 think_xhigh    ttft=7011.2ms out=597 think=594 sig=2592 chars=1/1 $6.59
+[502/1250] q435 think_low      ttft=4645.9ms out=367 think=364 sig=1912 chars=1/1 $6.60
+[503/1250] q435 think_high     ttft=7348.1ms out=588 think=585 sig=2608 chars=1/1 $6.61
+[504/1250] q435 think_max      ttft=Nonems out=8192 think=8192 sig=26688 chars=0/1 [불일치] [잘림] $6.78
+[505/1250] q435 think_medium   ttft=7869.2ms out=641 think=638 sig=2728 chars=1/1 $6.79
+[506/1250] q599 think_high     ttft=3081.2ms out=653 think=170 sig=1556 chars=480/1 [불일치] $6.80
+[507/1250] q599 think_low      ttft=2716.8ms out=533 think=128 sig=1364 chars=406/1 [불일치] $6.81
+[508/1250] q599 think_medium   ttft=2738.0ms out=662 think=147 sig=1468 chars=508/1 [불일치] $6.83
+[509/1250] q599 think_max      ttft=48018.7ms out=4800 think=4415 sig=17412 chars=385/1 [불일치] $6.92
+[510/1250] q599 think_xhigh    ttft=3481.7ms out=744 think=205 sig=1648 chars=536/1 [불일치] $6.94
+[511/1250] q35 think_low      ttft=4223.8ms out=394 think=391 sig=1588 chars=1/1 $6.95
+[512/1250] q35 think_xhigh    ttft=12293.1ms out=1337 think=1334 sig=3848 chars=1/1 $6.97
+[513/1250] q35 think_medium   ttft=4668.4ms out=474 think=471 sig=1904 chars=1/1 $6.98
+[514/1250] q35 think_high     ttft=6037.2ms out=572 think=569 sig=2164 chars=1/1 $7.00
+[515/1250] q35 think_max      ttft=18112.0ms out=2317 think=2314 sig=6624 chars=1/1 $7.04
+[516/1250] q566 think_max      ttft=15588.7ms out=1449 think=1446 sig=6972 chars=1/1 $7.07
+[517/1250] q566 think_high     ttft=4576.8ms out=950 think=290 sig=2044 chars=641/1 [불일치] $7.09
+[518/1250] q566 think_medium   ttft=3350.5ms out=744 think=233 sig=1792 chars=506/1 [불일치] $7.11
+[519/1250] q566 think_low      ttft=1814.2ms out=624 think=102 sig=1236 chars=512/1 [불일치] $7.12
+[520/1250] q566 think_xhigh    ttft=6764.5ms out=524 think=521 sig=3040 chars=1/1 $7.13
+[521/1250] q355 think_xhigh    ttft=4642.1ms out=423 think=420 sig=2192 chars=1/1 $7.14
+[522/1250] q355 think_max      ttft=30367.6ms out=3051 think=3048 sig=11748 chars=1/1 $7.20
+[523/1250] q355 think_high     ttft=3235.4ms out=244 think=241 sig=1632 chars=1/1 $7.21
+[524/1250] q355 think_low      ttft=2573.4ms out=156 think=153 sig=1312 chars=1/1 $7.21
+[525/1250] q355 think_medium   ttft=2117.9ms out=117 think=114 sig=1192 chars=1/1 $7.21
+[526/1250] q394 think_xhigh    ttft=5190.7ms out=446 think=443 sig=1920 chars=1/1 $7.22
+[527/1250] q394 think_low      ttft=5543.6ms out=426 think=423 sig=1876 chars=1/1 $7.23
+[528/1250] q394 think_max      ttft=29301.5ms out=3091 think=3088 sig=9880 chars=1/1 $7.29
+[529/1250] q394 think_medium   ttft=4822.7ms out=363 think=360 sig=1748 chars=1/1 $7.30
+[530/1250] q394 think_high     ttft=5162.3ms out=480 think=477 sig=1964 chars=1/1 $7.31
+[531/1250] q382 think_xhigh    ttft=2123.2ms out=157 think=154 sig=1172 chars=1/1 $7.31
+[532/1250] q382 think_low      ttft=1682.8ms out=79 think=76 sig=980 chars=1/1 $7.32
+[533/1250] q382 think_medium   ttft=1713.9ms out=110 think=107 sig=1048 chars=1/1 $7.32
+[534/1250] q382 think_high     ttft=1770.8ms out=106 think=103 sig=1072 chars=1/1 $7.32
+[535/1250] q382 think_max      ttft=4205.5ms out=356 think=353 sig=1776 chars=1/1 $7.33
+[536/1250] q434 think_low      ttft=3075.3ms out=213 think=210 sig=1488 chars=1/1 $7.33
+[537/1250] q434 think_high     ttft=3616.9ms out=320 think=317 sig=1920 chars=1/1 $7.34
+[538/1250] q434 think_medium   ttft=4875.8ms out=412 think=409 sig=2148 chars=1/1 $7.35
+[539/1250] q434 think_xhigh    ttft=4861.3ms out=380 think=377 sig=2056 chars=1/1 $7.36
+[540/1250] q434 think_max      ttft=20841.0ms out=1960 think=1957 sig=7540 chars=1/1 $7.40
+[541/1250] q381 think_medium   ttft=1560.1ms out=113 think=110 sig=1092 chars=1/1 $7.40
+[542/1250] q381 think_high     ttft=1793.9ms out=148 think=145 sig=1160 chars=1/1 $7.40
+[543/1250] q381 think_xhigh    ttft=2843.5ms out=217 think=214 sig=1400 chars=1/1 $7.41
+[544/1250] q381 think_low      ttft=1603.2ms out=102 think=99 sig=1044 chars=1/1 $7.41
+[545/1250] q381 think_max      ttft=4825.7ms out=519 think=516 sig=2348 chars=1/1 $7.42
+[546/1250] q439 think_low      ttft=2545.7ms out=145 think=142 sig=1208 chars=1/1 $7.42
+[547/1250] q439 think_xhigh    ttft=4460.1ms out=385 think=382 sig=1988 chars=1/1 $7.43
+[548/1250] q439 think_medium   ttft=3139.9ms out=205 think=202 sig=1484 chars=1/1 $7.44
+[549/1250] q439 think_max      ttft=15468.5ms out=1462 think=1459 sig=5788 chars=1/1 $7.47
+[550/1250] q439 think_high     ttft=2523.2ms out=168 think=165 sig=1308 chars=1/1 $7.47
+[551/1250] q514 think_medium   ttft=4477.3ms out=334 think=331 sig=2136 chars=1/1 $7.48
+[552/1250] q514 think_max      ttft=8966.9ms out=746 think=743 sig=3920 chars=1/1 $7.49
+[553/1250] q514 think_low      ttft=3657.1ms out=704 think=213 sig=1736 chars=492/1 [불일치] $7.51
+[554/1250] q514 think_xhigh    ttft=6424.1ms out=499 think=496 sig=2920 chars=1/1 $7.52
+[555/1250] q514 think_high     ttft=5633.0ms out=876 think=397 sig=2484 chars=487/1 [불일치] $7.54
+[556/1250] q662 think_xhigh    ttft=1427.7ms out=64 think=61 sig=1052 chars=1/1 $7.54
+[557/1250] q662 think_low      ttft=948.7ms out=3 think=0 sig=0 chars=1/1 $7.54
+[558/1250] q662 think_medium   ttft=1377.0ms out=3 think=0 sig=0 chars=1/1 $7.54
+[559/1250] q662 think_high     ttft=1926.5ms out=68 think=65 sig=1072 chars=1/1 $7.54
+[560/1250] q662 think_max      ttft=2044.9ms out=129 think=126 sig=1296 chars=1/1 $7.54
+[561/1250] q806 think_high     ttft=2640.5ms out=179 think=176 sig=1164 chars=1/1 $7.55
+[562/1250] q806 think_low      ttft=2403.2ms out=187 think=184 sig=1180 chars=1/1 $7.55
+[563/1250] q806 think_xhigh    ttft=2380.5ms out=220 think=217 sig=1252 chars=1/1 $7.56
+[564/1250] q806 think_max      ttft=3697.3ms out=364 think=361 sig=1536 chars=1/1 $7.57
+[565/1250] q806 think_medium   ttft=2532.1ms out=216 think=213 sig=1232 chars=1/1 $7.57
+[566/1250] q79 think_high     ttft=1635.6ms out=101 think=98 sig=1020 chars=1/1 $7.57
+[567/1250] q79 think_xhigh    ttft=1445.3ms out=71 think=68 sig=948 chars=1/1 $7.58
+[568/1250] q79 think_medium   ttft=1556.7ms out=88 think=85 sig=992 chars=1/1 $7.58
+[569/1250] q79 think_max      ttft=4082.0ms out=380 think=377 sig=1728 chars=1/1 $7.59
+[570/1250] q79 think_low      ttft=1720.4ms out=82 think=79 sig=976 chars=1/1 $7.59
+[571/1250] q452 think_low      ttft=2039.8ms out=33 think=30 sig=876 chars=1/1 $7.59
+[572/1250] q452 think_medium   ttft=1126.2ms out=36 think=33 sig=892 chars=1/1 $7.59
+[573/1250] q452 think_max      ttft=2321.1ms out=150 think=147 sig=1248 chars=1/1 $7.59
+[574/1250] q452 think_high     ttft=985.6ms out=35 think=32 sig=892 chars=1/1 $7.60
+[575/1250] q452 think_xhigh    ttft=1478.3ms out=65 think=62 sig=984 chars=1/1 $7.60
+[576/1250] q579 think_xhigh    ttft=10575.2ms out=1229 think=855 sig=4432 chars=392/1 [불일치] $7.62
+[577/1250] q579 think_high     ttft=1981.6ms out=679 think=93 sig=1216 chars=577/1 [불일치] $7.64
+[578/1250] q579 think_max      ttft=25591.8ms out=2297 think=2294 sig=10584 chars=1/1 $7.68
+[579/1250] q579 think_medium   ttft=2468.3ms out=729 think=128 sig=1368 chars=592/1 [불일치] $7.70
+[580/1250] q579 think_low      ttft=2088.3ms out=685 think=114 sig=1292 chars=564/1 [불일치] $7.71
+[581/1250] q610 think_high     ttft=2290.5ms out=736 think=129 sig=1372 chars=600/1 [불일치] $7.73
+[582/1250] q610 think_xhigh    ttft=2992.3ms out=649 think=189 sig=1668 chars=461/1 [불일치] $7.74
+[583/1250] q610 think_medium   ttft=1886.8ms out=551 think=96 sig=1208 chars=456/1 [불일치] $7.75
+[584/1250] q610 think_max      ttft=21387.6ms out=2477 think=1950 sig=7792 chars=519/1 [불일치] $7.80
+[585/1250] q610 think_low      ttft=2487.1ms out=615 think=100 sig=1220 chars=513/1 [불일치] $7.81
+[586/1250] q679 think_medium   ttft=2426.2ms out=152 think=149 sig=1152 chars=1/1 $7.82
+[587/1250] q679 think_xhigh    ttft=2993.0ms out=249 think=246 sig=1368 chars=1/1 $7.82
+[588/1250] q679 think_high     ttft=2892.0ms out=174 think=171 sig=1192 chars=1/1 $7.83
+[589/1250] q679 think_max      ttft=3479.3ms out=306 think=303 sig=1628 chars=1/1 $7.84
+[590/1250] q679 think_low      ttft=2446.2ms out=150 think=147 sig=1132 chars=1/1 $7.84
+[591/1250] q609 think_max      ttft=23653.4ms out=2044 think=2041 sig=9300 chars=1/1 $7.88
+[592/1250] q609 think_medium   ttft=2796.5ms out=730 think=207 sig=1720 chars=530/1 [불일치] $7.90
+[593/1250] q609 think_xhigh    ttft=5693.7ms out=968 think=391 sig=2468 chars=578/1 [불일치] $7.92
+[594/1250] q609 think_high     ttft=2954.7ms out=636 think=167 sig=1528 chars=471/1 [불일치] $7.93
+[595/1250] q609 think_low      ttft=1978.2ms out=589 think=121 sig=1316 chars=467/1 [불일치] $7.94
+[596/1250] q396 think_medium   ttft=4879.9ms out=411 think=408 sig=2144 chars=1/1 $7.95
+[597/1250] q396 think_high     ttft=3082.3ms out=278 think=275 sig=1604 chars=1/1 $7.96
+[598/1250] q396 think_max      ttft=49423.0ms out=5077 think=5074 sig=17988 chars=1/1 $8.06
+[599/1250] q396 think_low      ttft=2222.4ms out=132 think=129 sig=1204 chars=1/1 $8.06
+[600/1250] q396 think_xhigh    ttft=7813.6ms out=725 think=722 sig=2928 chars=1/1 $8.08
+[601/1250] q620 think_low      ttft=1552.9ms out=567 think=81 sig=1152 chars=483/1 [불일치] $8.09
+[602/1250] q620 think_max      ttft=27417.5ms out=2905 think=2352 sig=9944 chars=546/1 [불일치] $8.15
+[603/1250] q620 think_xhigh    ttft=3177.1ms out=569 think=201 sig=1664 chars=371/1 [불일치] $8.16
+[604/1250] q620 think_medium   ttft=2113.2ms out=540 think=99 sig=1212 chars=442/1 [불일치] $8.17
+[605/1250] q620 think_high     ttft=2580.3ms out=535 think=130 sig=1368 chars=405/1 [불일치] $8.18
+[606/1250] q83 think_max      ttft=10976.8ms out=1349 think=1346 sig=3316 chars=1/1 $8.21
+[607/1250] q83 think_xhigh    ttft=5194.5ms out=511 think=508 sig=1696 chars=1/1 $8.22
+[608/1250] q83 think_low      ttft=3403.3ms out=279 think=276 sig=1284 chars=1/1 $8.22
+[609/1250] q83 think_high     ttft=4131.8ms out=367 think=364 sig=1456 chars=1/1 $8.23
+[610/1250] q83 think_medium   ttft=3718.1ms out=299 think=296 sig=1340 chars=1/1 $8.24
+[611/1250] q387 think_xhigh    ttft=2167.1ms out=148 think=145 sig=1180 chars=1/1 $8.24
+[612/1250] q387 think_max      ttft=3905.6ms out=371 think=368 sig=1880 chars=1/1 $8.25
+[613/1250] q387 think_medium   ttft=2120.8ms out=133 think=130 sig=1132 chars=1/1 $8.25
+[614/1250] q387 think_high     ttft=2156.3ms out=149 think=146 sig=1156 chars=1/1 $8.26
+[615/1250] q387 think_low      ttft=2218.2ms out=150 think=147 sig=1160 chars=1/1 $8.26
+[616/1250] q592 think_medium   ttft=2868.6ms out=710 think=173 sig=1572 chars=539/1 [불일치] $8.27
+[617/1250] q592 think_high     ttft=2330.2ms out=702 think=120 sig=1352 chars=578/1 [불일치] $8.29
+[618/1250] q592 think_low      ttft=2215.9ms out=667 think=129 sig=1368 chars=538/1 [불일치] $8.30
+[619/1250] q592 think_xhigh    ttft=5962.8ms out=935 think=445 sig=2720 chars=489/1 [불일치] $8.32
+[620/1250] q592 think_max      ttft=20858.7ms out=2180 think=1693 sig=7232 chars=488/1 [불일치] $8.37
+[621/1250] q615 think_low      ttft=2519.6ms out=118 think=115 sig=1252 chars=1/1 $8.37
+[622/1250] q615 think_medium   ttft=4025.6ms out=214 think=211 sig=1628 chars=1/1 $8.37
+[623/1250] q615 think_xhigh    ttft=9192.0ms out=680 think=677 sig=3700 chars=1/1 $8.39
+[624/1250] q615 think_high     ttft=3937.5ms out=272 think=269 sig=1928 chars=1/1 $8.39
+[625/1250] q615 think_max      ttft=13595.0ms out=1211 think=1208 sig=5768 chars=1/1 $8.42
+[626/1250] q663 think_medium   ttft=1334.3ms out=47 think=44 sig=968 chars=1/1 $8.42
+[627/1250] q663 think_low      ttft=1021.9ms out=3 think=0 sig=0 chars=1/1 $8.42
+[628/1250] q663 think_max      ttft=3154.4ms out=230 think=227 sig=1736 chars=1/1 $8.43
+[629/1250] q663 think_xhigh    ttft=1125.2ms out=44 think=41 sig=964 chars=1/1 $8.43
+[630/1250] q663 think_high     ttft=982.9ms out=44 think=41 sig=964 chars=1/1 $8.43
+[631/1250] q621 think_xhigh    ttft=8708.9ms out=1113 think=704 sig=3816 chars=407/1 [불일치] $8.45
+[632/1250] q621 think_max      ttft=16504.8ms out=1391 think=1388 sig=6776 chars=1/1 $8.48
+[633/1250] q621 think_low      ttft=3521.2ms out=577 think=230 sig=1764 chars=358/1 [불일치] $8.49
+[634/1250] q621 think_medium   ttft=5152.7ms out=824 think=372 sig=2452 chars=452/1 [불일치] $8.51
+[635/1250] q621 think_high     ttft=4675.9ms out=342 think=339 sig=2220 chars=1/1 $8.52
+[636/1250] q451 think_xhigh    ttft=3791.5ms out=268 think=265 sig=1636 chars=1/1 $8.52
+[637/1250] q451 think_max      ttft=5021.8ms out=465 think=462 sig=2312 chars=1/1 $8.53
+[638/1250] q451 think_high     ttft=1798.7ms out=130 think=127 sig=1192 chars=1/1 $8.53
+[639/1250] q451 think_medium   ttft=1786.2ms out=104 think=101 sig=1092 chars=1/1 $8.54
+[640/1250] q451 think_low      ttft=1638.9ms out=69 think=66 sig=992 chars=1/1 $8.54
+[641/1250] q752 think_high     ttft=1674.7ms out=83 think=80 sig=988 chars=1/1 $8.54
+[642/1250] q752 think_medium   ttft=1456.1ms out=91 think=88 sig=1012 chars=1/1 $8.54
+[643/1250] q752 think_xhigh    ttft=1791.8ms out=96 think=93 sig=1024 chars=1/1 $8.55
+[644/1250] q752 think_max      ttft=2426.7ms out=211 think=208 sig=1368 chars=1/1 $8.55
+[645/1250] q752 think_low      ttft=1246.0ms out=80 think=77 sig=988 chars=1/1 $8.55
+[646/1250] q366 think_low      ttft=8016.7ms out=319 think=316 sig=1680 chars=1/1 $8.56
+[647/1250] q366 think_xhigh    ttft=10507.2ms out=769 think=766 sig=2980 chars=1/1 $8.58
+[648/1250] q366 think_high     ttft=7419.0ms out=389 think=386 sig=1972 chars=1/1 $8.58
+[649/1250] q366 think_medium   ttft=9596.3ms out=543 think=540 sig=2408 chars=1/1 $8.60
+[650/1250] q366 think_max      ttft=32577.9ms out=3083 think=3080 sig=10504 chars=1/1 $8.66
+[651/1250] q420 think_max      ttft=2747.5ms out=231 think=228 sig=1312 chars=1/1 $8.66
+[652/1250] q420 think_high     ttft=1714.0ms out=96 think=93 sig=1000 chars=1/1 $8.67
+[653/1250] q420 think_low      ttft=1346.1ms out=68 think=65 sig=940 chars=1/1 $8.67
+[654/1250] q420 think_xhigh    ttft=1573.1ms out=98 think=95 sig=1008 chars=1/1 $8.67
+[655/1250] q420 think_medium   ttft=1629.2ms out=92 think=89 sig=992 chars=1/1 $8.67
+[656/1250] q432 think_low      ttft=4199.3ms out=228 think=225 sig=1524 chars=1/1 $8.68
+[657/1250] q432 think_medium   ttft=9689.7ms out=599 think=596 sig=2468 chars=1/1 $8.69
+[658/1250] q432 think_xhigh    ttft=8353.8ms out=643 think=640 sig=2632 chars=1/1 $8.70
+[659/1250] q432 think_max      ttft=11616.2ms out=1246 think=1243 sig=4376 chars=1/1 $8.73
+[660/1250] q432 think_high     ttft=3844.6ms out=270 think=267 sig=1716 chars=1/1 $8.73
+[661/1250] q106 think_xhigh    ttft=2468.7ms out=135 think=132 sig=1088 chars=1/1 $8.74
+[662/1250] q106 think_high     ttft=1750.4ms out=109 think=106 sig=1024 chars=1/1 $8.74
+[663/1250] q106 think_medium   ttft=1718.4ms out=106 think=103 sig=1008 chars=1/1 $8.74
+[664/1250] q106 think_max      ttft=5820.5ms out=608 think=605 sig=2188 chars=1/1 $8.76
+[665/1250] q106 think_low      ttft=1786.6ms out=110 think=107 sig=1020 chars=1/1 $8.76
+[666/1250] q575 think_max      ttft=11077.8ms out=1014 think=1011 sig=5036 chars=1/1 $8.78
+[667/1250] q575 think_xhigh    ttft=3795.9ms out=769 think=300 sig=2172 chars=472/1 [불일치] $8.79
+[668/1250] q575 think_low      ttft=1797.6ms out=603 think=95 sig=1204 chars=499/1 [불일치] $8.81
+[669/1250] q575 think_medium   ttft=2053.2ms out=637 think=132 sig=1392 chars=502/1 [불일치] $8.82
+[670/1250] q575 think_high     ttft=2143.8ms out=676 think=144 sig=1436 chars=523/1 [불일치] $8.83
+[671/1250] q548 think_medium   ttft=8655.6ms out=882 think=422 sig=2604 chars=466/1 [불일치] $8.85
+[672/1250] q548 think_xhigh    ttft=11957.3ms out=1068 think=659 sig=3664 chars=432/1 [불일치] $8.87
+[673/1250] q548 think_low      ttft=6057.2ms out=658 think=176 sig=1560 chars=508/1 [불일치] $8.89
+[674/1250] q548 think_high     ttft=6170.8ms out=778 think=276 sig=2048 chars=504/1 [불일치] $8.90
+[675/1250] q548 think_max      ttft=32326.7ms out=2815 think=2812 sig=12636 chars=1/1 $8.96
+[676/1250] q606 think_high     ttft=3126.7ms out=649 think=209 sig=1724 chars=439/1 [불일치] $8.97
+[677/1250] q606 think_xhigh    ttft=5196.6ms out=848 think=351 sig=2328 chars=492/1 [불일치] $8.99
+[678/1250] q606 think_max      ttft=37806.2ms out=3228 think=3225 sig=14524 chars=1/1 $9.06
+[679/1250] q606 think_medium   ttft=2185.0ms out=618 think=163 sig=1524 chars=456/1 [불일치] $9.07
+[680/1250] q606 think_low      ttft=2175.4ms out=511 think=112 sig=1276 chars=403/1 [불일치] $9.08
+[681/1250] q450 think_medium   ttft=1808.3ms out=77 think=74 sig=992 chars=1/1 $9.08
+[682/1250] q450 think_high     ttft=1985.1ms out=82 think=79 sig=1016 chars=1/1 $9.08
+[683/1250] q450 think_max      ttft=2742.1ms out=209 think=206 sig=1388 chars=1/1 $9.09
+[684/1250] q450 think_low      ttft=1782.7ms out=75 think=72 sig=984 chars=1/1 $9.09
+[685/1250] q450 think_xhigh    ttft=1620.1ms out=96 think=93 sig=1056 chars=1/1 $9.09
+[686/1250] q406 think_max      ttft=3223.7ms out=236 think=233 sig=1644 chars=1/1 $9.10
+[687/1250] q406 think_high     ttft=1807.2ms out=89 think=86 sig=1080 chars=1/1 $9.10
+[688/1250] q406 think_medium   ttft=1588.1ms out=46 think=43 sig=936 chars=1/1 $9.10
+[689/1250] q406 think_low      ttft=1594.3ms out=49 think=46 sig=928 chars=1/1 $9.10
+[690/1250] q406 think_xhigh    ttft=2203.0ms out=148 think=145 sig=1256 chars=1/1 $9.11
+[691/1250] q565 think_max      ttft=26070.7ms out=2360 think=2357 sig=10980 chars=1/1 $9.15
+[692/1250] q565 think_medium   ttft=3160.2ms out=518 think=191 sig=1648 chars=339/1 [불일치] $9.17
+[693/1250] q565 think_high     ttft=2155.5ms out=574 think=147 sig=1432 chars=440/1 [불일치] $9.18
+[694/1250] q565 think_low      ttft=2537.5ms out=439 think=166 sig=1520 chars=267/1 [불일치] $9.19
+[695/1250] q565 think_xhigh    ttft=5185.1ms out=817 think=419 sig=2588 chars=416/1 [불일치] $9.20
+[696/1250] q107 think_high     ttft=1421.5ms out=21 think=18 sig=844 chars=1/1 $9.20
+[697/1250] q107 think_xhigh    ttft=1688.1ms out=23 think=20 sig=864 chars=1/1 $9.20
+[698/1250] q107 think_low      ttft=1368.8ms out=16 think=13 sig=828 chars=1/1 $9.21
+[699/1250] q107 think_medium   ttft=1421.3ms out=16 think=13 sig=828 chars=1/1 $9.21
+[700/1250] q107 think_max      ttft=2099.5ms out=114 think=111 sig=1172 chars=1/1 $9.21
+[701/1250] q591 think_medium   ttft=2873.8ms out=469 think=180 sig=1584 chars=294/1 [불일치] $9.22
+[702/1250] q591 think_xhigh    ttft=8552.2ms out=668 think=665 sig=3636 chars=1/1 $9.23
+[703/1250] q591 think_low      ttft=3204.7ms out=484 think=183 sig=1604 chars=304/1 [불일치] $9.24
+[704/1250] q591 think_high     ttft=4790.7ms out=701 think=341 sig=2256 chars=364/1 [불일치] $9.26
+[705/1250] q591 think_max      ttft=11571.6ms out=983 think=980 sig=4900 chars=1/1 $9.28
+[706/1250] q186 think_high     ttft=14142.0ms out=1446 think=1443 sig=4688 chars=1/1 $9.31
+[707/1250] q186 think_xhigh    ttft=16142.8ms out=1794 think=1791 sig=5420 chars=1/1 $9.34
+[708/1250] q186 think_max      ttft=61465.4ms out=7414 think=7411 sig=19224 chars=1/1 $9.49
+[709/1250] q186 think_low      ttft=12803.5ms out=1132 think=1129 sig=3812 chars=1/1 $9.52
+[710/1250] q186 think_medium   ttft=13228.1ms out=1359 think=1356 sig=4428 chars=1/1 $9.54
+[711/1250] q399 think_high     ttft=7818.5ms out=726 think=723 sig=2992 chars=1/1 $9.56
+[712/1250] q399 think_max      ttft=21020.2ms out=2111 think=2108 sig=7472 chars=1/1 $9.60
+[713/1250] q399 think_medium   ttft=5864.6ms out=494 think=491 sig=2284 chars=1/1 $9.61
+[714/1250] q399 think_xhigh    ttft=4701.3ms out=432 think=429 sig=2072 chars=1/1 $9.62
+[715/1250] q399 think_low      ttft=3548.2ms out=270 think=267 sig=1548 chars=1/1 $9.63
+[716/1250] q541 think_xhigh    ttft=4963.9ms out=363 think=360 sig=2276 chars=1/1 $9.63
+[717/1250] q541 think_low      ttft=2782.2ms out=140 think=137 sig=1328 chars=1/1 $9.64
+[718/1250] q541 think_max      ttft=9935.3ms out=829 think=826 sig=3952 chars=1/1 $9.65
+[719/1250] q541 think_medium   ttft=3011.4ms out=150 think=147 sig=1408 chars=1/1 $9.66
+[720/1250] q541 think_high     ttft=3723.9ms out=243 think=240 sig=1832 chars=1/1 $9.66
+[721/1250] q544 think_xhigh    ttft=3801.0ms out=242 think=239 sig=1812 chars=1/1 $9.67
+[722/1250] q544 think_high     ttft=3261.2ms out=218 think=215 sig=1712 chars=1/1 $9.67
+[723/1250] q544 think_max      ttft=7407.9ms out=612 think=609 sig=3452 chars=1/1 $9.69
+[724/1250] q544 think_low      ttft=2694.0ms out=177 think=174 sig=1564 chars=1/1 $9.69
+[725/1250] q544 think_medium   ttft=4262.4ms out=306 think=303 sig=2108 chars=1/1 $9.70
+[726/1250] q680 think_low      ttft=1675.3ms out=114 think=111 sig=1084 chars=1/1 $9.70
+[727/1250] q680 think_xhigh    ttft=2288.6ms out=194 think=191 sig=1312 chars=1/1 $9.70
+[728/1250] q680 think_max      ttft=2836.2ms out=281 think=278 sig=1644 chars=1/1 $9.71
+[729/1250] q680 think_high     ttft=1808.8ms out=143 think=140 sig=1160 chars=1/1 $9.71
+[730/1250] q680 think_medium   ttft=1979.9ms out=173 think=170 sig=1188 chars=1/1 $9.72
+[731/1250] q314 think_low      ttft=3350.4ms out=273 think=270 sig=1520 chars=1/1 $9.72
+[732/1250] q314 think_high     ttft=4414.8ms out=328 think=325 sig=1648 chars=1/1 $9.73
+[733/1250] q314 think_max      ttft=11751.1ms out=1244 think=1241 sig=4248 chars=1/1 $9.76
+[734/1250] q314 think_xhigh    ttft=6873.3ms out=623 think=620 sig=2488 chars=1/1 $9.77
+[735/1250] q314 think_medium   ttft=4093.3ms out=280 think=277 sig=1468 chars=1/1 $9.78
+[736/1250] q600 think_low      ttft=1382.6ms out=555 think=77 sig=1136 chars=483/1 [불일치] $9.79
+[737/1250] q600 think_xhigh    ttft=2867.1ms out=818 think=183 sig=1632 chars=634/1 [불일치] $9.80
+[738/1250] q600 think_high     ttft=2514.9ms out=768 think=169 sig=1548 chars=602/1 [불일치] $9.82
+[739/1250] q600 think_max      ttft=36841.9ms out=4277 think=3579 sig=13388 chars=692/1 [불일치] $9.91
+[740/1250] q600 think_medium   ttft=1618.4ms out=557 think=102 sig=1240 chars=458/1 [불일치] $9.92
+[741/1250] q601 think_low      ttft=2112.9ms out=625 think=111 sig=1292 chars=509/1 [불일치] $9.93
+[742/1250] q601 think_high     ttft=2845.6ms out=596 think=175 sig=1604 chars=418/1 [불일치] $9.94
+[743/1250] q601 think_medium   ttft=2273.0ms out=655 think=142 sig=1428 chars=508/1 [불일치] $9.96
+[744/1250] q601 think_xhigh    ttft=4470.4ms out=752 think=331 sig=2312 chars=420/1 [불일치] $9.97
+[745/1250] q601 think_max      ttft=26303.6ms out=2908 think=2312 sig=9708 chars=581/1 [불일치] $10.03
+[746/1250] q598 think_xhigh    ttft=5302.5ms out=437 think=434 sig=2608 chars=1/1 $10.04
+[747/1250] q598 think_low      ttft=1991.5ms out=120 think=117 sig=1260 chars=1/1 $10.04
+[748/1250] q598 think_max      ttft=10814.8ms out=992 think=989 sig=4920 chars=1/1 $10.06
+[749/1250] q598 think_high     ttft=4067.2ms out=336 think=333 sig=2204 chars=1/1 $10.07
+[750/1250] q598 think_medium   ttft=2826.2ms out=224 think=221 sig=1748 chars=1/1 $10.08
+[751/1250] q370 think_max      ttft=1659.6ms out=120 think=117 sig=1208 chars=1/1 $10.08
+[752/1250] q370 think_medium   ttft=956.5ms out=49 think=46 sig=940 chars=1/1 $10.08
+[753/1250] q370 think_xhigh    ttft=1303.1ms out=56 think=53 sig=960 chars=1/1 $10.08
+[754/1250] q370 think_high     ttft=1227.1ms out=46 think=43 sig=936 chars=1/1 $10.08
+[755/1250] q370 think_low      ttft=1201.1ms out=48 think=45 sig=936 chars=1/1 $10.08
+[756/1250] q391 think_max      ttft=27798.9ms out=2816 think=2813 sig=10020 chars=1/1 $10.14
+[757/1250] q391 think_high     ttft=3777.8ms out=340 think=337 sig=1748 chars=1/1 $10.15
+[758/1250] q391 think_medium   ttft=8336.0ms out=702 think=699 sig=2764 chars=1/1 $10.16
+[759/1250] q391 think_low      ttft=3355.7ms out=287 think=284 sig=1532 chars=1/1 $10.17
+[760/1250] q391 think_xhigh    ttft=5736.1ms out=473 think=470 sig=2204 chars=1/1 $10.18
+[761/1250] q669 think_max      ttft=8260.4ms out=728 think=725 sig=3728 chars=1/1 $10.19
+[762/1250] q669 think_xhigh    ttft=3254.7ms out=230 think=227 sig=1724 chars=1/1 $10.20
+[763/1250] q669 think_low      ttft=893.3ms out=3 think=0 sig=0 chars=1/1 $10.20
+[764/1250] q669 think_high     ttft=2817.5ms out=162 think=159 sig=1404 chars=1/1 $10.20
+[765/1250] q669 think_medium   ttft=2307.0ms out=143 think=140 sig=1312 chars=1/1 $10.21
+[766/1250] q782 think_max      ttft=1876.1ms out=122 think=119 sig=1060 chars=1/1 $10.21
+[767/1250] q782 think_medium   ttft=1546.4ms out=59 think=56 sig=924 chars=1/1 $10.21
+[768/1250] q782 think_low      ttft=1493.7ms out=40 think=37 sig=892 chars=1/1 $10.21
+[769/1250] q782 think_xhigh    ttft=1609.9ms out=76 think=73 sig=960 chars=1/1 $10.22
+[770/1250] q782 think_high     ttft=1516.1ms out=35 think=32 sig=868 chars=1/1 $10.22
+[771/1250] q9 think_low      ttft=4852.0ms out=340 think=337 sig=1532 chars=1/1 $10.22
+[772/1250] q9 think_xhigh    ttft=3652.4ms out=269 think=266 sig=1468 chars=1/1 $10.23
+[773/1250] q9 think_medium   ttft=4637.4ms out=383 think=380 sig=1660 chars=1/1 $10.24
+[774/1250] q9 think_max      ttft=5524.6ms out=507 think=504 sig=2080 chars=1/1 $10.25
+[775/1250] q9 think_high     ttft=4364.8ms out=355 think=352 sig=1628 chars=1/1 $10.26
+[776/1250] q440 think_medium   ttft=1775.8ms out=118 think=115 sig=1052 chars=1/1 $10.26
+[777/1250] q440 think_xhigh    ttft=3319.8ms out=259 think=256 sig=1408 chars=1/1 $10.26
+[778/1250] q440 think_high     ttft=3191.5ms out=224 think=221 sig=1344 chars=1/1 $10.27
+[779/1250] q440 think_low      ttft=2372.7ms out=146 think=143 sig=1132 chars=1/1 $10.27
+[780/1250] q440 think_max      ttft=14767.0ms out=1480 think=1477 sig=5256 chars=1/1 $10.30
+[781/1250] q433 think_high     ttft=1208.7ms out=29 think=26 sig=876 chars=1/1 $10.30
+[782/1250] q433 think_max      ttft=1495.0ms out=51 think=48 sig=948 chars=1/1 $10.31
+[783/1250] q433 think_medium   ttft=1325.7ms out=29 think=26 sig=876 chars=1/1 $10.31
+[784/1250] q433 think_xhigh    ttft=1190.7ms out=41 think=38 sig=900 chars=1/1 $10.31
+[785/1250] q433 think_low      ttft=1251.7ms out=3 think=0 sig=0 chars=1/1 $10.31
+[786/1250] q672 think_medium   ttft=2194.0ms out=196 think=193 sig=1272 chars=1/1 $10.31
+[787/1250] q672 think_xhigh    ttft=2353.5ms out=231 think=228 sig=1300 chars=1/1 $10.32
+[788/1250] q672 think_high     ttft=2192.0ms out=192 think=189 sig=1252 chars=1/1 $10.32
+[789/1250] q672 think_low      ttft=1841.9ms out=124 think=121 sig=1048 chars=1/1 $10.33
+[790/1250] q672 think_max      ttft=2975.0ms out=323 think=320 sig=1712 chars=1/1 $10.33
+[791/1250] q436 think_xhigh    ttft=3020.2ms out=225 think=222 sig=1428 chars=1/1 $10.34
+[792/1250] q436 think_max      ttft=10580.0ms out=988 think=985 sig=4152 chars=1/1 $10.36
+[793/1250] q436 think_high     ttft=1700.5ms out=80 think=77 sig=1032 chars=1/1 $10.36
+[794/1250] q436 think_medium   ttft=2078.3ms out=109 think=106 sig=1116 chars=1/1 $10.36
+[795/1250] q436 think_low      ttft=1956.7ms out=101 think=98 sig=1108 chars=1/1 $10.37
+[796/1250] q373 think_max      ttft=1835.7ms out=129 think=126 sig=1200 chars=1/1 $10.37
+[797/1250] q373 think_medium   ttft=1244.9ms out=43 think=40 sig=900 chars=1/1 $10.37
+[798/1250] q373 think_xhigh    ttft=1339.2ms out=58 think=55 sig=944 chars=1/1 $10.37
+[799/1250] q373 think_high     ttft=890.5ms out=43 think=40 sig=900 chars=1/1 $10.37
+[800/1250] q373 think_low      ttft=1241.1ms out=28 think=25 sig=860 chars=1/1 $10.37
+[801/1250] q419 think_medium   ttft=1038.4ms out=43 think=40 sig=916 chars=1/1 $10.37
+[802/1250] q419 think_low      ttft=1221.6ms out=41 think=38 sig=896 chars=1/1 $10.38
+[803/1250] q419 think_high     ttft=1720.8ms out=61 think=58 sig=968 chars=1/1 $10.38
+[804/1250] q419 think_max      ttft=2363.2ms out=167 think=164 sig=1344 chars=1/1 $10.38
+[805/1250] q419 think_xhigh    ttft=1165.9ms out=46 think=43 sig=924 chars=1/1 $10.38
+[806/1250] q580 think_xhigh    ttft=3637.3ms out=799 think=274 sig=2016 chars=533/1 [불일치] $10.40
+[807/1250] q580 think_medium   ttft=3046.4ms out=705 think=211 sig=1732 chars=500/1 [불일치] $10.41
+[808/1250] q580 think_high     ttft=3393.9ms out=979 think=249 sig=1836 chars=729/1 [불일치] $10.43
+[809/1250] q580 think_max      ttft=36671.8ms out=3956 think=3372 sig=13148 chars=591/1 [불일치] $10.51
+[810/1250] q580 think_low      ttft=2646.0ms out=602 think=139 sig=1384 chars=468/1 [불일치] $10.53
+[811/1250] q34 think_low      ttft=3742.6ms out=267 think=264 sig=1408 chars=1/1 $10.53
+[812/1250] q34 think_max      ttft=5327.2ms out=579 think=576 sig=2276 chars=1/1 $10.54
+[813/1250] q34 think_medium   ttft=3977.4ms out=319 think=316 sig=1560 chars=1/1 $10.55
+[814/1250] q34 think_high     ttft=3163.6ms out=258 think=255 sig=1360 chars=1/1 $10.56
+[815/1250] q34 think_xhigh    ttft=3426.3ms out=300 think=297 sig=1492 chars=1/1 $10.56
+[816/1250] q588 think_max      ttft=23881.9ms out=2178 think=2175 sig=9732 chars=1/1 $10.61
+[817/1250] q588 think_xhigh    ttft=5896.5ms out=485 think=482 sig=2780 chars=1/1 $10.62
+[818/1250] q588 think_medium   ttft=4294.7ms out=361 think=358 sig=2284 chars=1/1 $10.62
+[819/1250] q588 think_high     ttft=4715.0ms out=750 think=336 sig=2168 chars=424/1 [불일치] $10.64
+[820/1250] q588 think_low      ttft=3650.9ms out=453 think=250 sig=1888 chars=201/1 [불일치] $10.65
+[821/1250] q595 think_high     ttft=5406.8ms out=383 think=380 sig=2480 chars=1/1 $10.66
+[822/1250] q595 think_medium   ttft=3410.1ms out=243 think=240 sig=1860 chars=1/1 $10.66
+[823/1250] q595 think_max      ttft=7646.9ms out=695 think=692 sig=3744 chars=1/1 $10.68
+[824/1250] q595 think_low      ttft=2602.6ms out=138 think=135 sig=1380 chars=1/1 $10.68
+[825/1250] q595 think_xhigh    ttft=4667.7ms out=355 think=352 sig=2292 chars=1/1 $10.69
+[826/1250] q755 think_max      ttft=2310.3ms out=196 think=193 sig=1324 chars=1/1 $10.69
+[827/1250] q755 think_low      ttft=1235.8ms out=80 think=77 sig=988 chars=1/1 $10.69
+[828/1250] q755 think_medium   ttft=1269.0ms out=70 think=67 sig=968 chars=1/1 $10.70
+[829/1250] q755 think_xhigh    ttft=1587.5ms out=90 think=87 sig=1036 chars=1/1 $10.70
+[830/1250] q755 think_high     ttft=1636.3ms out=82 think=79 sig=988 chars=1/1 $10.70
+[831/1250] q377 think_max      ttft=2243.2ms out=188 think=185 sig=1360 chars=1/1 $10.71
+[832/1250] q377 think_low      ttft=1548.9ms out=64 think=61 sig=952 chars=1/1 $10.71
+[833/1250] q377 think_xhigh    ttft=1425.3ms out=76 think=73 sig=1012 chars=1/1 $10.71
+[834/1250] q377 think_medium   ttft=1352.7ms out=59 think=56 sig=948 chars=1/1 $10.71
+[835/1250] q377 think_high     ttft=1387.4ms out=73 think=70 sig=988 chars=1/1 $10.71
+[836/1250] q581 think_high     ttft=2992.7ms out=526 think=119 sig=1352 chars=405/1 [불일치] $10.72
+[837/1250] q581 think_low      ttft=2573.2ms out=533 think=105 sig=1244 chars=420/1 [불일치] $10.74
+[838/1250] q581 think_xhigh    ttft=3024.4ms out=806 think=170 sig=1564 chars=626/1 [불일치] $10.75
+[839/1250] q581 think_medium   ttft=2605.2ms out=630 think=131 sig=1372 chars=495/1 [불일치] $10.76
+[840/1250] q581 think_max      ttft=45155.6ms out=4980 think=4366 sig=16336 chars=608/1 [불일치] $10.86
+[841/1250] q403 think_high     ttft=1450.8ms out=58 think=55 sig=968 chars=1/1 $10.87
+[842/1250] q403 think_max      ttft=2895.2ms out=223 think=220 sig=1520 chars=1/1 $10.87
+[843/1250] q403 think_xhigh    ttft=1375.2ms out=62 think=59 sig=972 chars=1/1 $10.87
+[844/1250] q403 think_medium   ttft=1091.6ms out=42 think=39 sig=896 chars=1/1 $10.87
+[845/1250] q403 think_low      ttft=1773.0ms out=49 think=46 sig=916 chars=1/1 $10.88
+[846/1250] q456 think_medium   ttft=1463.9ms out=70 think=67 sig=1036 chars=1/1 $10.88
+[847/1250] q456 think_max      ttft=4141.0ms out=345 think=342 sig=2064 chars=1/1 $10.89
+[848/1250] q456 think_low      ttft=1468.2ms out=64 think=61 sig=1012 chars=1/1 $10.89
+[849/1250] q456 think_xhigh    ttft=2319.3ms out=157 think=154 sig=1300 chars=1/1 $10.89
+[850/1250] q456 think_high     ttft=1790.2ms out=116 think=113 sig=1160 chars=1/1 $10.89
+[851/1250] q557 think_xhigh    ttft=2610.6ms out=637 think=186 sig=1616 chars=448/1 [불일치] $10.91
+[852/1250] q557 think_max      ttft=30562.8ms out=3635 think=2964 sig=11800 chars=667/1 [불일치] $10.98
+[853/1250] q557 think_medium   ttft=2094.7ms out=486 think=130 sig=1360 chars=360/1 [불일치] $10.99
+[854/1250] q557 think_low      ttft=2143.4ms out=634 think=127 sig=1396 chars=507/1 [불일치] $11.00
+[855/1250] q557 think_high     ttft=1958.5ms out=524 think=97 sig=1244 chars=428/1 [불일치] $11.01
+[856/1250] q425 think_medium   ttft=4650.4ms out=351 think=348 sig=1824 chars=1/1 $11.02
+[857/1250] q425 think_low      ttft=2498.4ms out=157 think=154 sig=1248 chars=1/1 $11.03
+[858/1250] q425 think_high     ttft=2867.5ms out=222 think=219 sig=1500 chars=1/1 $11.03
+[859/1250] q425 think_max      ttft=15579.3ms out=1495 think=1492 sig=5836 chars=1/1 $11.06
+[860/1250] q425 think_xhigh    ttft=5410.3ms out=458 think=455 sig=2156 chars=1/1 $11.07
+[861/1250] q587 think_xhigh    ttft=8428.4ms out=668 think=665 sig=3256 chars=1/1 $11.08
+[862/1250] q587 think_low      ttft=4685.1ms out=224 think=221 sig=1616 chars=1/1 $11.09
+[863/1250] q587 think_max      ttft=Nonems out=8192 think=8192 sig=32520 chars=0/1 [불일치] [잘림] $11.25
+[864/1250] q587 think_high     ttft=5769.2ms out=422 think=419 sig=2280 chars=1/1 $11.26
+[865/1250] q587 think_medium   ttft=4367.5ms out=280 think=277 sig=1804 chars=1/1 $11.27
+[866/1250] q271 think_xhigh    ttft=3797.9ms out=355 think=352 sig=1840 chars=1/1 $11.28
+[867/1250] q271 think_max      ttft=Nonems out=8192 think=8192 sig=27396 chars=0/1 [불일치] [잘림] $11.44
+[868/1250] q271 think_high     ttft=2574.6ms out=214 think=211 sig=1436 chars=1/1 $11.44
+[869/1250] q271 think_low      ttft=2097.3ms out=144 think=141 sig=1212 chars=1/1 $11.45
+[870/1250] q271 think_medium   ttft=3372.2ms out=272 think=269 sig=1516 chars=1/1 $11.45
+[871/1250] q423 think_max      ttft=11069.1ms out=1071 think=1068 sig=3976 chars=1/1 $11.48
+[872/1250] q423 think_xhigh    ttft=4050.5ms out=318 think=315 sig=1644 chars=1/1 $11.48
+[873/1250] q423 think_low      ttft=1848.8ms out=129 think=126 sig=1108 chars=1/1 $11.49
+[874/1250] q423 think_high     ttft=3969.6ms out=289 think=286 sig=1588 chars=1/1 $11.49
+[875/1250] q423 think_medium   ttft=3653.3ms out=281 think=278 sig=1528 chars=1/1 $11.50
+[876/1250] q449 think_low      ttft=1669.4ms out=108 think=105 sig=1156 chars=1/1 $11.50
+[877/1250] q449 think_high     ttft=2157.9ms out=161 think=158 sig=1372 chars=1/1 $11.50
+[878/1250] q449 think_xhigh    ttft=2434.7ms out=198 think=195 sig=1428 chars=1/1 $11.51
+[879/1250] q449 think_medium   ttft=2259.2ms out=174 think=171 sig=1368 chars=1/1 $11.51
+[880/1250] q449 think_max      ttft=7040.7ms out=695 think=692 sig=3116 chars=1/1 $11.53
+[881/1250] q389 think_medium   ttft=2783.5ms out=210 think=207 sig=1344 chars=1/1 $11.53
+[882/1250] q389 think_high     ttft=1956.1ms out=148 think=145 sig=1240 chars=1/1 $11.53
+[883/1250] q389 think_low      ttft=1961.4ms out=150 think=147 sig=1212 chars=1/1 $11.54
+[884/1250] q389 think_max      ttft=6183.3ms out=595 think=592 sig=2768 chars=1/1 $11.55
+[885/1250] q389 think_xhigh    ttft=3458.6ms out=272 think=269 sig=1596 chars=1/1 $11.56
+[886/1250] q361 think_low      ttft=974.2ms out=3 think=0 sig=0 chars=1/1 $11.56
+[887/1250] q361 think_high     ttft=1194.8ms out=37 think=34 sig=896 chars=1/1 $11.56
+[888/1250] q361 think_xhigh    ttft=1334.9ms out=45 think=42 sig=928 chars=1/1 $11.56
+[889/1250] q361 think_medium   ttft=1148.0ms out=33 think=30 sig=896 chars=1/1 $11.56
+[890/1250] q361 think_max      ttft=1807.6ms out=138 think=135 sig=1252 chars=1/1 $11.56
+[891/1250] q729 think_max      ttft=2786.0ms out=205 think=202 sig=1468 chars=1/1 $11.57
+[892/1250] q729 think_high     ttft=2080.5ms out=95 think=92 sig=1064 chars=1/1 $11.57
+[893/1250] q729 think_medium   ttft=1612.1ms out=88 think=85 sig=1040 chars=1/1 $11.57
+[894/1250] q729 think_xhigh    ttft=2113.9ms out=114 think=111 sig=1112 chars=1/1 $11.58
+[895/1250] q729 think_low      ttft=1911.1ms out=91 think=88 sig=1044 chars=1/1 $11.58
+[896/1250] q568 think_max      ttft=19019.4ms out=2469 think=1783 sig=7200 chars=679/1 [불일치] $11.63
+[897/1250] q568 think_xhigh    ttft=2609.6ms out=825 think=178 sig=1616 chars=643/1 [불일치] $11.65
+[898/1250] q568 think_medium   ttft=2320.9ms out=734 think=140 sig=1432 chars=597/1 [불일치] $11.66
+[899/1250] q568 think_high     ttft=2004.7ms out=628 think=123 sig=1364 chars=507/1 [불일치] $11.68
+[900/1250] q568 think_low      ttft=2240.7ms out=765 think=102 sig=1228 chars=652/1 [불일치] $11.69
+[901/1250] q414 think_xhigh    ttft=8667.8ms out=799 think=796 sig=3596 chars=1/1 $11.71
+[902/1250] q414 think_high     ttft=10002.1ms out=909 think=906 sig=3788 chars=1/1 $11.73
+[903/1250] q414 think_low      ttft=4460.5ms out=370 think=367 sig=1980 chars=1/1 $11.73
+[904/1250] q414 think_max      ttft=Nonems out=8192 think=8192 sig=28828 chars=0/1 [불일치] [잘림] $11.90
+[905/1250] q414 think_medium   ttft=9421.5ms out=841 think=838 sig=3592 chars=1/1 $11.92
+[906/1250] q664 think_low      ttft=2015.2ms out=58 think=55 sig=1004 chars=1/1 $11.92
+[907/1250] q664 think_xhigh    ttft=3067.8ms out=222 think=219 sig=1696 chars=1/1 $11.92
+[908/1250] q664 think_high     ttft=2137.8ms out=71 think=68 sig=1076 chars=1/1 $11.92
+[909/1250] q664 think_medium   ttft=2565.6ms out=114 think=111 sig=1264 chars=1/1 $11.93
+[910/1250] q664 think_max      ttft=3366.3ms out=244 think=241 sig=1792 chars=1/1 $11.93
+[911/1250] q490 think_high     ttft=2170.9ms out=147 think=144 sig=1368 chars=1/1 $11.94
+[912/1250] q490 think_max      ttft=25456.0ms out=2261 think=2258 sig=9776 chars=1/1 $11.98
+[913/1250] q490 think_medium   ttft=3579.0ms out=239 think=236 sig=1696 chars=1/1 $11.99
+[914/1250] q490 think_low      ttft=1235.9ms out=60 think=57 sig=984 chars=1/1 $11.99
+[915/1250] q490 think_xhigh    ttft=4702.1ms out=389 think=386 sig=2344 chars=1/1 $12.00
+[916/1250] q607 think_low      ttft=4421.2ms out=727 think=221 sig=1768 chars=500/1 [불일치] $12.01
+[917/1250] q607 think_max      ttft=22067.2ms out=2626 think=2140 sig=8680 chars=485/1 [불일치] $12.06
+[918/1250] q607 think_high     ttft=3347.9ms out=689 think=171 sig=1544 chars=511/1 [불일치] $12.08
+[919/1250] q607 think_xhigh    ttft=4571.7ms out=789 think=293 sig=2124 chars=493/1 [불일치] $12.10
+[920/1250] q607 think_medium   ttft=2412.8ms out=620 think=105 sig=1236 chars=514/1 [불일치] $12.11
+[921/1250] q605 think_medium   ttft=3198.7ms out=847 think=203 sig=1700 chars=638/1 [불일치] $12.13
+[922/1250] q605 think_xhigh    ttft=3803.3ms out=848 think=283 sig=2060 chars=569/1 [불일치] $12.14
+[923/1250] q605 think_max      ttft=45304.0ms out=4534 think=4087 sig=16620 chars=445/1 [불일치] $12.23
+[924/1250] q605 think_high     ttft=3338.2ms out=614 think=199 sig=1680 chars=417/1 [불일치] $12.25
+[925/1250] q605 think_low      ttft=1736.0ms out=615 think=96 sig=1212 chars=521/1 [불일치] $12.26
+[926/1250] q409 think_xhigh    ttft=1551.7ms out=92 think=89 sig=1028 chars=1/1 $12.26
+[927/1250] q409 think_low      ttft=1571.2ms out=105 think=102 sig=1096 chars=1/1 $12.26
+[928/1250] q409 think_medium   ttft=1777.2ms out=123 think=120 sig=1128 chars=1/1 $12.27
+[929/1250] q409 think_max      ttft=8245.7ms out=828 think=825 sig=3444 chars=1/1 $12.28
+[930/1250] q409 think_high     ttft=1578.7ms out=91 think=88 sig=1024 chars=1/1 $12.29
+[931/1250] q628 think_high     ttft=2095.2ms out=640 think=143 sig=1456 chars=496/1 [불일치] $12.30
+[932/1250] q628 think_max      ttft=42140.2ms out=4487 think=3968 sig=16200 chars=506/1 [불일치] $12.39
+[933/1250] q628 think_medium   ttft=1759.9ms out=744 think=95 sig=1224 chars=639/1 [불일치] $12.41
+[934/1250] q628 think_xhigh    ttft=2328.9ms out=790 think=173 sig=1584 chars=606/1 [불일치] $12.42
+[935/1250] q628 think_low      ttft=1842.5ms out=525 think=90 sig=1200 chars=431/1 [불일치] $12.43
+[936/1250] q617 think_xhigh    ttft=2085.3ms out=122 think=119 sig=1204 chars=1/1 $12.44
+[937/1250] q617 think_high     ttft=2323.2ms out=82 think=79 sig=1072 chars=1/1 $12.44
+[938/1250] q617 think_max      ttft=5138.8ms out=419 think=416 sig=2368 chars=1/1 $12.45
+[939/1250] q617 think_low      ttft=1352.0ms out=3 think=0 sig=0 chars=1/1 $12.45
+[940/1250] q617 think_medium   ttft=2319.0ms out=87 think=84 sig=1080 chars=1/1 $12.45
+[941/1250] q614 think_high     ttft=3514.9ms out=251 think=248 sig=1908 chars=1/1 $12.45
+[942/1250] q614 think_xhigh    ttft=4981.3ms out=406 think=403 sig=2528 chars=1/1 $12.46
+[943/1250] q614 think_low      ttft=2038.0ms out=127 think=124 sig=1340 chars=1/1 $12.47
+[944/1250] q614 think_max      ttft=9706.3ms out=831 think=828 sig=4292 chars=1/1 $12.48
+[945/1250] q614 think_medium   ttft=3059.6ms out=223 think=220 sig=1768 chars=1/1 $12.49
+[946/1250] q466 think_medium   ttft=730.9ms out=33 think=30 sig=864 chars=1/1 $12.49
+[947/1250] q466 think_low      ttft=1097.7ms out=33 think=30 sig=864 chars=1/1 $12.49
+[948/1250] q466 think_max      ttft=1545.1ms out=106 think=103 sig=1124 chars=1/1 $12.49
+[949/1250] q466 think_high     ttft=1120.5ms out=33 think=30 sig=864 chars=1/1 $12.49
+[950/1250] q466 think_xhigh    ttft=1204.5ms out=35 think=32 sig=872 chars=1/1 $12.50
+[951/1250] q589 think_xhigh    ttft=4064.0ms out=866 think=297 sig=2132 chars=566/1 [불일치] $12.51
+[952/1250] q589 think_max      ttft=48680.3ms out=5155 think=4605 sig=17892 chars=559/1 [불일치] $12.62
+[953/1250] q589 think_low      ttft=2502.2ms out=449 think=144 sig=1420 chars=305/1 [불일치] $12.63
+[954/1250] q589 think_medium   ttft=2348.9ms out=573 think=143 sig=1440 chars=434/1 [불일치] $12.64
+[955/1250] q589 think_high     ttft=2153.8ms out=722 think=147 sig=1472 chars=571/1 [불일치] $12.65
+[956/1250] q670 think_high     ttft=1585.2ms out=52 think=49 sig=1000 chars=1/1 $12.65
+[957/1250] q670 think_low      ttft=655.2ms out=3 think=0 sig=0 chars=1/1 $12.65
+[958/1250] q670 think_max      ttft=Nonems out=8192 think=8192 sig=33924 chars=0/1 [불일치] [잘림] $12.82
+[959/1250] q670 think_medium   ttft=1471.0ms out=46 think=43 sig=988 chars=1/1 $12.82
+[960/1250] q670 think_xhigh    ttft=3116.5ms out=218 think=215 sig=1716 chars=1/1 $12.82
+[961/1250] q469 think_low      ttft=2388.1ms out=173 think=170 sig=1308 chars=1/1 $12.83
+[962/1250] q469 think_medium   ttft=3176.4ms out=221 think=218 sig=1456 chars=1/1 $12.83
+[963/1250] q469 think_high     ttft=3212.8ms out=236 think=233 sig=1476 chars=1/1 $12.84
+[964/1250] q469 think_xhigh    ttft=3866.8ms out=314 think=311 sig=1764 chars=1/1 $12.85
+[965/1250] q469 think_max      ttft=7607.6ms out=728 think=725 sig=3212 chars=1/1 $12.86
+[966/1250] q603 think_high     ttft=2788.0ms out=777 think=201 sig=1676 chars=571/1 [불일치] $12.88
+[967/1250] q603 think_xhigh    ttft=4124.2ms out=896 think=305 sig=2188 chars=593/1 [불일치] $12.89
+[968/1250] q603 think_low      ttft=1965.2ms out=636 think=124 sig=1356 chars=512/1 [불일치] $12.91
+[969/1250] q603 think_medium   ttft=2414.3ms out=800 think=165 sig=1540 chars=628/1 [불일치] $12.92
+[970/1250] q603 think_max      ttft=20454.4ms out=2403 think=1901 sig=8084 chars=496/1 [불일치] $12.97
+[971/1250] q658 think_low      ttft=642.2ms out=3 think=0 sig=0 chars=1/1 $12.97
+[972/1250] q658 think_medium   ttft=1037.3ms out=3 think=0 sig=0 chars=1/1 $12.97
+[973/1250] q658 think_max      ttft=1711.4ms out=119 think=116 sig=1284 chars=1/1 $12.98
+[974/1250] q658 think_high     ttft=1070.3ms out=3 think=0 sig=0 chars=1/1 $12.98
+[975/1250] q658 think_xhigh    ttft=888.3ms out=37 think=34 sig=944 chars=1/1 $12.98
+[976/1250] q454 think_high     ttft=1165.9ms out=25 think=22 sig=868 chars=1/1 $12.98
+[977/1250] q454 think_xhigh    ttft=1216.3ms out=32 think=29 sig=896 chars=1/1 $12.98
+[978/1250] q454 think_low      ttft=1040.6ms out=3 think=0 sig=0 chars=1/1 $12.98
+[979/1250] q454 think_max      ttft=1578.2ms out=102 think=99 sig=1156 chars=1/1 $12.98
+[980/1250] q454 think_medium   ttft=1298.0ms out=22 think=19 sig=860 chars=1/1 $12.98
+[981/1250] q352 think_medium   ttft=9362.1ms out=785 think=782 sig=3104 chars=1/1 $13.00
+[982/1250] q352 think_high     ttft=6921.6ms out=608 think=605 sig=2584 chars=1/1 $13.01
+[983/1250] q352 think_low      ttft=4821.2ms out=424 think=421 sig=1996 chars=1/1 $13.02
+[984/1250] q352 think_max      ttft=Nonems out=8192 think=8192 sig=26524 chars=0/1 [불일치] [잘림] $13.19
+[985/1250] q352 think_xhigh    ttft=8531.0ms out=814 think=811 sig=3140 chars=1/1 $13.20
+[986/1250] q666 think_xhigh    ttft=2381.3ms out=154 think=151 sig=1376 chars=1/1 $13.21
+[987/1250] q666 think_high     ttft=1998.9ms out=107 think=104 sig=1212 chars=1/1 $13.21
+[988/1250] q666 think_low      ttft=1193.7ms out=3 think=0 sig=0 chars=1/1 $13.21
+[989/1250] q666 think_medium   ttft=1408.3ms out=48 think=45 sig=956 chars=1/1 $13.21
+[990/1250] q666 think_max      ttft=4978.7ms out=459 think=456 sig=2668 chars=1/1 $13.22
+[991/1250] q185 think_low      ttft=12178.2ms out=1218 think=1215 sig=3892 chars=1/1 $13.25
+[992/1250] q185 think_medium   ttft=11706.5ms out=1189 think=1186 sig=3904 chars=1/1 $13.27
+[993/1250] q185 think_max      ttft=37481.5ms out=4409 think=4406 sig=12028 chars=1/1 $13.36
+[994/1250] q185 think_xhigh    ttft=15390.8ms out=1600 think=1597 sig=5048 chars=1/1 $13.39
+[995/1250] q185 think_high     ttft=12355.1ms out=1279 think=1276 sig=4344 chars=1/1 $13.42
+[996/1250] q159 think_low      ttft=1022.7ms out=3 think=0 sig=0 chars=1/1 $13.42
+[997/1250] q159 think_medium   ttft=1339.0ms out=55 think=52 sig=916 chars=1/1 $13.42
+[998/1250] q159 think_max      ttft=2223.6ms out=170 think=167 sig=1276 chars=1/1 $13.42
+[999/1250] q159 think_high     ttft=1440.7ms out=52 think=49 sig=908 chars=1/1 $13.43
+[1000/1250] q159 think_xhigh    ttft=1352.7ms out=55 think=52 sig=916 chars=1/1 $13.43
+[1001/1250] q563 think_high     ttft=2918.8ms out=213 think=210 sig=1660 chars=1/1 $13.43
+[1002/1250] q563 think_low      ttft=2709.9ms out=140 think=137 sig=1320 chars=1/1 $13.44
+[1003/1250] q563 think_max      ttft=11701.7ms out=1127 think=1124 sig=5180 chars=1/1 $13.46
+[1004/1250] q563 think_medium   ttft=2715.9ms out=186 think=183 sig=1504 chars=1/1 $13.46
+[1005/1250] q563 think_xhigh    ttft=3166.2ms out=213 think=210 sig=1676 chars=1/1 $13.47
+[1006/1250] q158 think_medium   ttft=2345.1ms out=166 think=163 sig=1220 chars=1/1 $13.47
+[1007/1250] q158 think_xhigh    ttft=2702.7ms out=218 think=215 sig=1300 chars=1/1 $13.48
+[1008/1250] q158 think_high     ttft=2420.4ms out=176 think=173 sig=1260 chars=1/1 $13.48
+[1009/1250] q158 think_max      ttft=3557.5ms out=314 think=311 sig=1580 chars=1/1 $13.49
+[1010/1250] q158 think_low      ttft=2189.2ms out=155 think=152 sig=1184 chars=1/1 $13.49
+[1011/1250] q629 think_max      ttft=38931.9ms out=4101 think=3584 sig=14384 chars=507/1 [불일치] $13.57
+[1012/1250] q629 think_high     ttft=2477.2ms out=703 think=122 sig=1316 chars=571/1 [불일치] $13.59
+[1013/1250] q629 think_low      ttft=1778.7ms out=580 think=88 sig=1176 chars=492/1 [불일치] $13.60
+[1014/1250] q629 think_medium   ttft=1865.0ms out=649 think=115 sig=1296 chars=529/1 [불일치] $13.61
+[1015/1250] q629 think_xhigh    ttft=3149.2ms out=713 think=209 sig=1732 chars=491/1 [불일치] $13.63
+[1016/1250] q203 think_xhigh    ttft=3341.9ms out=318 think=315 sig=1532 chars=1/1 $13.64
+[1017/1250] q203 think_max      ttft=4952.4ms out=490 think=487 sig=1948 chars=1/1 $13.65
+[1018/1250] q203 think_high     ttft=2778.1ms out=241 think=238 sig=1332 chars=1/1 $13.65
+[1019/1250] q203 think_medium   ttft=4056.8ms out=303 think=300 sig=1524 chars=1/1 $13.66
+[1020/1250] q203 think_low      ttft=3356.6ms out=263 think=260 sig=1412 chars=1/1 $13.66
+[1021/1250] q461 think_low      ttft=2293.9ms out=125 think=122 sig=1200 chars=1/1 $13.67
+[1022/1250] q461 think_medium   ttft=2539.9ms out=176 think=173 sig=1368 chars=1/1 $13.67
+[1023/1250] q461 think_xhigh    ttft=2877.8ms out=215 think=212 sig=1476 chars=1/1 $13.68
+[1024/1250] q461 think_high     ttft=2873.3ms out=208 think=205 sig=1444 chars=1/1 $13.68
+[1025/1250] q461 think_max      ttft=6265.5ms out=535 think=532 sig=2520 chars=1/1 $13.69
+[1026/1250] q374 think_xhigh    ttft=1612.0ms out=106 think=103 sig=1136 chars=1/1 $13.69
+[1027/1250] q374 think_high     ttft=1324.5ms out=71 think=68 sig=1008 chars=1/1 $13.70
+[1028/1250] q374 think_medium   ttft=1188.4ms out=45 think=42 sig=928 chars=1/1 $13.70
+[1029/1250] q374 think_low      ttft=1663.8ms out=111 think=108 sig=1112 chars=1/1 $13.70
+[1030/1250] q374 think_max      ttft=2818.6ms out=232 think=229 sig=1520 chars=1/1 $13.70
+[1031/1250] q627 think_max      ttft=23920.6ms out=2226 think=2223 sig=9764 chars=1/1 $13.75
+[1032/1250] q627 think_xhigh    ttft=4389.7ms out=311 think=308 sig=2112 chars=1/1 $13.76
+[1033/1250] q627 think_low      ttft=3768.8ms out=270 think=267 sig=1908 chars=1/1 $13.76
+[1034/1250] q627 think_medium   ttft=2662.3ms out=182 think=179 sig=1528 chars=1/1 $13.77
+[1035/1250] q627 think_high     ttft=4511.7ms out=342 think=339 sig=2216 chars=1/1 $13.77
+[1036/1250] q585 think_max      ttft=34891.9ms out=3844 think=3185 sig=12820 chars=652/1 [불일치] $13.85
+[1037/1250] q585 think_low      ttft=1777.2ms out=654 think=88 sig=1188 chars=557/1 [불일치] $13.86
+[1038/1250] q585 think_medium   ttft=2663.7ms out=707 think=193 sig=1676 chars=518/1 [불일치] $13.88
+[1039/1250] q585 think_high     ttft=2212.4ms out=730 think=133 sig=1376 chars=588/1 [불일치] $13.89
+[1040/1250] q585 think_xhigh    ttft=4379.0ms out=963 think=267 sig=1956 chars=687/1 [불일치] $13.91
+[1041/1250] q582 think_high     ttft=4928.7ms out=423 think=325 sig=2252 chars=93/1 [불일치] $13.92
+[1042/1250] q582 think_medium   ttft=4343.1ms out=759 think=288 sig=2036 chars=464/1 [불일치] $13.94
+[1043/1250] q582 think_max      ttft=12758.8ms out=1145 think=1142 sig=5932 chars=1/1 $13.96
+[1044/1250] q582 think_low      ttft=4329.9ms out=439 think=273 sig=2004 chars=161/1 [불일치] $13.97
+[1045/1250] q582 think_xhigh    ttft=8590.3ms out=651 think=648 sig=3664 chars=1/1 $13.98
+[1046/1250] q564 think_high     ttft=7837.6ms out=507 think=504 sig=2912 chars=1/1 $13.99
+[1047/1250] q564 think_xhigh    ttft=3668.8ms out=669 think=206 sig=1748 chars=455/1 [불일치] $14.01
+
+[중단] 누적 $14.008 > 상한 $14.00. 1047/1250 콜에서 멈춘다. 여기까지의 로그는 그대로 쓸 수 있다.
+
+[done] 로그 -> out/anthropic_strict_opus250_log.jsonl
+토큰: 입력 129,015 / 출력 674,622
+비용: $14.008
+→ 확인 1: answer_chars 가 조건 무관 1 인지(길이 통제 성공 여부)
+→ 확인 2: truncated=true 건수(추론이 max_tokens 까지 간 콜 — 분석서 제외)
+→ 확인 3: thoughts_tokens 가 None 뿐이면 Task B 라벨이 없다. usage_raw 를 볼 것
+→ 확인 4: 파싱 후 CSV 에서 조건별 up_bytes 중앙값이 같은지(패딩 검증)
+
+완료. 다음:  python3 parse_pcap.py out/anthropic_strict_opus250_20261118_182111.pcap out/anthropic_strict_opus250_log.jsonl --local-ip 163.152.223.17 --out out/anthropic_opus250.csv
