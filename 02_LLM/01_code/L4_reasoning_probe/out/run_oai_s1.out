@@ -1,0 +1,41 @@
+nohup: ignoring input
+
+==================================================
+[05:49:11] 시작: x50_luna
+==================================================
+필터: tcp port 443 and ( host 162.159.140.245 or host 172.66.0.243)
+pcap: out/openai_strict_x50_luna_20261120_054911.pcap  log: out/openai_strict_x50_luna_log.jsonl
+tcpdump PID=186057, 2초 워밍업...
+선별 적용: out/qfile_oai_cross50.json -> 50문항
+문항 50개 / 템플릿 50개 (신뢰구간의 독립 표본 수는 문항이 아니라 템플릿 쪽이다)
+[1/250] q14 think_high     arm=0          ttft=2113.2ms out=67 think=60 chars=1/1  $0.000
+[2/250] q14 think_low      arm=0          ttft=1412.8ms out=74 think=67 chars=1/1  $0.000
+[3/250] q14 think_max      arm=0          ttft=1634.0ms out=119 think=112 chars=1/1  $0.000
+[4/250] q14 think_medium   arm=0          ttft=1029.7ms out=44 think=37 chars=1/1  $0.000
+[5/250] q14 think_xhigh    arm=0          ttft=1180.1ms out=66 think=59 chars=1/1  $0.000
+[6/250] q9 think_medium   arm=0          ttft=11668.8ms out=1161 think=1154 chars=1/1  $0.001
+[7/250] q9 think_max      arm=0          ttft=5982.1ms out=824 think=817 chars=1/1  $0.001
+[8/250] q9 think_xhigh    arm=0          ttft=7756.2ms out=773 think=766 chars=1/1  $0.002
+[9/250] q9 think_low      arm=0          ttft=17934.5ms out=1679 think=1672 chars=1/1  $0.002
+[10/250] q9 think_high     arm=0          ttft=62878.2ms out=6988 think=6981 chars=1/1  $0.006
+[11/250] q4 think_medium   arm=0          ttft=2063.6ms out=164 think=157 chars=1/1  $0.006
+[12/250] q4 think_max      arm=0          ttft=3522.7ms out=168 think=161 chars=1/1  $0.006
+[13/250] q4 think_high     arm=0          ttft=2722.1ms out=163 think=156 chars=1/1  $0.006
+[14/250] q4 think_low      arm=0          ttft=1727.1ms out=121 think=114 chars=1/1  $0.006
+[15/250] q4 think_xhigh    arm=0          ttft=3165.6ms out=239 think=232 chars=1/1  $0.006
+[16/250] q42 think_low      arm=0          ttft=758.0ms out=29 think=22 chars=1/1  $0.006
+[17/250] q42 think_max      arm=0          ttft=1411.1ms out=41 think=34 chars=1/1  $0.007
+[18/250] q42 think_xhigh    arm=0          ttft=949.6ms out=33 think=26 chars=1/1  $0.007
+[19/250] q42 think_high     arm=0          ttft=1126.3ms out=31 think=24 chars=1/1  $0.007
+[20/250] q42 think_medium   arm=0          ttft=1173.4ms out=30 think=23 chars=1/1  $0.007
+[21/250] q29 think_high     arm=0          ttft=1144.4ms out=31 think=24 chars=1/1  $0.007
+[22/250] q29 think_max      arm=0          ttft=1216.8ms out=64 think=57 chars=1/1  $0.007
+[23/250] q29 think_medium   arm=0          ttft=1464.7ms out=57 think=50 chars=1/1  $0.007
+[24/250] q29 think_xhigh    arm=0          ttft=1116.6ms out=60 think=53 chars=1/1  $0.007
+[25/250] q29 think_low      arm=0          ttft=896.8ms out=26 think=19 chars=1/1  $0.007
+[26/250] q36 think_high     arm=0          ttft=5243.6ms out=523 think=516 chars=1/1  $0.007
+[27/250] q36 think_xhigh    arm=0          ttft=8027.1ms out=848 think=841 chars=1/1  $0.007
+[28/250] q36 think_medium   arm=0          ttft=1628.5ms out=90 think=83 chars=1/1  $0.008
+[29/250] q36 think_low      arm=0          ttft=3543.2ms out=308 think=301 chars=1/1  $0.008
+[30/250] q36 think_max      arm=0          ttft=1401.5ms out=92 think=85 chars=1/1  $0.008
+[31/250] q35 think_xhigh    arm=0          ttft=3916.5ms out=419 think=412 chars=1/1  $0.008
