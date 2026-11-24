@@ -1,0 +1,27 @@
+행 8162  조건 5종 low,medium,high,xhigh,max  우연 20.0%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체   1166    38.2%     1.91x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high   xhigh     max
+     low     126      46      39      25      12
+  medium      65      57      53      43      22
+    high      34      46      57      67      32
+   xhigh      15      37      64      66      54
+     max       2      12      20      33     139
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  down_bytes           0.126
+  down_iat_mean_ms     0.095
+  pkt_gap_ms           0.093
+  down_pkt_mean        0.090
+  up_bytes             0.087
+  down_iat_p99_ms      0.086
+
+[out] out/taskA_rf_haiku250.csv
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.

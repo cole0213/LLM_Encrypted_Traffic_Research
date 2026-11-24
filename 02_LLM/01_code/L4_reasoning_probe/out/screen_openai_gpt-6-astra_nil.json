@@ -1,0 +1,303 @@
+{
+ "provider": "openai",
+ "model": "gpt-6-astra",
+ "qset": "nil",
+ "efforts": [
+  "low",
+  "medium",
+  "high",
+  "xhigh",
+  "max"
+ ],
+ "min_spread": 100,
+ "families": [
+  "echo_a",
+  "echo_b",
+  "echo_c",
+  "echo_d",
+  "given_a",
+  "given_b",
+  "given_c",
+  "given_d",
+  "repeat_a",
+  "repeat_b",
+  "repeat_c",
+  "repeat_d"
+ ],
+ "good": [
+  0,
+  6,
+  8,
+  9,
+  10,
+  11
+ ],
+ "rows": [
+  {
+   "q": 0,
+   "spread": 121,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    14,
+    38,
+    121
+   ],
+   "ans": [
+    "A",
+    "A",
+    "A",
+    "A",
+    "A"
+   ],
+   "gold": "A",
+   "text": "A 를 그대로 출력하라. A) A B) B C) C D) D"
+  },
+  {
+   "q": 1,
+   "spread": 85,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    18,
+    43,
+    85
+   ],
+   "ans": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "gold": "B",
+   "text": "B 를 그대로 출력하라. A) A B) B C) C D) D"
+  },
+  {
+   "q": 2,
+   "spread": 83,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    22,
+    37,
+    83
+   ],
+   "ans": [
+    "C",
+    "C",
+    "C",
+    "C",
+    "C"
+   ],
+   "gold": "C",
+   "text": "C 를 그대로 출력하라. A) A B) B C) C D) D"
+  },
+  {
+   "q": 3,
+   "spread": 70,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    20,
+    70,
+    59
+   ],
+   "ans": [
+    "D",
+    "D",
+    "D",
+    "D",
+    "D"
+   ],
+   "gold": "D",
+   "text": "D 를 그대로 출력하라. A) A B) B C) C D) D"
+  },
+  {
+   "q": 4,
+   "spread": 88,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    33,
+    88
+   ],
+   "ans": [
+    "A",
+    "A",
+    "A",
+    "A",
+    "A"
+   ],
+   "gold": "A",
+   "text": "정답은 A 다. 정답은 무엇인가? A) A B) B C) C D) D"
+  },
+  {
+   "q": 5,
+   "spread": 52,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    27,
+    52
+   ],
+   "ans": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "gold": "B",
+   "text": "정답은 B 다. 정답은 무엇인가? A) A B) B C) C D) D"
+  },
+  {
+   "q": 6,
+   "spread": 100,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    19,
+    24,
+    100
+   ],
+   "ans": [
+    "C",
+    "C",
+    "C",
+    "C",
+    "C"
+   ],
+   "gold": "C",
+   "text": "정답은 C 다. 정답은 무엇인가? A) A B) B C) C D) D"
+  },
+  {
+   "q": 7,
+   "spread": 98,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    0,
+    0,
+    25,
+    98
+   ],
+   "ans": [
+    "D",
+    "D",
+    "D",
+    "D",
+    "D"
+   ],
+   "gold": "D",
+   "text": "정답은 D 다. 정답은 무엇인가? A) A B) B C) C D) D"
+  },
+  {
+   "q": 8,
+   "spread": 113,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    18,
+    28,
+    45,
+    92,
+    131
+   ],
+   "ans": [
+    "A",
+    "A",
+    "A",
+    "A",
+    "A"
+   ],
+   "gold": "A",
+   "text": "아래 글자를 따라 쓰라: A. A) A B) B C) C D) D"
+  },
+  {
+   "q": 9,
+   "spread": 135,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    30,
+    34,
+    70,
+    135
+   ],
+   "ans": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "gold": "B",
+   "text": "아래 글자를 따라 쓰라: B. A) A B) B C) C D) D"
+  },
+  {
+   "q": 10,
+   "spread": 155,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    17,
+    45,
+    83,
+    155
+   ],
+   "ans": [
+    "C",
+    "C",
+    "C",
+    "C",
+    "C"
+   ],
+   "gold": "C",
+   "text": "아래 글자를 따라 쓰라: C. A) A B) B C) C D) D"
+  },
+  {
+   "q": 11,
+   "spread": 132,
+   "trunc": 0,
+   "nonc": 0,
+   "vals": [
+    0,
+    16,
+    67,
+    89,
+    132
+   ],
+   "ans": [
+    "D",
+    "D",
+    "D",
+    "D",
+    "D"
+   ],
+   "gold": "D",
+   "text": "아래 글자를 따라 쓰라: D. A) A B) B C) C D) D"
+  }
+ ],
+ "incomplete": [],
+ "errors": []
+}

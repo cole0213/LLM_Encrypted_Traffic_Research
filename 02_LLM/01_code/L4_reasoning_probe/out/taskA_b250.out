@@ -1,0 +1,84 @@
+##### b250_luna
+행 8750  조건 5종 low,medium,high,xhigh,max  우연 20.0%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체   1250    29.0%     1.45x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high   xhigh     max
+     low      98      46      38      37      31
+  medium      71      46      46      33      54
+    high      39      44      64      44      59
+   xhigh      41      37      56      39      77
+     max      21      28      25      61     115
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  pkt_gap_ms           0.085
+  down_iat_p90_ms      0.084
+  down_iat_p99_ms      0.082
+  down_pkt_mean        0.080
+  down_bytes           0.079
+  down_iat_mean_ms     0.079
+
+[out] out/taskA_rf_b250_luna.csv
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+##### b250_terra
+행 8750  조건 5종 low,medium,high,xhigh,max  우연 20.0%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체   1250    50.9%     2.54x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high   xhigh     max
+     low     186      47      11       3       3
+  medium      69      88      57      29       7
+    high      20      58      79      71      22
+   xhigh       2      22      64     105      57
+     max       1       4      21      46     178
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  down_iat_p99_ms      0.104
+  down_iat_max_ms      0.096
+  down_bytes           0.093
+  stall_total_ms       0.086
+  down_iat_mean_ms     0.077
+  down_iat_p90_ms      0.076
+
+[out] out/taskA_rf_b250_terra.csv
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+##### b250_sol
+행 8750  조건 5종 low,medium,high,xhigh,max  우연 20.0%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체   1250    54.2%     2.71x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high   xhigh     max
+     low     149      81      16       4       0
+  medium      72     115      55       6       2
+    high       2      26     137      61      24
+   xhigh       1      10      72      92      75
+     max       0       1      14      50     185
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  down_bytes           0.108
+  stall_total_ms       0.099
+  down_iat_p99_ms      0.098
+  down_iat_max_ms      0.098
+  down_pkt_max         0.085
+  stall_count          0.065
+
+[out] out/taskA_rf_b250_sol.csv
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
