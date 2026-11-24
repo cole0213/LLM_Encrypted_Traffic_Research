@@ -48,6 +48,10 @@ WIRE = ["pkt_gap_ms", "up_pkts", "down_pkts", "up_bytes", "down_bytes",
 
 ORD = ["think_low", "think_medium", "think_high", "think_xhigh", "think_max"]
 
+# --quantize 가 반올림할 피처. '바이트를 세는' 열만 넣는다.
+# 패킷 수·시간 열은 에코의 영향을 안 받으므로 건드리지 않는다.
+BYTE_FEATS = ["down_bytes", "up_bytes", "down_pkt_mean", "down_pkt_max"]
+
 
 def read(path: str) -> list[dict]:
     with open(path, encoding="utf-8-sig") as f:
@@ -80,6 +84,15 @@ def main() -> None:
     ap.add_argument("--folds", type=int, default=5)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--out", default="", help="결과를 CSV 로도 저장")
+    # 2026-11-24 추가. 라벨 에코 누출을 죽이려고 바이트 피처를 버킷으로 반올림한다.
+    # 배경: OpenAI 응답이 effort 문자열("low"/"medium"/...)을 그대로 되돌려보내고
+    # 그 값이 스트림에 두 번 실려, down_bytes 가 **설정 글자 수 x 2 바이트**만큼 달라진다.
+    # 500ms 창에서는 다른 피처가 전부 상수라 이 6바이트만으로 75% 가 나왔다 — 추론이 아니라
+    # 라벨을 베낀 것이다. 전체 창의 진짜 신호는 수천 바이트라 100바이트 버킷이면
+    # 에코는 죽고 신호는 남는다. --quantize 100 으로 돌려 두 수치를 비교하라.
+    ap.add_argument("--quantize", type=int, default=0, metavar="B",
+                    help="바이트 피처를 B 바이트 버킷으로 반올림(0=끄기). "
+                         "라벨 에코 누출 제거용. 권장 100")
     a = ap.parse_args()
 
     rows = read(a.csv_path)
@@ -98,6 +111,18 @@ def main() -> None:
     if a.cutoffs:
         want = {int(x.strip()) for x in a.cutoffs.split(",") if x.strip()}
         cuts_all = [c for c in cuts_all if c in want]
+
+    # 바이트 피처 양자화. 라벨 에코는 6바이트 규모라 버킷 하나에 흡수되고,
+    # 진짜 추론 신호(수천 바이트)는 버킷을 넘나들어 그대로 남는다.
+    # 행을 직접 고치므로 아래 모든 적합·중요도 계산에 일괄 적용된다.
+    if a.quantize > 0:
+        q = a.quantize
+        for r in rows:
+            for f in BYTE_FEATS:
+                if r.get(f) not in (None, ""):
+                    r[f] = str(round(num(r[f]) / q) * q)
+        print(f"[양자화] {', '.join(BYTE_FEATS)} 를 {q}바이트 버킷으로 반올림했다 "
+              f"— 설정 문자열 에코(글자당 2B) 제거용\n")
 
     conds = [c for c in ORD if any(r["condition"] == c for r in rows)]
     chance = 100.0 / len(conds)
