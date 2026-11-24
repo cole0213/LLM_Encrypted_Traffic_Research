@@ -148,6 +148,9 @@ def run_one(client, model, question, effort, pad, max_tok=MAX_TOKENS):
     t0 = time.time()
     t_first = None
     answer_chars = 0      # 눈에 보이는 답 길이. 조건 무관 1이어야 길이 통제가 성립한다.
+    # 2026-11-24 추가. 길이만 세고 '무슨 글자였는지'를 안 남겨서 본 캡처 전체가
+    # 정답률 분석 불가였다. 품질 대 비용을 묻지 못하면 동기 (D)를 방어할 수 없다.
+    answer_text = ""
     thought_chars = 0     # 사고 '텍스트' 길이. display 기본값이 omitted 라 보통 0이다.
     sig_chars = 0         # 사고 서명 길이. Gemini 에서 누출의 정체였던 그 자리.
     sig_parts = 0
@@ -176,6 +179,7 @@ def run_one(client, model, question, effort, pad, max_tok=MAX_TOKENS):
                         if t_first is None and txt.strip():
                             t_first = t
                         answer_chars += len(txt)
+                        answer_text += txt
                 elif dt == "thinking_delta":
                     thought_chars += len(_get(d, "thinking") or "")
                 elif dt == "signature_delta":
@@ -213,6 +217,9 @@ def run_one(client, model, question, effort, pad, max_tok=MAX_TOKENS):
         "app_ttft_ms": round((t_first - t0) * 1000, 1) if t_first else None,
         "app_total_ms": round((t_end - t0) * 1000, 1),
         "answer_chars": answer_chars,
+        # 앞 80자만. arm 0 은 한 글자라 전문이 들어가고, 자유 응답 arm 에서도
+        # 채점용 선두 글자와 불응 여부 확인에는 넉넉하다.
+        "answer_head": answer_text.strip()[:80],
         # 다른 러너와 이름을 맞춘다(parse_pcap 이 thoughts_tokens 로 읽는다).
         "thoughts_tokens": think_tok, "output_tokens": out_tok, "input_tokens": in_tok,
         "thought_chars": thought_chars, "had_thought": thought_chars > 0,

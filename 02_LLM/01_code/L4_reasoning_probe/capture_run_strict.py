@@ -264,6 +264,10 @@ def run_one(client, question, think, pad, instr=INSTR, max_tok=None):
     t_start = time.time()
     t_first_answer = None
     answer_chars = 0
+    # 2026-11-24 추가. 길이만 세고 '무슨 글자였는지'를 안 남겨서 본 캡처 전체가
+    # 정답률 분석 불가였다(선별기는 11-17 에 고쳤는데 러너는 빠져 있었다).
+    # 자유 응답 arm 에서는 답이 길고, 불응한 경우 그 사유도 여기 들어온다.
+    answer_text = ""
     thoughts_tok = answer_tok = None
     # 3차 분석에서 Gemini down_bytes 가 추론토큰당 약 3.9바이트로 선형 증가하는 것이 확인됐다.
     # usage 숫자 자릿수로는 설명이 안 되는 크기라, thought(추론 요약) 텍스트가 실제로
@@ -309,6 +313,7 @@ def run_one(client, question, think, pad, instr=INSTR, max_tok=None):
             if t_first_answer is None:
                 t_first_answer = t
             answer_chars += len(txt)
+            answer_text += txt
         um = getattr(chunk, "usage_metadata", None)
         if um is not None:
             thoughts_tok = getattr(um, "thoughts_token_count", None) or thoughts_tok
@@ -319,6 +324,9 @@ def run_one(client, question, think, pad, instr=INSTR, max_tok=None):
         "app_ttft_ms": round((t_first_answer - t_start) * 1000, 1) if t_first_answer else None,
         "app_total_ms": round((t_end - t_start) * 1000, 1),
         "answer_chars": answer_chars,
+        # 앞 80자만. arm 0 은 한 글자라 전문이 들어가고, 자유 응답 arm 에서도
+        # 채점용 선두 글자와 불응 사유 확인에는 넉넉하다.
+        "answer_head": answer_text.strip()[:80],
         "thoughts_tokens": thoughts_tok, "output_tokens": answer_tok,
         "thought_chars": thought_chars, "had_thought": had_thought,
         "chunk_count": chunk_count,

@@ -50,22 +50,25 @@ from questions_all import QUESTIONS_V2_ALL, FAMILIES_V2_ALL, ANSWERS_V2_ALL
 # 가르는 대조군. 한 걸음이면 끝나는 문항만 들었다.
 from questions_trivial import (QUESTIONS_TRIVIAL, FAMILIES_TRIVIAL,
                                ANSWERS_TRIVIAL)
+# 2026-11-24 추가. trivial 로도 못 가른 것을 가르는 극단 대조군.
+# luna 의 바닥(16~24 토큰)이 "문턱이 낮아서"인지 "게이트가 없어서"인지를 본다.
+from questions_nil import QUESTIONS_NIL, FAMILIES_NIL, ANSWERS_NIL
 
 QSETS = {"base": QUESTIONS_BASE, "hard": QUESTIONS_HARD, "v2": QUESTIONS_V2_ALL,
-         "trivial": QUESTIONS_TRIVIAL}
+         "trivial": QUESTIONS_TRIVIAL, "nil": QUESTIONS_NIL}
 
 # 문항 세트별 템플릿 id. 없는 세트는 None — 그때는 문항 하나가 곧 클러스터로 취급된다.
 # v2 는 한 템플릿에서 변형이 여럿 나오므로 선별 결과를 템플릿 단위로도 집계해야
 # '한 템플릿만 잘 돼서 통과 수가 부풀어 보이는' 착시를 피할 수 있다.
 QSET_FAMILIES = {"base": None, "hard": None, "v2": FAMILIES_V2_ALL,
-                 "trivial": FAMILIES_TRIVIAL}
+                 "trivial": FAMILIES_TRIVIAL, "nil": FAMILIES_NIL}
 
 # 세트별 정답 글자. 없는 세트는 None — 그때는 정답률을 못 낸다.
 # v2 의 "정답 없는 갈래"(딜레마·페르미 등)는 원소가 None 이라 그 문항만 집계에서 빠진다.
 # 2026-11-17 추가. 그 전까지 선별기는 답 글자를 버려서, 모델이 추론을 안 쓰고도
 # 맞혔는지("성능이 좋아 생략")와 그냥 틀렸는지를 구분할 수 없었다.
 QSET_ANSWERS = {"base": None, "hard": None, "v2": ANSWERS_V2_ALL,
-                "trivial": ANSWERS_TRIVIAL}
+                "trivial": ANSWERS_TRIVIAL, "nil": ANSWERS_NIL}
 
 # 문항이 쓸 만하다고 보는 최소 격차(추론 토큰).
 # 근거: 추론 N 토큰 ≈ 4N 바이트 응답 증가(Gemini 3차 실측에서 토큰당 약 3.9 바이트).

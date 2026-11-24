@@ -169,6 +169,9 @@ def run_one(client, question, effort, pad, instr=None, max_tok=None):
     """스트리밍 요청. 벽시계 t_start/t_first_answer/t_end(pcap 정렬용) + 토큰수 반환."""
     t0 = time.time(); t_first = None; in_think = False; saw_think = False
     answer_chars = 0; comp_tok = None; think_tok = None; finish = None
+    # 2026-11-24 추가. 길이만 세고 '무슨 글자였는지'를 안 남겨서 본 캡처 전체가
+    # 정답률 분석 불가였다. 자유 응답 arm 과 불응 사유 확인에도 필요하다.
+    answer_text = ""
     # reasoning_format="hidden" 이라 추론 텍스트는 안 와야 정상이다. Gemini 쪽에서
     # 추론량에 비례해 down_bytes 가 커지는 것이 확인됐으므로, Groq 도 같은 일이
     # 벌어지는지 양으로 기록해 둔다(0이면 '바이트 신호 없음'의 직접 근거가 된다).
@@ -205,6 +208,7 @@ def run_one(client, question, effort, pad, instr=None, max_tok=None):
                 if t_first is None:
                     t_first = t
                 answer_chars += len(clean)
+                answer_text += clean
             elif in_think:
                 # <think> 태그 안쪽으로 들어온 추론 텍스트도 바이트로는 내려온 것이다.
                 reasoning_chars += len(clean)
@@ -217,6 +221,9 @@ def run_one(client, question, effort, pad, instr=None, max_tok=None):
             "app_ttft_ms": round((t_first - t0) * 1000, 1) if t_first else None,
             "app_total_ms": round((t_end - t0) * 1000, 1),
             "answer_chars": answer_chars,
+            # 앞 80자만. arm 0 은 한 글자라 전문이 들어가고, 자유 응답 arm 에서도
+            # 채점용 선두 글자와 불응 사유 확인에는 넉넉하다.
+            "answer_head": answer_text.strip()[:80],
             "thoughts_tokens": think_tok, "output_tokens": comp_tok,
             "had_reasoning": saw_think, "reasoning_chars": reasoning_chars,
             "chunk_count": chunk_count,

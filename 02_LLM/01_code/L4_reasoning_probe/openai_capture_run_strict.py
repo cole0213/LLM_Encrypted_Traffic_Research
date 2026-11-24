@@ -342,6 +342,11 @@ def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
     max_tok = max_tok or MAX_COMPLETION_TOKENS
     t0 = time.time(); t_first = None
     answer_chars = 0; comp_tok = None; think_tok = None; in_tok = None; finish = None
+    # 2026-11-24 추가. 답의 '글자 수'만 세고 '무슨 글자였는지'를 안 남겨서, 본 캡처
+    # 9,812콜 전부 정답률을 못 냈다(선별기는 11-17 에 고쳤는데 러너는 빠져 있었다).
+    # 그 결과 "설정을 올리면 비용이 오르는데 품질도 오르는가"를 못 묻는다 —
+    # 동기 (D)를 방어하려면 반드시 필요한 값이다. 앞으로 찍는 캡처는 공짜로 따라온다.
+    answer_text = ""
     # 추론 요약이 스트림에 실려 내려오는지 양으로 기록한다. 0 이면 '바이트 신호 없음'의
     # 직접 근거가 되고, 0 이 아니면 Gemini thoughtSignature 와 같은 누출 경로가 된다.
     reasoning_chars = 0
@@ -378,6 +383,7 @@ def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
                     if t_first is None and d.strip():
                         t_first = t
                     answer_chars += len(d)
+                    answer_text += d
             # 서명은 delta 가 아니라 item 에 실려 온다. 2026-11-20 이전 판은 이걸
             # 놓쳐 sig_chars 가 항상 0 이었다(openai_sse_probe.py 로 규명).
             it = getattr(chunk, "item", None)
@@ -419,6 +425,7 @@ def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
                 if t_first is None and txt.strip():
                     t_first = t
                 answer_chars += len(txt)
+                answer_text += txt
             usage = getattr(chunk, "usage", None)
         if usage is not None:
             comp_tok = _output_tokens(usage) or comp_tok
@@ -429,6 +436,10 @@ def run_one(client, model, question, effort, pad, instr=None, max_tok=None,
             "app_ttft_ms": round((t_first - t0) * 1000, 1) if t_first else None,
             "app_total_ms": round((t_end - t0) * 1000, 1),
             "answer_chars": answer_chars,
+            # 앞 80자만 남긴다. arm 0 은 한 글자라 전부 들어가고, 자유 응답 arm 에서도
+            # 채점에 필요한 선두 글자와 불응 여부 확인에는 넉넉하다. 전문을 남기면
+            # 로그가 수십 MB 로 불어나고 pcap 정렬 외의 용도가 섞인다.
+            "answer_head": answer_text.strip()[:80],
             "thoughts_tokens": think_tok, "output_tokens": comp_tok,
             "input_tokens": in_tok,
             "had_reasoning": bool(think_tok), "reasoning_chars": reasoning_chars,
