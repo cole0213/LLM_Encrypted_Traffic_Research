@@ -110,6 +110,18 @@ def main() -> None:
     # 분류기·분할·피처를 똑같이 써야 다른 provider 와 숫자를 나란히 놓을 수 있다.
     ap.add_argument("--qfile", default="",
                     help="선별 JSON 의 'good' q_idx 만 남긴다. 공통 문항 축으로 맞출 때 쓴다")
+    # 2026-11-26 추가. "Task A 가 맞히는 건 깊이가 아니라 추론 켜짐/꺼짐 아니냐"는 반론용 대조.
+    # 모든 조건에서 실제로 추론이 일어난 문항만 남기면 '켜짐/꺼짐' 성분이 사라지고
+    # 남는 정확도는 전부 '깊이' 에서 온 것이 된다.
+    #
+    # 행 단위가 아니라 **문항 단위**로 거른다. 행만 빼면 추론 0 이 몰린 조건(보통 low)의
+    # 표본이 통째로 줄어 클래스가 기울고, 거르기 전 정확도와 나란히 못 읽는다.
+    # 문항 단위로 거르면 문항마다 조건 수가 그대로라 균형이 유지된다.
+    # (2026-11-26: 이 정의로 재면 haiku 114 · sonnet 11 · opus 156 문항이 나와
+    #  2026-11-20 노트의 reasoned-only 표를 그대로 재현한다. 정의가 맞다는 확인.)
+    ap.add_argument("--reasoned-only", action="store_true",
+                    help="쓰는 조건 전부에서 thoughts_tokens>0 인 문항만 남긴다. "
+                         "'켜짐/꺼짐' 성분을 빼고 '깊이' 만 남겨 대조한다")
     a = ap.parse_args()
 
     # --echo-sub 파싱은 행을 읽기 전에 해서, 오타면 비싼 계산 전에 바로 죽게 한다.
@@ -148,6 +160,26 @@ def main() -> None:
         rows = [r for r in rows if r["condition"] in keep_lv]
     if not rows:
         raise SystemExit("조건에 맞는 행이 없다. --levels / --no-clean-only 를 확인하라.")
+
+    # --reasoned-only 는 --levels 로 축을 좁힌 **뒤에** 건다. 순서가 중요하다:
+    # 5단 전체를 요구하면 3단 축에서 쓰지도 않을 xhigh/max 의 추론 0 때문에
+    # 문항이 통째로 날아간다.
+    if a.reasoned_only:
+        if "thoughts_tokens" not in rows[0]:
+            raise SystemExit("--reasoned-only: CSV 에 thoughts_tokens 열이 없다")
+        conds = {r["condition"] for r in rows}
+        pos: dict[str, set[str]] = {}
+        for r in rows:
+            if num(r.get("thoughts_tokens")) > 0:
+                pos.setdefault(str(r.get("q_idx", "")).strip(), set()).add(r["condition"])
+        good_q = {q for q, cs in pos.items() if cs >= conds}
+        before = len(rows)
+        rows = [r for r in rows
+                if str(r.get("q_idx", "")).strip() in good_q]
+        print(f"[추론>0 대조] 전 조건 추론>0 인 문항 {len(good_q)}개만 사용 "
+              f"({len(rows)}/{before}행). 조건 {sorted(conds)}\n")
+        if not rows:
+            raise SystemExit("--reasoned-only: 전 조건 추론>0 인 문항이 하나도 없다.")
 
     cuts_all = sorted({int(num(r["cutoff_ms"])) for r in rows},
                       key=lambda c: (c == 0, c))   # 0(전체)을 맨 뒤로
