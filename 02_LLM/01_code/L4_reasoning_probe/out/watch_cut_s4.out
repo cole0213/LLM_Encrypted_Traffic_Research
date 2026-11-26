@@ -1,0 +1,24 @@
+nohup: ignoring input
+[2026-11-22 05:39:16] 감시 시작. out/run_oai_rest.out 에 '시작: ext_' 가 뜨면 끊는다.
+[2026-11-22 07:16:59] S4(ext_*) 진입 감지. 끊는다.
+[2026-11-22 07:17:06] 잔존 확인:
+247841 tcpdump -i any -U -w out/openai_strict_f250_terra_20261122_071703.pcap tcp port 443 and ( host 162.159.140.245 or host 172.66.0.243)
+247843 python3 -u openai_capture_run_strict.py --log out/openai_strict_f250_terra_log.jsonl --model gpt-6.1-terra --qset v2 --api responses --sleep 3 --block-shuffle --qfile out/qfile_anth250.json --efforts low,medium,high,xhigh,max --repeats 1 --arms free_full --price-in 1 --price-out 5 --max-spend 5.0
+ice-in 0.10 --price-out 0.50 --max-spend 0.1
+  319-    --efforts $EFF --repeats 1 --arms 0 --price-in 1 --price-out 5 --max-spend 0.5
+  321-    --efforts $EFF --repeats 1 --arms 0 --price-in 2 --price-out 10 --max-spend 0.7
+  327-      --efforts $EFF --repeats 1 --arms 0 --price-in 10 --price-out 50 --max-spend 2.2
+[2026-11-22 07:16:48] 단계 [8 9] 시작, 전역 예산 $18.71. 로그: out/run_oai_s8.out
+[2026-11-22 07:17:06] 예산: 잔액 $35.54 - S5 $12.7730 - S3 $2.5590 - 여유 $3.0 = $17.21
+[2026-11-22 07:17:06] 새 상한:
+  168:    "gpt-6.1-terra|1|5|1.2|1.8|3.0|terra" \
+  169:    "gpt-6.1-sol|2|10|1.5|2.6|5.0|sol"
+  232:    "gpt-6.1-terra|1|5|8.0|terra" \
+  233:    "gpt-6.1-sol|2|10|11.0|sol"
+  296:    "gpt-6.1-sol|2|10|9.5|sol" \
+  297:    "gpt-6.1-terra|1|5|5.0|terra" \
+  317-    --efforts $EFF --repeats 1 --arms 0 --price-in 0.10 --price-out 0.50 --max-spend 0.1
+  319-    --efforts $EFF --repeats 1 --arms 0 --price-in 1 --price-out 5 --max-spend 0.5
+  321-    --efforts $EFF --repeats 1 --arms 0 --price-in 2 --price-out 10 --max-spend 0.7
+  327-      --efforts $EFF --repeats 1 --arms 0 --price-in 10 --price-out 50 --max-spend 2.6
+[2026-11-22 07:17:06] 단계 [8 9] 시작, 전역 예산 $17.21. 로그: out/run_oai_s8.out

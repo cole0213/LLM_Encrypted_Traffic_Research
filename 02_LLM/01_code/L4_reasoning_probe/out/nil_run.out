@@ -1,0 +1,120 @@
+##### gpt-6-luna
+
+=== openai / gpt-6-luna / qset=nil / low,medium,high,xhigh,max ===
+문항 12개 x 설정 5개 = 60콜
+   q      low   medium     high    xhigh      max     격차   잘림   불응  문항
+   0       73       85      112      107       83     39    0    0  A 를 그대로 출력하라. A) A B) B C) C D) D
+   1       27       57       81       57       55     54    0    0  B 를 그대로 출력하라. A) A B) B C) C D) D
+   2       62       59       81       75       78     22    0    0  C 를 그대로 출력하라. A) A B) B C) C D) D
+   3       21       37       50       75       44     54    0    0  D 를 그대로 출력하라. A) A B) B C) C D) D
+   4       22       56       26       28       50     34    0    0  정답은 A 다. 정답은 무엇인가? A) A B) B C) C D) D
+   5       15       22       41       36       44     29    0    0  정답은 B 다. 정답은 무엇인가? A) A B) B C) C D) D
+   6        0       41       27       41       26     41    0    0  정답은 C 다. 정답은 무엇인가? A) A B) B C) C D) D
+   7        0       24       26       21       77     77    0    0  정답은 D 다. 정답은 무엇인가? A) A B) B C) C D) D
+   8      118      232      172      235      261    143    0    0  아래 글자를 따라 쓰라: A. A) A B) B C) C D) D
+   9       47       83       97       61       87     50    0    0  아래 글자를 따라 쓰라: B. A) A B) B C) C D) D
+  10       51       91      100       95       83     49    0    0  아래 글자를 따라 쓰라: C. A) A B) B C) C D) D
+  11       64       84      190      155      108    126    0    0  아래 글자를 따라 쓰라: D. A) A B) B C) C D) D
+
+격차 100+ · 잘림 0 · 불응 0: 2/12
+  쓸 문항: [8, 11]
+  격차 상위: q8(143), q11(126), q7(77), q1(54), q3(54), q9(50), q10(49), q6(41), q0(39), q4(34)
+
+  템플릿 2/12개에서 통과 문항이 나왔다
+    repeat_a             1/1
+    repeat_d             1/1
+    통과 0인 템플릿 10개: echo_a, echo_b, echo_c, echo_d, given_a, given_b, given_c, given_d, repeat_b, repeat_c
+  -> out/screen_openai_gpt-6-luna_nil.json
+##### gpt-6.1-terra
+
+=== openai / gpt-6.1-terra / qset=nil / low,medium,high,xhigh,max ===
+문항 12개 x 설정 5개 = 60콜
+   q      low   medium     high    xhigh      max     격차   잘림   불응  문항
+   0        0       34       33       40      125    125    0    0  A 를 그대로 출력하라. A) A B) B C) C D) D
+   1        0        0       32       37      113    113    0    0  B 를 그대로 출력하라. A) A B) B C) C D) D
+   2        0       23       23       69      116    116    0    0  C 를 그대로 출력하라. A) A B) B C) C D) D
+   3        0        0       20       55       89     89    0    0  D 를 그대로 출력하라. A) A B) B C) C D) D
+   4        0        0        0        0        0      0    0    0  정답은 A 다. 정답은 무엇인가? A) A B) B C) C D) D
+   5        0        0        0        0        0      0    0    0  정답은 B 다. 정답은 무엇인가? A) A B) B C) C D) D
+   6        0        0        0        0       29     29    0    0  정답은 C 다. 정답은 무엇인가? A) A B) B C) C D) D
+   7        0        0        0        0        0      0    0    0  정답은 D 다. 정답은 무엇인가? A) A B) B C) C D) D
+   8       14       39       37       73      149    135    0    0  아래 글자를 따라 쓰라: A. A) A B) B C) C D) D
+   9       23       42       72       74      142    119    0    0  아래 글자를 따라 쓰라: B. A) A B) B C) C D) D
+  10        0       34       41       41      128    128    0    0  아래 글자를 따라 쓰라: C. A) A B) B C) C D) D
+  11        0       31       57       49      128    128    0    0  아래 글자를 따라 쓰라: D. A) A B) B C) C D) D
+
+격차 100+ · 잘림 0 · 불응 0: 7/12
+  쓸 문항: [0, 1, 2, 8, 9, 10, 11]
+  격차 상위: q8(135), q10(128), q11(128), q0(125), q9(119), q2(116), q1(113), q3(89), q6(29), q4(0)
+
+  템플릿 7/12개에서 통과 문항이 나왔다
+    echo_a               1/1
+    echo_b               1/1
+    echo_c               1/1
+    repeat_a             1/1
+    repeat_b             1/1
+    repeat_c             1/1
+    repeat_d             1/1
+    통과 0인 템플릿 5개: echo_d, given_a, given_b, given_c, given_d
+  -> out/screen_openai_gpt-6.1-terra_nil.json
+##### gpt-6.1-sol
+
+=== openai / gpt-6.1-sol / qset=nil / low,medium,high,xhigh,max ===
+문항 12개 x 설정 5개 = 60콜
+   q      low   medium     high    xhigh      max     격차   잘림   불응  문항
+   0        0        0       17       42      120    120    0    0  A 를 그대로 출력하라. A) A B) B C) C D) D
+   1        0        0       38       27      104    104    0    0  B 를 그대로 출력하라. A) A B) B C) C D) D
+   2        0        0       10       19       98     98    0    0  C 를 그대로 출력하라. A) A B) B C) C D) D
+   3        0        0       22       65       80     80    0    0  D 를 그대로 출력하라. A) A B) B C) C D) D
+   4        0        0       10       26       87     87    0    0  정답은 A 다. 정답은 무엇인가? A) A B) B C) C D) D
+   5        0        0        0       20       77     77    0    0  정답은 B 다. 정답은 무엇인가? A) A B) B C) C D) D
+   6        0        0       10       23       92     92    0    0  정답은 C 다. 정답은 무엇인가? A) A B) B C) C D) D
+   7        0        0        0       15       81     81    0    0  정답은 D 다. 정답은 무엇인가? A) A B) B C) C D) D
+   8        0       24       31       80      144    144    0    0  아래 글자를 따라 쓰라: A. A) A B) B C) C D) D
+   9       24       22       49       57      128    106    0    0  아래 글자를 따라 쓰라: B. A) A B) B C) C D) D
+  10        0       13       18       87      139    139    0    0  아래 글자를 따라 쓰라: C. A) A B) B C) C D) D
+  11       14       14       34       70      108     94    0    0  아래 글자를 따라 쓰라: D. A) A B) B C) C D) D
+
+격차 100+ · 잘림 0 · 불응 0: 5/12
+  쓸 문항: [0, 1, 8, 9, 10]
+  격차 상위: q8(144), q10(139), q0(120), q9(106), q1(104), q2(98), q11(94), q6(92), q4(87), q7(81)
+
+  템플릿 5/12개에서 통과 문항이 나왔다
+    echo_a               1/1
+    echo_b               1/1
+    repeat_a             1/1
+    repeat_b             1/1
+    repeat_c             1/1
+    통과 0인 템플릿 7개: echo_c, echo_d, given_a, given_b, given_c, given_d, repeat_d
+  -> out/screen_openai_gpt-6.1-sol_nil.json
+##### gpt-6-astra
+
+=== openai / gpt-6-astra / qset=nil / low,medium,high,xhigh,max ===
+문항 12개 x 설정 5개 = 60콜
+   q      low   medium     high    xhigh      max     격차   잘림   불응  문항
+   0        0        0       14       38      121    121    0    0  A 를 그대로 출력하라. A) A B) B C) C D) D
+   1        0        0       18       43       85     85    0    0  B 를 그대로 출력하라. A) A B) B C) C D) D
+   2        0        0       22       37       83     83    0    0  C 를 그대로 출력하라. A) A B) B C) C D) D
+   3        0        0       20       70       59     70    0    0  D 를 그대로 출력하라. A) A B) B C) C D) D
+   4        0        0        0       33       88     88    0    0  정답은 A 다. 정답은 무엇인가? A) A B) B C) C D) D
+   5        0        0        0       27       52     52    0    0  정답은 B 다. 정답은 무엇인가? A) A B) B C) C D) D
+   6        0        0       19       24      100    100    0    0  정답은 C 다. 정답은 무엇인가? A) A B) B C) C D) D
+   7        0        0        0       25       98     98    0    0  정답은 D 다. 정답은 무엇인가? A) A B) B C) C D) D
+   8       18       28       45       92      131    113    0    0  아래 글자를 따라 쓰라: A. A) A B) B C) C D) D
+   9        0       30       34       70      135    135    0    0  아래 글자를 따라 쓰라: B. A) A B) B C) C D) D
+  10        0       17       45       83      155    155    0    0  아래 글자를 따라 쓰라: C. A) A B) B C) C D) D
+  11        0       16       67       89      132    132    0    0  아래 글자를 따라 쓰라: D. A) A B) B C) C D) D
+
+격차 100+ · 잘림 0 · 불응 0: 6/12
+  쓸 문항: [0, 6, 8, 9, 10, 11]
+  격차 상위: q10(155), q9(135), q11(132), q0(121), q8(113), q6(100), q7(98), q4(88), q1(85), q2(83)
+
+  템플릿 6/12개에서 통과 문항이 나왔다
+    echo_a               1/1
+    given_c              1/1
+    repeat_a             1/1
+    repeat_b             1/1
+    repeat_c             1/1
+    repeat_d             1/1
+    통과 0인 템플릿 6개: echo_b, echo_c, echo_d, given_a, given_b, given_d
+  -> out/screen_openai_gpt-6-astra_nil.json

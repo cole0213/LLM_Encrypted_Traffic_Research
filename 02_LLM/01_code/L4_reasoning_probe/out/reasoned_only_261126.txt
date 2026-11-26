@@ -1,0 +1,248 @@
+===== gem_v2_all 전체 =====
+[wide CSV] cutoff_ms 열이 없어 전체 창(cutoff 0) 으로만 평가한다.
+
+[선별] out/qfile_anth250.json -> 750/2312행
+
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 725  조건 3종 low,medium,high  우연 33.3%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체    725    66.3%     1.99x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high
+     low     210      25       9
+  medium       3     140     101
+    high       1     105     131
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  down_bytes           0.169
+  pkt_gap_ms           0.119
+  down_pkt_mean        0.099
+  down_iat_mean_ms     0.098
+  down_pkts            0.088
+  n_pkts_window        0.084
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+===== gem_v2_all --reasoned-only =====
+[wide CSV] cutoff_ms 열이 없어 전체 창(cutoff 0) 으로만 평가한다.
+
+[선별] out/qfile_anth250.json -> 750/2312행
+
+[추론>0 대조] 전 조건 추론>0 인 문항 40개만 사용 (120/725행). 조건 ['think_high', 'think_low', 'think_medium']
+
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 120  조건 3종 low,medium,high  우연 33.3%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체    120    52.5%     1.57x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high
+     low      25       9       6
+  medium      10      17      13
+    high       6      13      21
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  down_bytes           0.151
+  pkt_gap_ms           0.120
+  down_iat_mean_ms     0.112
+  down_iat_p99_ms      0.108
+  down_iat_max_ms      0.099
+  down_iat_p90_ms      0.096
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+===== terra250 전체 =====
+[wide CSV] cutoff_ms 열이 없어 전체 창(cutoff 0) 으로만 평가한다.
+
+[선별] out/qfile_anth250.json -> 1250/1250행
+
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 750  조건 3종 low,medium,high  우연 33.3%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체    750    39.6%     1.19x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high
+     low     125      70      55
+  medium      86      73      91
+    high      66      85      99
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  pkt_gap_ms           0.114
+  stall_total_ms       0.104
+  down_iat_p90_ms      0.098
+  down_iat_mean_ms     0.097
+  down_iat_p99_ms      0.094
+  down_bytes           0.093
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+===== terra250 --reasoned-only =====
+[wide CSV] cutoff_ms 열이 없어 전체 창(cutoff 0) 으로만 평가한다.
+
+[선별] out/qfile_anth250.json -> 1250/1250행
+
+[추론>0 대조] 전 조건 추론>0 인 문항 198개만 사용 (594/750행). 조건 ['think_high', 'think_low', 'think_medium']
+
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 594  조건 3종 low,medium,high  우연 33.3%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체    594    43.6%     1.31x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high
+     low     110      46      42
+  medium      73      58      67
+    high      47      60      91
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  pkt_gap_ms           0.111
+  down_bytes           0.109
+  stall_total_ms       0.106
+  down_iat_p99_ms      0.094
+  down_iat_mean_ms     0.093
+  down_iat_p90_ms      0.093
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+===== sol250 전체 =====
+[wide CSV] cutoff_ms 열이 없어 전체 창(cutoff 0) 으로만 평가한다.
+
+[선별] out/qfile_anth250.json -> 1250/1250행
+
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 750  조건 3종 low,medium,high  우연 33.3%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체    750    47.9%     1.44x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high
+     low     121      74      55
+  medium      82      79      89
+    high      35      56     159
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  down_bytes           0.125
+  stall_total_ms       0.105
+  down_iat_p90_ms      0.097
+  down_iat_mean_ms     0.094
+  pkt_gap_ms           0.092
+  down_iat_p99_ms      0.091
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+===== sol250 --reasoned-only =====
+[wide CSV] cutoff_ms 열이 없어 전체 창(cutoff 0) 으로만 평가한다.
+
+[선별] out/qfile_anth250.json -> 1250/1250행
+
+[추론>0 대조] 전 조건 추론>0 인 문항 217개만 사용 (651/750행). 조건 ['think_high', 'think_low', 'think_medium']
+
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 651  조건 3종 low,medium,high  우연 33.3%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체    651    45.8%     1.37x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high
+     low     106      66      45
+  medium      75      67      75
+    high      27      65     125
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  down_bytes           0.135
+  stall_total_ms       0.102
+  down_iat_mean_ms     0.095
+  down_iat_p90_ms      0.095
+  pkt_gap_ms           0.093
+  down_iat_p99_ms      0.089
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+===== anthropic_haiku250 전체 =====
+[wide CSV] cutoff_ms 열이 없어 전체 창(cutoff 0) 으로만 평가한다.
+
+[선별] out/qfile_anth250.json -> 1250/1250행
+
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 724  조건 3종 low,medium,high  우연 33.3%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체    724    44.9%     1.35x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high
+     low     120      69      59
+  medium      70      81      89
+    high      40      72     124
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  pkt_gap_ms           0.145
+  down_iat_mean_ms     0.133
+  down_iat_p99_ms      0.105
+  down_iat_max_ms      0.100
+  down_iat_p90_ms      0.099
+  stall_total_ms       0.097
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+===== anthropic_haiku250 --reasoned-only =====
+[wide CSV] cutoff_ms 열이 없어 전체 창(cutoff 0) 으로만 평가한다.
+
+[선별] out/qfile_anth250.json -> 1250/1250행
+
+[추론>0 대조] 전 조건 추론>0 인 문항 139개만 사용 (417/724행). 조건 ['think_high', 'think_low', 'think_medium']
+
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 417  조건 3종 low,medium,high  우연 33.3%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+      전체    417    38.6%     1.16x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high
+     low      51      53      35
+  medium      53      45      41
+    high      37      37      65
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  pkt_gap_ms           0.154
+  down_iat_mean_ms     0.121
+  down_iat_p99_ms      0.098
+  down_iat_first_ms    0.097
+  stall_total_ms       0.096
+  down_iat_p90_ms      0.094
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.

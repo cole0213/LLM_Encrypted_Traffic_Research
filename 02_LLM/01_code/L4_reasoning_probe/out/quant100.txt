@@ -1,0 +1,174 @@
+##### luna250
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 8708  조건 5종 low,medium,high,xhigh,max  우연 20.0%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+   500ms   1244    20.5%     1.02x     94.0%      0.0%
+      전체   1244    24.5%     1.23x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high   xhigh     max
+     low      95      42      47      25      41
+  medium      61      56      34      54      45
+    high      52      46      49      44      58
+   xhigh      54      50      52      48      45
+     max      40      44      60      45      57
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  pkt_gap_ms           0.108
+  down_iat_p90_ms      0.100
+  down_iat_mean_ms     0.098
+  down_bytes           0.097
+  stall_total_ms       0.095
+  down_iat_p99_ms      0.091
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+##### terra250
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 8736  조건 5종 low,medium,high,xhigh,max  우연 20.0%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+   500ms   1248    26.6%     1.33x     92.5%      0.0%
+      전체   1248    30.6%     1.53x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high   xhigh     max
+     low     118      52      45      20      15
+  medium      87      44      44      47      28
+    high      60      52      47      56      35
+   xhigh      35      47      51      42      75
+     max      11      32      24      50     131
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  down_bytes           0.113
+  stall_total_ms       0.106
+  pkt_gap_ms           0.102
+  down_iat_mean_ms     0.095
+  down_iat_p99_ms      0.095
+  down_iat_max_ms      0.093
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+##### sol250
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 8750  조건 5종 low,medium,high,xhigh,max  우연 20.0%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+   500ms   1250    25.3%     1.26x     74.2%      0.0%
+      전체   1250    40.2%     2.01x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high   xhigh     max
+     low     119      79      27      14      11
+  medium      91      80      44      22      13
+    high      29      52      78      56      35
+   xhigh       9      33      57      64      87
+     max       2       6      21      60     161
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  down_bytes           0.151
+  stall_total_ms       0.102
+  down_iat_p99_ms      0.095
+  down_iat_mean_ms     0.090
+  down_iat_max_ms      0.089
+  down_iat_p90_ms      0.089
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+##### sonnet250
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 6314  조건 5종 low,medium,high,xhigh,max  우연 20.0%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+   500ms    902    22.7%     1.14x      0.7%      0.0%
+      전체    902    44.2%     2.21x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high   xhigh     max
+     low      80      35       8       8      10
+  medium      54      37      18      20      14
+    high       6      23      76      83      22
+   xhigh       1      17      70      84      39
+     max       4       6      36      29     122
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  pkt_gap_ms           0.119
+  down_bytes           0.118
+  down_iat_mean_ms     0.112
+  down_iat_p99_ms      0.108
+  down_iat_max_ms      0.103
+  stall_total_ms       0.096
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+##### haiku250
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 8162  조건 5종 low,medium,high,xhigh,max  우연 20.0%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+   500ms   1166    21.8%     1.09x      5.8%      0.0%
+      전체   1166    36.4%     1.82x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high   xhigh     max
+     low     120      54      34      29      11
+  medium      76      44      52      48      20
+    high      36      51      58      54      37
+   xhigh      17      34      63      72      50
+     max       6      11      24      34     131
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  pkt_gap_ms           0.125
+  down_iat_mean_ms     0.121
+  down_iat_p99_ms      0.105
+  down_iat_max_ms      0.102
+  down_bytes           0.102
+  stall_total_ms       0.098
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.
+##### opus250
+[양자화] down_bytes, up_bytes, down_pkt_mean, down_pkt_max 를 100바이트 버킷으로 반올림했다 — 설정 문자열 에코(글자당 2B) 제거용
+
+행 5775  조건 5종 low,medium,high,xhigh,max  우연 20.0%
+분할: family 단위 GroupKFold(5)  분류기: RandomForest(300)
+
+  cutoff      n      정확도      우연대비     응답시작%     이미완료%
+------------------------------------------------------
+   500ms    825    20.6%     1.03x      0.4%      0.0%
+      전체    825    33.2%     1.66x    100.0%    100.0%
+
+=== 전체 창 혼동행렬 (행=실제, 열=예측) ===
+             low  medium    high   xhigh     max
+     low      61      32      36      19      12
+  medium      37      28      39      33      25
+    high      36      29      42      39      17
+   xhigh      20      39      30      45      35
+     max       9      17      18      29      98
+
+=== 피처 중요도 상위 6 (전체 적합, 참고치) ===
+  pkt_gap_ms           0.129
+  down_iat_mean_ms     0.117
+  down_iat_p99_ms      0.107
+  stall_total_ms       0.105
+  down_iat_max_ms      0.105
+  down_iat_p90_ms      0.102
+
+→ 작은 cutoff 의 정확도가 전체에 가까우면 조기 탐지가 성립한다.
+→ '이미완료%'가 높은 cutoff 는 조기 관측이 아니라 사실상 전체 관측이다. 같이 읽어라.

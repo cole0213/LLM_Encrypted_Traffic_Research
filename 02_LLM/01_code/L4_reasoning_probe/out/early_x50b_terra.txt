@@ -1,0 +1,19 @@
+/usr/local/lib/python3.10/dist-packages/scapy/layers/tls/crypto/groups.py:25: CryptographyDeprecationWarning: Diffie-Hellman over finite fields (FFDH) is deprecated and support will be removed in a future release. Use a more modern key exchange algorithm.
+  from cryptography.hazmat.primitives.asymmetric.dh import DHParameterNumbers
+요청 250개  cutoff [200, 500, 1000, 2000, 5000, 10000, 0]
+pcap 읽는 중...
+패킷 6304개
+
+[out] out/early_x50b_terra.csv  (1750행 = 요청 250 x cutoff 7)
+
+  cutoff     응답시작%     이미완료%   down_bytes중앙      본비율중앙
+   200ms      0.0%      0.0%              0       0.08
+   500ms     94.8%      0.0%           3532       0.19
+  1000ms    100.0%      0.0%           3534       0.39
+  2000ms    100.0%     28.8%           7030       0.77
+  5000ms    100.0%     82.8%          14219       1.00
+ 10000ms    100.0%     90.4%          14674       1.00
+      전체    100.0%    100.0%          15244       1.00
+
+→ 응답시작%가 조건별로 갈리면, 그 시점엔 '침묵' 자체가 신호다.
+→ 이미완료%가 높은 cutoff 는 조기 탐지가 아니라 전체 관측에 가깝다. 해석 주의.

@@ -137,6 +137,10 @@ def main():
         stalls = [v for v in iats if v >= STALL_MS]
         rows.append({
             "idx": e["idx"], "q_idx": e["q_idx"], "condition": e["condition"],
+            # 클러스터 키. 파라메트릭 갈래는 한 템플릿의 변형 25개가 서로 닮아
+            # 독립 표본이 아니다. e2_snr 의 질문 단위 재표집이 q_idx 로 묶으면
+            # 신뢰구간이 가짜로 좁아진다. 옛 로그(v2 이전)엔 없으므로 q_idx 로 되돌린다.
+            "family": e.get("family") or f"q{e['q_idx']}",
             "rep": e["rep"],
             "pkt_gap_ms": pkt_gap_ms,                 # ★ 요청→첫응답 패킷 간격
             "up_pkts": len(out), "down_pkts": len(inc),
@@ -176,6 +180,10 @@ def main():
             # 커지는데 텍스트는 안 오는 현상의 유력 원인이라 직접 재서 대조한다.
             "sig_chars": e.get("sig_chars"),
             "sig_parts": e.get("sig_parts"),
+            # OpenAI 는 같은 서명을 .added/.done/response.completed 로 2~3번 보낸다.
+            # 전선 바이트를 설명하는 건 sig_chars 가 아니라 이 '총 전송량'이다.
+            # 다른 provider 로그에는 없으므로 빈칸이 정상.
+            "sig_sent_chars": e.get("sig_sent_chars"),
             "parts_no_text": e.get("parts_no_text"),
         })
 

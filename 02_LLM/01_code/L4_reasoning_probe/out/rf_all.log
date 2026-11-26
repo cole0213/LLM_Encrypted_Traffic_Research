@@ -1,0 +1,1033 @@
+
+########## out/gem_v2rest1.csv  [arm=0]  (n=465) ##########
+
+==========================================================
+[이진: think_low vs think_high] n=306, 질문 155개 (leave-one-question-out)
+  클래스 분포: {'think_low': 155, 'think_high': 151}
+  ※ 4건 제외(토큰 한계 도달 또는 지시 무시)
+  ※ 경고: 아래 (질문, 조건)은 남은 표본이 0 — 해당 회차 평가가 불완전함
+       q191 think_high
+       q192 think_high
+       q194 think_high
+       q197 think_high
+  majority(찍기)      : 0.507
+  length-only(길이만) : 0.507   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.807   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.820   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.866   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.863   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [134  21]
+    think_high  [ 21 130]
+  하향 피처 중요도: down_bytes=0.25, down_pkt_mean=0.22, pkt_gap_ms=0.14, down_pkts=0.11, down_iat_mean_ms=0.07
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_high']:
+    think_low   [133  22]
+    think_high  [ 19 132]
+  피처 중요도: down_bytes=0.23, down_pkt_mean=0.20, pkt_gap_ms=0.14, down_pkts=0.09, down_iat_mean_ms=0.08
+
+==========================================================
+[3클래스: low/med/high] n=460, 질문 155개 (leave-one-question-out)
+  클래스 분포: {'think_low': 155, 'think_medium': 154, 'think_high': 151}
+  ※ 5건 제외(토큰 한계 도달 또는 지시 무시)
+  ※ 경고: 아래 (질문, 조건)은 남은 표본이 0 — 해당 회차 평가가 불완전함
+       q191 think_medium
+       q191 think_high
+       q192 think_high
+       q194 think_high
+       q197 think_high
+  majority(찍기)      : 0.337
+  length-only(길이만) : 0.335   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.524   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.574   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.604   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.578   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [101  43  11]
+    think_medium [33 70 51]
+    think_high  [ 7 49 95]
+  하향 피처 중요도: down_pkt_mean=0.20, down_bytes=0.19, pkt_gap_ms=0.15, down_iat_mean_ms=0.10, down_iat_max_ms=0.09
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_medium', 'think_high']:
+    think_low   [105  40  10]
+    think_medium [34 75 45]
+    think_high  [ 7 46 98]
+  피처 중요도: down_bytes=0.17, down_pkt_mean=0.17, pkt_gap_ms=0.14, down_iat_mean_ms=0.10, up_bytes=0.09
+
+########## out/gem_v2rest2.csv  [arm=0]  (n=363) ##########
+
+==========================================================
+[이진: think_low vs think_high] n=237, 질문 154개 (leave-one-question-out)
+  클래스 분포: {'think_low': 121, 'think_high': 116}
+  ※ 9건 제외(토큰 한계 도달 또는 지시 무시)
+  ※ 경고: 아래 (질문, 조건)은 남은 표본이 0 — 해당 회차 평가가 불완전함
+       q244 think_high
+       q246 think_high
+       q247 think_high
+       q362 think_high
+       q363 think_low
+       q364 think_low
+       q365 think_high
+       q368 think_high
+       q371 think_high
+       q372 think_high
+       q373 think_low
+       q375 think_low
+       q379 think_high
+       q381 think_high
+       q388 think_high
+       q390 think_high
+       q394 think_low
+       q398 think_high
+       q400 think_low
+       q404 think_low
+       q405 think_high
+       q407 think_high
+       q409 think_low
+       q410 think_low
+       q413 think_low
+       q416 think_high
+       q424 think_high
+       q426 think_high
+       q429 think_high
+       q430 think_high
+       q433 think_high
+       q434 think_high
+       q435 think_low
+       q437 think_low
+       q438 think_low
+       q441 think_high
+       q445 think_low
+       q447 think_high
+       q450 think_low
+       q451 think_low
+       q453 think_high
+       q458 think_low
+       q461 think_low
+       q463 think_low
+       q466 think_low
+       q467 think_low
+       q468 think_high
+       q469 think_low
+       q471 think_low
+       q477 think_high
+       q479 think_high
+       q480 think_low
+       q481 think_high
+       q485 think_low
+       q486 think_high
+       q487 think_high
+       q563 think_low
+       q564 think_low
+       q568 think_high
+       q569 think_high
+       q570 think_low
+       q574 think_high
+       q575 think_low
+       q576 think_high
+       q577 think_low
+       q578 think_low
+       q580 think_low
+       q581 think_high
+       q583 think_high
+       q586 think_high
+       q587 think_low
+  majority(찍기)      : 0.511
+  length-only(길이만) : 0.511   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.852   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.949   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.970   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.962   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [113   8]
+    think_high  [  1 115]
+  하향 피처 중요도: down_pkts=0.20, down_bytes=0.19, down_pkt_mean=0.18, down_pkt_max=0.16, down_iat_mean_ms=0.14
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_high']:
+    think_low   [115   6]
+    think_high  [  1 115]
+  피처 중요도: down_bytes=0.19, down_pkt_max=0.17, down_pkt_mean=0.16, down_iat_mean_ms=0.15, down_pkts=0.14
+
+==========================================================
+[3클래스: low/med/high] n=352, 질문 160개 (leave-one-question-out)
+  클래스 분포: {'think_low': 121, 'think_medium': 115, 'think_high': 116}
+  ※ 11건 제외(토큰 한계 도달 또는 지시 무시)
+  ※ 경고: 아래 (질문, 조건)은 남은 표본이 0 — 해당 회차 평가가 불완전함
+       q240 think_medium
+       q241 think_low
+       q241 think_high
+       q244 think_high
+       q245 think_medium
+       q246 think_high
+       q247 think_high
+       q362 think_high
+       q363 think_low
+       q364 think_low
+       q365 think_high
+       q367 think_medium
+       q368 think_high
+       q369 think_medium
+       q371 think_high
+       q372 think_high
+       q373 think_low
+       q375 think_low
+       q377 think_medium
+       q379 think_high
+       q381 think_medium
+       q381 think_high
+       q383 think_low
+       q383 think_high
+       q385 think_medium
+       q386 think_medium
+       q388 think_high
+       q390 think_medium
+       q390 think_high
+       q392 think_medium
+       q394 think_low
+       q394 think_medium
+       q395 think_medium
+       q396 think_medium
+       q398 think_high
+       q400 think_low
+       q400 think_medium
+       q404 think_low
+       q405 think_medium
+       q405 think_high
+       q407 think_medium
+       q407 think_high
+       q409 think_low
+       q409 think_medium
+       q410 think_low
+       q413 think_low
+       q414 think_medium
+       q415 think_medium
+       q416 think_medium
+       q416 think_high
+       q418 think_medium
+       q419 think_low
+       q419 think_high
+       q422 think_medium
+       q424 think_high
+       q426 think_medium
+       q426 think_high
+       q427 think_medium
+       q429 think_high
+       q430 think_high
+       q431 think_medium
+       q432 think_medium
+       q433 think_high
+       q434 think_high
+       q435 think_low
+       q437 think_low
+       q437 think_medium
+       q438 think_low
+       q441 think_high
+       q442 think_medium
+       q445 think_low
+       q447 think_high
+       q450 think_low
+       q451 think_low
+       q453 think_high
+       q454 think_medium
+       q456 think_medium
+       q458 think_low
+       q458 think_medium
+       q461 think_low
+       q463 think_low
+       q465 think_medium
+       q466 think_low
+       q467 think_low
+       q467 think_medium
+       q468 think_high
+       q469 think_low
+       q469 think_medium
+       q471 think_low
+       q471 think_medium
+       q472 think_low
+       q472 think_high
+       q475 think_medium
+       q477 think_high
+       q478 think_medium
+       q479 think_high
+       q480 think_low
+       q480 think_medium
+       q481 think_high
+       q485 think_low
+       q486 think_high
+       q487 think_high
+       q562 think_low
+       q562 think_high
+       q563 think_low
+       q564 think_low
+       q568 think_high
+       q569 think_high
+       q570 think_low
+       q570 think_medium
+       q574 think_medium
+       q574 think_high
+       q575 think_low
+       q575 think_medium
+       q576 think_high
+       q577 think_low
+       q578 think_low
+       q579 think_medium
+       q580 think_low
+       q580 think_medium
+       q581 think_high
+       q583 think_high
+       q584 think_medium
+       q585 think_low
+       q585 think_high
+       q586 think_medium
+       q586 think_high
+       q587 think_low
+  majority(찍기)      : 0.344
+  length-only(길이만) : 0.344   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.616   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.668   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.685   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.707   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [112   7   2]
+    think_medium [ 0 69 46]
+    think_high  [ 0 48 68]
+  하향 피처 중요도: down_bytes=0.19, down_pkt_mean=0.16, down_pkts=0.13, down_pkt_max=0.12, down_iat_mean_ms=0.11
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_medium', 'think_high']:
+    think_low   [112   7   2]
+    think_medium [ 0 66 49]
+    think_high  [ 0 53 63]
+  피처 중요도: down_bytes=0.18, down_pkt_mean=0.15, down_pkt_max=0.11, pkt_gap_ms=0.11, down_iat_mean_ms=0.10
+
+########## out/gem_v2rest3.csv  [arm=0]  (n=493) ##########
+
+==========================================================
+[이진: think_low vs think_high] n=308, 질문 209개 (leave-one-question-out)
+  클래스 분포: {'think_low': 158, 'think_high': 150}
+  ※ 12건 제외(토큰 한계 도달 또는 지시 무시)
+  ※ 경고: 아래 (질문, 조건)은 남은 표본이 0 — 해당 회차 평가가 불완전함
+       q241 think_high
+       q244 think_low
+       q246 think_low
+       q247 think_low
+       q362 think_low
+       q364 think_high
+       q365 think_low
+       q368 think_low
+       q371 think_low
+       q372 think_low
+       q379 think_low
+       q381 think_low
+       q388 think_low
+       q390 think_low
+       q394 think_high
+       q398 think_low
+       q404 think_high
+       q405 think_low
+       q407 think_low
+       q409 think_high
+       q413 think_high
+       q417 think_low
+       q424 think_low
+       q430 think_low
+       q433 think_low
+       q434 think_low
+       q435 think_high
+       q437 think_high
+       q438 think_high
+       q441 think_low
+       q451 think_high
+       q453 think_low
+       q458 think_high
+       q459 think_low
+       q461 think_high
+       q463 think_high
+       q466 think_high
+       q467 think_high
+       q468 think_low
+       q471 think_high
+       q477 think_low
+       q479 think_low
+       q481 think_low
+       q485 think_high
+       q486 think_low
+       q562 think_high
+       q563 think_high
+       q564 think_high
+       q570 think_high
+       q571 think_low
+       q575 think_high
+       q577 think_high
+       q580 think_high
+       q591 think_low
+       q594 think_high
+       q595 think_low
+       q599 think_high
+       q600 think_low
+       q604 think_high
+       q605 think_high
+       q607 think_high
+       q612 think_high
+       q614 think_high
+       q616 think_low
+       q620 think_low
+       q625 think_high
+       q626 think_high
+       q628 think_high
+       q630 think_low
+       q636 think_low
+       q637 think_high
+       q666 think_low
+       q667 think_low
+       q670 think_high
+       q683 think_low
+       q690 think_low
+       q692 think_high
+       q693 think_high
+       q694 think_low
+       q713 think_high
+       q715 think_high
+       q717 think_low
+       q718 think_low
+       q720 think_low
+       q732 think_high
+       q733 think_high
+       q735 think_high
+       q740 think_high
+       q743 think_high
+       q745 think_high
+       q755 think_low
+       q756 think_low
+       q760 think_high
+       q761 think_high
+       q763 think_high
+       q765 think_high
+       q768 think_high
+       q769 think_low
+       q783 think_high
+       q784 think_high
+       q787 think_low
+       q788 think_high
+       q790 think_low
+       q792 think_high
+       q793 think_low
+       q808 think_high
+       q809 think_high
+       q810 think_high
+       q814 think_high
+       q817 think_low
+  majority(찍기)      : 0.513
+  length-only(길이만) : 0.513   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.821   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.873   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.922   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.893   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [141  17]
+    think_high  [ 16 134]
+  하향 피처 중요도: down_bytes=0.25, down_pkt_mean=0.22, pkt_gap_ms=0.15, down_iat_mean_ms=0.12, down_pkts=0.11
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_high']:
+    think_low   [145  13]
+    think_high  [ 11 139]
+  피처 중요도: down_bytes=0.25, down_pkt_mean=0.19, pkt_gap_ms=0.14, down_iat_mean_ms=0.13, down_pkts=0.09
+
+==========================================================
+[3클래스: low/med/high] n=478, 질문 243개 (leave-one-question-out)
+  클래스 분포: {'think_low': 158, 'think_medium': 170, 'think_high': 150}
+  ※ 15건 제외(토큰 한계 도달 또는 지시 무시)
+  ※ 경고: 아래 (질문, 조건)은 남은 표본이 0 — 해당 회차 평가가 불완전함
+       q241 think_medium
+       q241 think_high
+       q244 think_low
+       q244 think_medium
+       q245 think_low
+       q245 think_high
+       q246 think_low
+       q246 think_medium
+       q247 think_low
+       q247 think_medium
+       q362 think_low
+       q362 think_medium
+       q364 think_medium
+       q364 think_high
+       q365 think_low
+       q365 think_medium
+       q367 think_low
+       q367 think_high
+       q368 think_low
+       q368 think_medium
+       q371 think_low
+       q371 think_medium
+       q372 think_low
+       q372 think_medium
+       q377 think_low
+       q377 think_high
+       q379 think_low
+       q379 think_medium
+       q381 think_low
+       q383 think_medium
+       q385 think_low
+       q385 think_high
+       q388 think_low
+       q388 think_medium
+       q390 think_low
+       q392 think_low
+       q392 think_high
+       q394 think_medium
+       q394 think_high
+       q395 think_low
+       q395 think_high
+       q396 think_low
+       q396 think_high
+       q398 think_low
+       q398 think_medium
+       q400 think_low
+       q400 think_high
+       q404 think_medium
+       q404 think_high
+       q405 think_low
+       q407 think_low
+       q409 think_high
+       q413 think_medium
+       q413 think_high
+       q414 think_low
+       q414 think_high
+       q415 think_low
+       q415 think_high
+       q416 think_low
+       q416 think_high
+       q417 think_low
+       q418 think_low
+       q418 think_high
+       q419 think_medium
+       q424 think_low
+       q424 think_medium
+       q426 think_low
+       q426 think_high
+       q427 think_low
+       q427 think_high
+       q430 think_low
+       q430 think_medium
+       q431 think_low
+       q431 think_high
+       q432 think_low
+       q432 think_high
+       q433 think_low
+       q433 think_medium
+       q434 think_low
+       q434 think_medium
+       q435 think_medium
+       q435 think_high
+       q437 think_medium
+       q437 think_high
+       q438 think_medium
+       q438 think_high
+       q441 think_low
+       q441 think_medium
+       q442 think_low
+       q442 think_high
+       q451 think_medium
+       q451 think_high
+       q453 think_low
+       q453 think_medium
+       q454 think_low
+       q454 think_high
+       q456 think_low
+       q456 think_high
+       q458 think_medium
+       q458 think_high
+       q459 think_low
+       q461 think_medium
+       q461 think_high
+       q463 think_medium
+       q463 think_high
+       q465 think_low
+       q465 think_high
+       q466 think_medium
+       q466 think_high
+       q467 think_high
+       q468 think_low
+       q468 think_medium
+       q469 think_low
+       q469 think_high
+       q471 think_high
+       q472 think_medium
+       q475 think_low
+       q475 think_high
+       q477 think_low
+       q477 think_medium
+       q478 think_low
+       q478 think_high
+       q479 think_low
+       q479 think_medium
+       q480 think_low
+       q480 think_high
+       q481 think_low
+       q481 think_medium
+       q485 think_medium
+       q485 think_high
+       q486 think_low
+       q486 think_medium
+       q562 think_medium
+       q562 think_high
+       q563 think_medium
+       q563 think_high
+       q564 think_medium
+       q564 think_high
+       q570 think_high
+       q571 think_low
+       q575 think_medium
+       q575 think_high
+       q577 think_medium
+       q577 think_high
+       q579 think_low
+       q579 think_high
+       q580 think_high
+       q584 think_low
+       q584 think_high
+       q590 think_medium
+       q591 think_low
+       q593 think_low
+       q593 think_high
+       q594 think_medium
+       q594 think_high
+       q595 think_low
+       q599 think_high
+       q600 think_low
+       q604 think_high
+       q605 think_high
+       q607 think_high
+       q608 think_low
+       q608 think_high
+       q610 think_medium
+       q611 think_medium
+       q612 think_medium
+       q612 think_high
+       q614 think_medium
+       q614 think_high
+       q616 think_low
+       q618 think_low
+       q618 think_high
+       q620 think_low
+       q620 think_medium
+       q622 think_medium
+       q625 think_high
+       q626 think_high
+       q628 think_high
+       q630 think_low
+       q631 think_low
+       q631 think_high
+       q633 think_low
+       q633 think_high
+       q636 think_low
+       q637 think_high
+       q662 think_medium
+       q663 think_medium
+       q666 think_low
+       q667 think_low
+       q670 think_high
+       q683 think_low
+       q690 think_low
+       q690 think_medium
+       q692 think_high
+       q693 think_medium
+       q693 think_high
+       q694 think_low
+       q694 think_medium
+       q695 think_medium
+       q709 think_medium
+       q712 think_low
+       q712 think_high
+       q713 think_high
+       q715 think_medium
+       q715 think_high
+       q716 think_medium
+       q717 think_low
+       q718 think_low
+       q718 think_medium
+       q720 think_low
+       q729 think_medium
+       q730 think_low
+       q730 think_high
+       q732 think_high
+       q733 think_high
+       q735 think_high
+       q737 think_medium
+       q740 think_high
+       q743 think_high
+       q744 think_medium
+       q745 think_medium
+       q745 think_high
+       q755 think_low
+       q756 think_low
+       q760 think_medium
+       q760 think_high
+       q761 think_high
+       q763 think_high
+       q765 think_high
+       q766 think_medium
+       q768 think_high
+       q769 think_low
+       q770 think_medium
+       q782 think_low
+       q782 think_high
+       q783 think_high
+       q784 think_medium
+       q784 think_high
+       q787 think_low
+       q788 think_high
+       q790 think_low
+       q790 think_medium
+       q792 think_medium
+       q792 think_high
+       q793 think_low
+       q808 think_high
+       q809 think_high
+       q810 think_high
+       q814 think_high
+       q817 think_low
+       q819 think_medium
+  majority(찍기)      : 0.356
+  length-only(길이만) : 0.356   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.550   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.598   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.676   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.638   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [122  31   5]
+    think_medium [18 92 60]
+    think_high  [ 3 56 91]
+  하향 피처 중요도: down_bytes=0.20, down_pkt_mean=0.17, pkt_gap_ms=0.15, down_iat_mean_ms=0.10, down_pkt_max=0.08
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_medium', 'think_high']:
+    think_low   [127  28   3]
+    think_medium [ 12 102  56]
+    think_high  [ 2 54 94]
+  피처 중요도: down_bytes=0.18, down_pkt_mean=0.15, pkt_gap_ms=0.13, up_bytes=0.10, down_iat_mean_ms=0.10
+
+########## out/gem_v2rest4.csv  [arm=0]  (n=4) ##########
+
+==========================================================
+[이진: think_low vs think_high] n=2, 질문 2개 (leave-one-question-out)
+  클래스 분포: {'think_low': 1, 'think_high': 1}
+  majority(찍기)      : 0.000
+  length-only(길이만) : 0.000   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.000   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.000   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.000   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.000   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [0 1]
+    think_high  [1 0]
+  하향 피처 중요도: pkt_gap_ms=0.18, down_iat_max_ms=0.15, down_bytes=0.12, down_pkt_mean=0.12, down_pkts=0.10
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_high']:
+    think_low   [0 1]
+    think_high  [1 0]
+  피처 중요도: down_pkts=0.13, down_bytes=0.12, up_bytes=0.11, down_pkt_mean=0.11, down_iat_mean_ms=0.10
+
+==========================================================
+[3클래스: low/med/high] n=4, 질문 4개 (leave-one-question-out)
+  클래스 분포: {'think_low': 1, 'think_medium': 2, 'think_high': 1}
+  majority(찍기)      : 0.000
+  length-only(길이만) : 0.000   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.000   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.000   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.000   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.000   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [0 1 0]
+    think_medium [1 0 1]
+    think_high  [0 1 0]
+  하향 피처 중요도: pkt_gap_ms=0.14, down_iat_mean_ms=0.14, down_pkt_mean=0.13, down_iat_max_ms=0.11, down_iat_first_ms=0.11
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_medium', 'think_high']:
+    think_low   [0 1 0]
+    think_medium [1 0 1]
+    think_high  [0 1 0]
+  피처 중요도: pkt_gap_ms=0.14, up_bytes=0.13, down_pkt_mean=0.12, down_iat_mean_ms=0.11, down_bytes=0.08
+
+########## out/gem_v2rest7.csv  [arm=0]  (n=118) ##########
+
+==========================================================
+[이진: think_low vs think_high] n=83, 질문 77개 (leave-one-question-out)
+  클래스 분포: {'think_low': 40, 'think_high': 43}
+  ※ 1건 제외(토큰 한계 도달 또는 지시 무시)
+  ※ 경고: 아래 (질문, 조건)은 남은 표본이 0 — 해당 회차 평가가 불완전함
+       q363 think_high
+       q373 think_high
+       q375 think_high
+       q400 think_high
+       q410 think_high
+       q416 think_low
+       q417 think_high
+       q426 think_low
+       q429 think_low
+       q445 think_high
+       q447 think_low
+       q450 think_high
+       q459 think_high
+       q469 think_high
+       q480 think_high
+       q487 think_low
+       q562 think_low
+       q571 think_high
+       q587 think_high
+       q591 think_high
+       q594 think_low
+       q595 think_high
+       q599 think_low
+       q602 think_low
+       q604 think_low
+       q614 think_low
+       q616 think_high
+       q618 think_high
+       q626 think_low
+       q630 think_high
+       q636 think_high
+       q637 think_low
+       q666 think_high
+       q667 think_high
+       q670 think_low
+       q683 think_high
+       q690 think_high
+       q692 think_low
+       q693 think_low
+       q694 think_high
+       q712 think_low
+       q713 think_low
+       q715 think_low
+       q717 think_high
+       q718 think_high
+       q720 think_high
+       q732 think_low
+       q733 think_low
+       q735 think_low
+       q740 think_low
+       q743 think_low
+       q745 think_low
+       q755 think_high
+       q756 think_high
+       q760 think_low
+       q761 think_low
+       q763 think_low
+       q765 think_low
+       q768 think_low
+       q769 think_high
+       q784 think_low
+       q787 think_high
+       q788 think_low
+       q790 think_high
+       q792 think_low
+       q793 think_high
+       q808 think_low
+       q809 think_low
+       q810 think_low
+       q814 think_low
+       q817 think_high
+  majority(찍기)      : 0.518
+  length-only(길이만) : 0.518   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.855   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.867   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.867   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.867   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [34  6]
+    think_high  [ 5 38]
+  하향 피처 중요도: down_pkt_mean=0.24, down_bytes=0.21, pkt_gap_ms=0.19, down_iat_mean_ms=0.13, down_pkts=0.09
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_high']:
+    think_low   [33  7]
+    think_high  [ 4 39]
+  피처 중요도: down_bytes=0.22, down_pkt_mean=0.21, pkt_gap_ms=0.18, down_iat_mean_ms=0.13, down_pkts=0.09
+
+==========================================================
+[3클래스: low/med/high] n=117, 질문 98개 (leave-one-question-out)
+  클래스 분포: {'think_low': 40, 'think_medium': 34, 'think_high': 43}
+  ※ 1건 제외(토큰 한계 도달 또는 지시 무시)
+  ※ 경고: 아래 (질문, 조건)은 남은 표본이 0 — 해당 회차 평가가 불완전함
+       q240 think_low
+       q240 think_high
+       q363 think_medium
+       q363 think_high
+       q369 think_low
+       q369 think_high
+       q373 think_medium
+       q373 think_high
+       q375 think_medium
+       q375 think_high
+       q386 think_low
+       q386 think_high
+       q394 think_low
+       q394 think_high
+       q400 think_medium
+       q400 think_high
+       q410 think_medium
+       q410 think_high
+       q416 think_low
+       q416 think_medium
+       q417 think_medium
+       q417 think_high
+       q422 think_low
+       q422 think_high
+       q426 think_low
+       q426 think_medium
+       q429 think_low
+       q429 think_medium
+       q437 think_low
+       q437 think_high
+       q445 think_medium
+       q445 think_high
+       q447 think_low
+       q447 think_medium
+       q450 think_medium
+       q450 think_high
+       q458 think_low
+       q458 think_high
+       q459 think_medium
+       q459 think_high
+       q469 think_medium
+       q469 think_high
+       q480 think_medium
+       q480 think_high
+       q487 think_low
+       q487 think_medium
+       q562 think_low
+       q562 think_medium
+       q571 think_medium
+       q571 think_high
+       q586 think_low
+       q586 think_high
+       q587 think_medium
+       q587 think_high
+       q590 think_low
+       q590 think_high
+       q591 think_medium
+       q591 think_high
+       q593 think_medium
+       q594 think_low
+       q594 think_medium
+       q595 think_medium
+       q595 think_high
+       q599 think_low
+       q599 think_medium
+       q602 think_low
+       q604 think_low
+       q604 think_medium
+       q608 think_medium
+       q612 think_low
+       q612 think_high
+       q614 think_low
+       q616 think_medium
+       q616 think_high
+       q618 think_medium
+       q618 think_high
+       q622 think_low
+       q622 think_high
+       q626 think_low
+       q626 think_medium
+       q630 think_medium
+       q630 think_high
+       q633 think_medium
+       q636 think_medium
+       q636 think_high
+       q637 think_low
+       q637 think_medium
+       q662 think_low
+       q662 think_high
+       q663 think_low
+       q663 think_high
+       q666 think_medium
+       q666 think_high
+       q667 think_medium
+       q667 think_high
+       q670 think_low
+       q670 think_medium
+       q683 think_medium
+       q683 think_high
+       q690 think_high
+       q692 think_low
+       q692 think_medium
+       q693 think_low
+       q694 think_high
+       q695 think_low
+       q695 think_high
+       q709 think_low
+       q709 think_high
+       q712 think_low
+       q712 think_medium
+       q713 think_low
+       q713 think_medium
+       q715 think_low
+       q716 think_low
+       q716 think_high
+       q717 think_medium
+       q717 think_high
+       q718 think_high
+       q720 think_medium
+       q720 think_high
+       q729 think_low
+       q729 think_high
+       q730 think_medium
+       q732 think_low
+       q732 think_medium
+       q733 think_low
+       q733 think_medium
+       q735 think_low
+       q735 think_medium
+       q737 think_low
+       q737 think_high
+       q740 think_low
+       q740 think_medium
+       q743 think_low
+       q743 think_medium
+       q744 think_low
+       q744 think_high
+       q745 think_low
+       q755 think_medium
+       q755 think_high
+       q756 think_medium
+       q756 think_high
+       q760 think_low
+       q761 think_low
+       q761 think_medium
+       q763 think_low
+       q763 think_medium
+       q765 think_low
+       q765 think_medium
+       q766 think_low
+       q766 think_high
+       q768 think_low
+       q768 think_medium
+       q769 think_medium
+       q769 think_high
+       q782 think_medium
+       q784 think_low
+       q787 think_medium
+       q787 think_high
+       q788 think_low
+       q788 think_medium
+       q790 think_high
+       q792 think_low
+       q793 think_medium
+       q793 think_high
+       q808 think_low
+       q808 think_medium
+       q809 think_low
+       q809 think_medium
+       q810 think_low
+       q810 think_medium
+       q814 think_low
+       q814 think_medium
+       q817 think_medium
+       q817 think_high
+       q819 think_low
+       q819 think_high
+  majority(찍기)      : 0.368
+  length-only(길이만) : 0.368   ← 이걸 이겨야 함  [출처: answer_tokens]
+  ttfa-only(첫침묵만) : 0.624   ← pkt_gap_ms 하나
+  timing-only(타이밍만): 0.675   ← 크기 계열 전부 제외, 가장 보수적인 값
+  packet model(전체)  : 0.675   ← 업링크 포함(요청 크기로 설정값 누출 가능)
+  packet model(하향만): 0.701   ← 업링크 제외, 누수 없는 정직한 값
+  하향 혼동행렬 (행=정답, 열=예측):
+    think_low   [31  6  3]
+    think_medium [ 1 18 15]
+    think_high  [ 3  7 33]
+  하향 피처 중요도: down_bytes=0.19, down_pkt_mean=0.19, pkt_gap_ms=0.13, down_iat_mean_ms=0.11, down_pkt_max=0.10
+  혼동행렬 (행=정답, 열=예측) ['think_low', 'think_medium', 'think_high']:
+    think_low   [31  6  3]
+    think_medium [ 2 15 17]
+    think_high  [ 1  9 33]
+  피처 중요도: down_bytes=0.18, down_pkt_mean=0.17, pkt_gap_ms=0.12, down_iat_mean_ms=0.11, down_pkt_max=0.10

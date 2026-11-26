@@ -41,3 +41,13 @@ vendor/
 *.db
 02_LLM/02_literature/papers/state/raw_api/
 01_MachineLearning/
+
+# run_openai_next.sh 가 비용 줄을 읽으려고 만드는 임시 로그 (캡처 중 계속 쓰인다)
+02_LLM/01_code/L4_reasoning_probe/out/.stage_*.log
+
+# 런처가 sed 로 상한만 바꿔 만드는 복사본. 원본(run_openai_next.sh)만 추적한다.
+02_LLM/01_code/L4_reasoning_probe/run_openai_next_[bc].sh
+# 동시 캡처를 막는 flock 대상. 내용이 없는 런타임 파일이다.
+02_LLM/01_code/L4_reasoning_probe/out/.openai_capture.lock
+# 런처가 단계 실비를 읽으려고 만드는 임시 로그.
+02_LLM/01_code/L4_reasoning_probe/out/.final_s8.log

@@ -38,6 +38,13 @@ from pathlib import Path
 
 from groq import Groq
 
+# v2 문항 세트(821문항). 아래 하드코딩 QUESTIONS 는 provider 간 비교의 근거라 그대로 둔다.
+# --qset v2 로 갈아끼운다. import 실패해도 base 는 돌아가야 하므로 감싼다.
+try:
+    from questions_all import QUESTIONS_V2_ALL, FAMILIES_V2_ALL
+except Exception:
+    QUESTIONS_V2_ALL, FAMILIES_V2_ALL = None, None
+
 MODEL = "openai/gpt-oss-20b"
 
 CONDITIONS = [
@@ -162,6 +169,9 @@ def run_one(client, question, effort, pad, instr=None, max_tok=None):
     """스트리밍 요청. 벽시계 t_start/t_first_answer/t_end(pcap 정렬용) + 토큰수 반환."""
     t0 = time.time(); t_first = None; in_think = False; saw_think = False
     answer_chars = 0; comp_tok = None; think_tok = None; finish = None
+    # 2026-11-24 추가. 길이만 세고 '무슨 글자였는지'를 안 남겨서 본 캡처 전체가
+    # 정답률 분석 불가였다. 자유 응답 arm 과 불응 사유 확인에도 필요하다.
+    answer_text = ""
     # reasoning_format="hidden" 이라 추론 텍스트는 안 와야 정상이다. Gemini 쪽에서
     # 추론량에 비례해 down_bytes 가 커지는 것이 확인됐으므로, Groq 도 같은 일이
     # 벌어지는지 양으로 기록해 둔다(0이면 '바이트 신호 없음'의 직접 근거가 된다).
@@ -198,6 +208,7 @@ def run_one(client, question, effort, pad, instr=None, max_tok=None):
                 if t_first is None:
                     t_first = t
                 answer_chars += len(clean)
+                answer_text += clean
             elif in_think:
                 # <think> 태그 안쪽으로 들어온 추론 텍스트도 바이트로는 내려온 것이다.
                 reasoning_chars += len(clean)
@@ -210,12 +221,137 @@ def run_one(client, question, effort, pad, instr=None, max_tok=None):
             "app_ttft_ms": round((t_first - t0) * 1000, 1) if t_first else None,
             "app_total_ms": round((t_end - t0) * 1000, 1),
             "answer_chars": answer_chars,
+            # 앞 80자만. arm 0 은 한 글자라 전문이 들어가고, 자유 응답 arm 에서도
+            # 채점용 선두 글자와 불응 사유 확인에는 넉넉하다.
+            "answer_head": answer_text.strip()[:80],
             "thoughts_tokens": think_tok, "output_tokens": comp_tok,
             "had_reasoning": saw_think, "reasoning_chars": reasoning_chars,
             "chunk_count": chunk_count,
             "finish_reason": finish, "pad_chars": pad,
             # 답이 한 글자도 안 나왔으면 추론이 한계까지 간 것(1차서 q4 에 4건 발생).
             "truncated": answer_chars == 0}
+
+
+def select_questions(args, base_q):
+    """--qset / --qfile / --limit 을 풀어 (문항, 템플릿id, 원본번호) 세 줄을 돌려준다.
+
+    세 줄은 길이·순서가 1:1 이다. 원본번호를 같이 돌려주는 이유:
+      로그의 q_idx 는 **잘라내기 전 원본 리스트에서의 위치**여야 한다. 잘라낸 리스트의
+      위치를 쓰면 나중에 문항 텍스트·템플릿을 되짚을 때 통째로 어긋난다.
+
+    템플릿id(family)가 필요한 이유:
+      파라메트릭 갈래는 한 템플릿에서 변형 25개가 나온다. 서로 닮아 독립 표본이 아니다.
+      e2_snr 의 질문 단위 재표집이 q_idx 로 묶으면 변형 25개를 독립 클러스터 25개로
+      세어 신뢰구간이 가짜로 좁아진다. 그래서 로그에 family 를 같이 적는다.
+    """
+    if getattr(args, "qset", "base") == "v2":
+        if QUESTIONS_V2_ALL is None:
+            raise SystemExit("questions_all import 실패 — python3 questions_all.py 로 확인하라")
+        qsrc, fsrc = QUESTIONS_V2_ALL, FAMILIES_V2_ALL
+    else:
+        # base 는 템플릿 개념이 없다. 문항 하나하나가 각자 클러스터다.
+        qsrc = base_q
+        fsrc = [f"base_{i:03d}" for i in range(len(base_q))]
+
+    idx = list(range(len(qsrc)))
+    qfile = getattr(args, "qfile", "")
+    if qfile:
+        sel = json.loads(Path(qfile).read_text(encoding="utf-8"))
+        good = sel.get("good")
+        if not good:
+            raise SystemExit(f"{qfile}: 'good' 목록이 비었다 — 선별부터 끝내라")
+        if sel.get("qset") and sel["qset"] != getattr(args, "qset", "base"):
+            raise SystemExit(
+                f"선별 파일은 qset={sel['qset']} 인데 --qset {args.qset} 로 돌리려 한다. "
+                "문항 번호가 서로 다른 리스트를 가리켜 전부 어긋난다.")
+        keep = set(good)
+        idx = [i for i in idx if i in keep]
+        print(f"선별 적용: {qfile} -> {len(idx)}문항")
+    # --sample: 갈래를 고르게 가로질러 N문항. --limit 은 앞에서 자르므로 세트 앞쪽
+    # 갈래만 뽑힌다(v2 는 앞 250문항이 전부 솔버다). 예산이 전수를 못 덮을 때는
+    # **흩어진 부분집합보다 완결된 작은 집합**이 낫다. 한 문항의 조건이 하나라도 비면
+    # 쌍 비교(같은 문항의 low vs high)가 성립하지 않아 그 문항은 통째로 버려진다.
+    sample = getattr(args, "sample", 0)
+    if sample and sample < len(idx):
+        if not fsrc:
+            idx = idx[:: max(1, len(idx) // sample)][:sample]
+        else:
+            # 캡처의 통계적 힘은 **템플릿 수**가 정한다(신뢰구간을 템플릿 단위로 재표집하므로).
+            # 그래서 선별용 '갈래 균등'을 그대로 쓰면 안 된다 — 갈래가 19개인데 그중 16개는
+            # 템플릿이 1개뿐이라, 340문항을 갈래 균등으로 뽑으면 템플릿이 70개로 줄어든다
+            # (2026-11-10 실제로 그랬다). 반대로 템플릿만 최대화하면 검증된 솔버 갈래가
+            # 10문항으로 쪼그라들고, 통과율을 모르는 페르미·딜레마가 94%를 차지한다.
+            #
+            # 그래서 두 요구를 절충한다:
+            #   바닥(FLOOR)  : 갈래마다 최소 이만큼 — 검증된 갈래가 사라지지 않게
+            #   나머지       : 템플릿 수에 비례 배분 — 템플릿 많은 갈래가 표본을 더 가져감
+            # 갈래 안에서는 **새 템플릿을 먼저** 고르고, 템플릿이 바닥나야 변형을 추가한다.
+            # 갈래별 최소 보장 문항수. 기본 8 이지만 --floor 로 낮출 수 있다.
+            #   콜마다 돈이 나가는 provider 에서 작은 탐침을 돌릴 때, 기본값 8 은
+            #   갈래 19개 x 8 = 152문항으로 --sample 을 통째로 무시해버린다.
+            #   (2026-11-18: --sample 30 을 줬는데 760콜이 잡혔다.)
+            FLOOR = max(1, int(getattr(args, "floor", 8) or 8))
+            def _group(f):
+                i = f.rfind("_")
+                return f[:i] if (i > 0 and f[i + 1:].isdigit()) else f
+            groups = {}
+            for i in idx:
+                groups.setdefault(_group(fsrc[i]), {}).setdefault(fsrc[i], []).append(i)
+            gkeys = sorted(groups)
+
+            # 1) 바닥 배정. 갈래가 가진 문항보다 많이 줄 수는 없다.
+            have = {g: sum(len(v) for v in groups[g].values()) for g in gkeys}
+            quota = {g: min(FLOOR, have[g]) for g in gkeys}
+            rest = sample - sum(quota.values())
+
+            # 2) 나머지를 템플릿 수에 비례 배분. 여유가 없는 갈래는 건너뛴다.
+            if rest > 0:
+                ntpl = {g: len(groups[g]) for g in gkeys}
+                room = {g: have[g] - quota[g] for g in gkeys}
+                tot = sum(ntpl[g] for g in gkeys if room[g] > 0) or 1
+                for g in gkeys:
+                    if room[g] <= 0:
+                        continue
+                    add = min(room[g], int(rest * ntpl[g] / tot))
+                    quota[g] += add
+                # 반올림 손실을 여유 있는 갈래에 한 개씩 돌려 채운다
+                while sum(quota.values()) < sample:
+                    moved = False
+                    for g in gkeys:
+                        if sum(quota.values()) >= sample:
+                            break
+                        if quota[g] < have[g]:
+                            quota[g] += 1
+                            moved = True
+                    if not moved:
+                        break
+
+            # 3) 갈래마다 할당량만큼 뽑되, 템플릿을 한 바퀴씩 돌아 새 템플릿을 먼저 쓴다.
+            picked = []
+            for g in gkeys:
+                tks = sorted(groups[g])
+                need, cur = quota[g], 0
+                while need > 0:
+                    moved = False
+                    for _ in range(len(tks)):
+                        t = tks[cur % len(tks)]
+                        cur += 1
+                        if groups[g][t]:
+                            picked.append(groups[g][t].pop(0))
+                            need -= 1
+                            moved = True
+                            break
+                    if not moved:
+                        break
+            idx = sorted(picked)
+    elif getattr(args, "limit", 0):
+        idx = idx[: args.limit]
+
+    qs = [qsrc[i] for i in idx]
+    fams = [fsrc[i] for i in idx]
+    print(f"문항 {len(qs)}개 / 템플릿 {len(set(fams))}개 "
+          f"(신뢰구간의 독립 표본 수는 문항이 아니라 템플릿 쪽이다)")
+    return qs, fams, idx
 
 
 def main():
@@ -228,6 +364,13 @@ def main():
     ap.add_argument("--list", action="store_true", help="사용가능 모델 출력 후 종료")
     ap.add_argument("--seed", type=int, default=20261002,
                     help="시행 순서 섞기용 시드(재현 가능하게 고정)")
+    ap.add_argument("--qset", default="base", choices=["base", "v2"],
+                    help="base=하드코딩 30문항(provider 간 비교용), v2=questions_all 821문항")
+    ap.add_argument("--qfile", default="",
+                    help="선별 결과 JSON. 그 안의 'good' 목록에 든 문항만 캡처한다.")
+    ap.add_argument("--sample", type=int, default=0,
+                    help="갈래를 고르게 가로질러 N문항만. 예산이 전수를 못 덮을 때 "
+                         "흩어진 부분집합 대신 완결된 작은 집합을 얻는다")
     ap.add_argument("--arms", default="0",
                     help="응답 길이 arm. 정수=덧붙일 글자 수(길이 고정), free_brief/free_full=자유 응답. 예) 0,400,1600,free_brief,free_full")
     ap.add_argument("--no-shuffle", action="store_true",
@@ -245,7 +388,7 @@ def main():
             print(m.id)
         return
 
-    qs = QUESTIONS[: args.limit] if args.limit else QUESTIONS
+    qs, fams, keep = select_questions(args, QUESTIONS)
     arms = parse_arms(args.arms)
     trials = [(qi, cond, effort, rep, arm)
               for qi, _ in enumerate(qs)
@@ -268,7 +411,13 @@ def main():
                 m = {"error": f"{type(e).__name__}: {e}"}
             # complied = 지시한 글자 수를 정확히 지켰는가. arm 이 길수록 떨어질 수 있어,
             #   분석에 쓸 수 있는 유효 표본이 얼마나 남는지 재는 데 쓴다.
-            m.update({"idx": i, "order_idx": i, "q_idx": qi, "condition": cond,
+            m.update({"idx": i, "order_idx": i,
+                      # 원본 리스트에서의 위치. 잘라낸 위치를 쓰면 문항을 되짚을 수 없다.
+                      "q_idx": keep[qi],
+                      # 클러스터 키. 분석(e2_snr)이 이걸로 묶어야 변형 25개가
+                      # 독립 표본 25개로 둔갑하지 않는다.
+                      "family": fams[qi], "qset": args.qset,
+                      "condition": cond,
                       "arm": arm, "expect_chars": expect,
                       # 자유 arm 은 기대 길이가 없어 준수 판정 대상이 아니다(None).
                       "complied": None if expect is None else m.get("answer_chars") == expect,

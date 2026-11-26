@@ -1,0 +1,864 @@
+nohup: ignoring input
+
+==================================================
+[05:49:11] 시작: x50_luna
+==================================================
+필터: tcp port 443 and ( host 162.159.140.245 or host 172.66.0.243)
+pcap: out/openai_strict_x50_luna_20261120_054911.pcap  log: out/openai_strict_x50_luna_log.jsonl
+tcpdump PID=186057, 2초 워밍업...
+선별 적용: out/qfile_oai_cross50.json -> 50문항
+문항 50개 / 템플릿 50개 (신뢰구간의 독립 표본 수는 문항이 아니라 템플릿 쪽이다)
+[1/250] q14 think_high     arm=0          ttft=2113.2ms out=67 think=60 chars=1/1  $0.000
+[2/250] q14 think_low      arm=0          ttft=1412.8ms out=74 think=67 chars=1/1  $0.000
+[3/250] q14 think_max      arm=0          ttft=1634.0ms out=119 think=112 chars=1/1  $0.000
+[4/250] q14 think_medium   arm=0          ttft=1029.7ms out=44 think=37 chars=1/1  $0.000
+[5/250] q14 think_xhigh    arm=0          ttft=1180.1ms out=66 think=59 chars=1/1  $0.000
+[6/250] q9 think_medium   arm=0          ttft=11668.8ms out=1161 think=1154 chars=1/1  $0.001
+[7/250] q9 think_max      arm=0          ttft=5982.1ms out=824 think=817 chars=1/1  $0.001
+[8/250] q9 think_xhigh    arm=0          ttft=7756.2ms out=773 think=766 chars=1/1  $0.002
+[9/250] q9 think_low      arm=0          ttft=17934.5ms out=1679 think=1672 chars=1/1  $0.002
+[10/250] q9 think_high     arm=0          ttft=62878.2ms out=6988 think=6981 chars=1/1  $0.006
+[11/250] q4 think_medium   arm=0          ttft=2063.6ms out=164 think=157 chars=1/1  $0.006
+[12/250] q4 think_max      arm=0          ttft=3522.7ms out=168 think=161 chars=1/1  $0.006
+[13/250] q4 think_high     arm=0          ttft=2722.1ms out=163 think=156 chars=1/1  $0.006
+[14/250] q4 think_low      arm=0          ttft=1727.1ms out=121 think=114 chars=1/1  $0.006
+[15/250] q4 think_xhigh    arm=0          ttft=3165.6ms out=239 think=232 chars=1/1  $0.006
+[16/250] q42 think_low      arm=0          ttft=758.0ms out=29 think=22 chars=1/1  $0.006
+[17/250] q42 think_max      arm=0          ttft=1411.1ms out=41 think=34 chars=1/1  $0.007
+[18/250] q42 think_xhigh    arm=0          ttft=949.6ms out=33 think=26 chars=1/1  $0.007
+[19/250] q42 think_high     arm=0          ttft=1126.3ms out=31 think=24 chars=1/1  $0.007
+[20/250] q42 think_medium   arm=0          ttft=1173.4ms out=30 think=23 chars=1/1  $0.007
+[21/250] q29 think_high     arm=0          ttft=1144.4ms out=31 think=24 chars=1/1  $0.007
+[22/250] q29 think_max      arm=0          ttft=1216.8ms out=64 think=57 chars=1/1  $0.007
+[23/250] q29 think_medium   arm=0          ttft=1464.7ms out=57 think=50 chars=1/1  $0.007
+[24/250] q29 think_xhigh    arm=0          ttft=1116.6ms out=60 think=53 chars=1/1  $0.007
+[25/250] q29 think_low      arm=0          ttft=896.8ms out=26 think=19 chars=1/1  $0.007
+[26/250] q36 think_high     arm=0          ttft=5243.6ms out=523 think=516 chars=1/1  $0.007
+[27/250] q36 think_xhigh    arm=0          ttft=8027.1ms out=848 think=841 chars=1/1  $0.007
+[28/250] q36 think_medium   arm=0          ttft=1628.5ms out=90 think=83 chars=1/1  $0.008
+[29/250] q36 think_low      arm=0          ttft=3543.2ms out=308 think=301 chars=1/1  $0.008
+[30/250] q36 think_max      arm=0          ttft=1401.5ms out=92 think=85 chars=1/1  $0.008
+[31/250] q35 think_xhigh    arm=0          ttft=3916.5ms out=419 think=412 chars=1/1  $0.008
+[32/250] q35 think_max      arm=0          ttft=9611.2ms out=1169 think=1162 chars=1/1  $0.009
+[33/250] q35 think_medium   arm=0          ttft=2709.8ms out=177 think=170 chars=1/1  $0.009
+[34/250] q35 think_high     arm=0          ttft=4325.3ms out=222 think=215 chars=1/1  $0.009
+[35/250] q35 think_low      arm=0          ttft=2825.8ms out=222 think=215 chars=1/1  $0.009
+[36/250] q12 think_xhigh    arm=0          ttft=1700.5ms out=63 think=56 chars=1/1  $0.009
+[37/250] q12 think_max      arm=0          ttft=1942.0ms out=61 think=54 chars=1/1  $0.009
+[38/250] q12 think_high     arm=0          ttft=1563.3ms out=47 think=40 chars=1/1  $0.009
+[39/250] q12 think_low      arm=0          ttft=958.3ms out=42 think=35 chars=1/1  $0.009
+[40/250] q12 think_medium   arm=0          ttft=1884.9ms out=96 think=89 chars=1/1  $0.009
+[41/250] q30 think_xhigh    arm=0          ttft=2129.0ms out=93 think=86 chars=1/1  $0.009
+[42/250] q30 think_max      arm=0          ttft=1900.4ms out=120 think=113 chars=1/1  $0.009
+[43/250] q30 think_low      arm=0          ttft=1217.7ms out=67 think=60 chars=1/1  $0.009
+[44/250] q30 think_high     arm=0          ttft=1770.5ms out=52 think=45 chars=1/1  $0.009
+[45/250] q30 think_medium   arm=0          ttft=1142.2ms out=53 think=46 chars=1/1  $0.009
+[46/250] q31 think_low      arm=0          ttft=1250.6ms out=59 think=52 chars=1/1  $0.009
+[47/250] q31 think_medium   arm=0          ttft=1020.8ms out=57 think=50 chars=1/1  $0.009
+[48/250] q31 think_xhigh    arm=0          ttft=4398.5ms out=401 think=394 chars=1/1  $0.010
+[49/250] q31 think_high     arm=0          ttft=2316.1ms out=169 think=162 chars=1/1  $0.010
+[50/250] q31 think_max      arm=0          ttft=3085.2ms out=280 think=273 chars=1/1  $0.010
+[51/250] q6 think_low      arm=0          ttft=2075.4ms out=157 think=150 chars=1/1  $0.010
+[52/250] q6 think_xhigh    arm=0          ttft=5844.5ms out=603 think=596 chars=1/1  $0.010
+[53/250] q6 think_medium   arm=0          ttft=2860.8ms out=229 think=222 chars=1/1  $0.010
+[54/250] q6 think_high     arm=0          ttft=2906.5ms out=241 think=234 chars=1/1  $0.010
+[55/250] q6 think_max      arm=0          ttft=3239.0ms out=299 think=292 chars=1/1  $0.011
+[56/250] q47 think_xhigh    arm=0          ttft=1958.1ms out=182 think=175 chars=1/1  $0.011
+[57/250] q47 think_high     arm=0          ttft=8736.4ms out=955 think=948 chars=1/1  $0.011
+[58/250] q47 think_medium   arm=0          ttft=2014.5ms out=125 think=118 chars=1/1  $0.011
+[59/250] q47 think_low      arm=0          ttft=2193.2ms out=193 think=186 chars=1/1  $0.011
+[60/250] q47 think_max      arm=0          ttft=2414.4ms out=204 think=197 chars=1/1  $0.012
+[61/250] q38 think_xhigh    arm=0          ttft=2350.5ms out=161 think=154 chars=1/1  $0.012
+[62/250] q38 think_max      arm=0          ttft=3051.1ms out=287 think=280 chars=1/1  $0.012
+[63/250] q38 think_high     arm=0          ttft=2545.3ms out=192 think=185 chars=1/1  $0.012
+[64/250] q38 think_low      arm=0          ttft=1579.3ms out=102 think=95 chars=1/1  $0.012
+[65/250] q38 think_medium   arm=0          ttft=1687.1ms out=113 think=106 chars=1/1  $0.012
+[66/250] q48 think_low      arm=0          ttft=1122.6ms out=59 think=52 chars=1/1  $0.012
+[67/250] q48 think_max      arm=0          ttft=4792.5ms out=548 think=541 chars=1/1  $0.012
+[68/250] q48 think_medium   arm=0          ttft=3212.7ms out=329 think=322 chars=1/1  $0.013
+[69/250] q48 think_xhigh    arm=0          ttft=1473.5ms out=118 think=111 chars=1/1  $0.013
+[70/250] q48 think_high     arm=0          ttft=3453.3ms out=318 think=311 chars=1/1  $0.013
+[71/250] q11 think_xhigh    arm=0          ttft=4105.0ms out=386 think=379 chars=1/1  $0.013
+[72/250] q11 think_medium   arm=0          ttft=4138.7ms out=425 think=418 chars=1/1  $0.013
+[73/250] q11 think_max      arm=0          ttft=12019.1ms out=1190 think=1183 chars=1/1  $0.014
+[74/250] q11 think_low      arm=0          ttft=4489.8ms out=348 think=341 chars=1/1  $0.014
+[75/250] q11 think_high     arm=0          ttft=2747.6ms out=235 think=228 chars=1/1  $0.014
+[76/250] q26 think_max      arm=0          ttft=971.4ms out=69 think=62 chars=1/1  $0.014
+[77/250] q26 think_medium   arm=0          ttft=1339.6ms out=69 think=62 chars=1/1  $0.014
+[78/250] q26 think_low      arm=0          ttft=1204.6ms out=58 think=51 chars=1/1  $0.014
+[79/250] q26 think_high     arm=0          ttft=3034.0ms out=78 think=71 chars=1/1  $0.014
+[80/250] q26 think_xhigh    arm=0          ttft=1221.2ms out=56 think=49 chars=1/1  $0.014
+[81/250] q32 think_max      arm=0          ttft=1404.3ms out=99 think=92 chars=1/1  $0.014
+[82/250] q32 think_xhigh    arm=0          ttft=2975.9ms out=275 think=268 chars=1/1  $0.015
+[83/250] q32 think_low      arm=0          ttft=1656.5ms out=87 think=80 chars=1/1  $0.015
+[84/250] q32 think_high     arm=0          ttft=1223.7ms out=61 think=54 chars=1/1  $0.015
+[85/250] q32 think_medium   arm=0          ttft=1919.4ms out=74 think=67 chars=1/1  $0.015
+[86/250] q45 think_low      arm=0          ttft=1275.6ms out=41 think=34 chars=1/1  $0.015
+[87/250] q45 think_xhigh    arm=0          ttft=2159.8ms out=70 think=63 chars=1/1  $0.015
+[88/250] q45 think_medium   arm=0          ttft=1293.2ms out=83 think=76 chars=1/1  $0.015
+[89/250] q45 think_max      arm=0          ttft=1539.2ms out=66 think=59 chars=1/1  $0.015
+[90/250] q45 think_high     arm=0          ttft=3819.6ms out=88 think=81 chars=1/1  $0.015
+[91/250] q23 think_low      arm=0          ttft=1115.6ms out=26 think=19 chars=1/1  $0.015
+[92/250] q23 think_medium   arm=0          ttft=1084.7ms out=40 think=33 chars=1/1  $0.015
+[93/250] q23 think_high     arm=0          ttft=1731.9ms out=42 think=35 chars=1/1  $0.015
+[94/250] q23 think_max      arm=0          ttft=4869.0ms out=64 think=57 chars=1/1  $0.015
+[95/250] q23 think_xhigh    arm=0          ttft=1055.4ms out=46 think=39 chars=1/1  $0.015
+[96/250] q18 think_medium   arm=0          ttft=4116.3ms out=175 think=168 chars=1/1  $0.015
+[97/250] q18 think_low      arm=0          ttft=2917.6ms out=48 think=41 chars=1/1  $0.015
+[98/250] q18 think_high     arm=0          ttft=2409.5ms out=100 think=93 chars=1/1  $0.015
+[99/250] q18 think_max      arm=0          ttft=2962.6ms out=103 think=96 chars=1/1  $0.015
+[100/250] q18 think_xhigh    arm=0          ttft=2189.5ms out=105 think=98 chars=1/1  $0.015
+[101/250] q2 think_low      arm=0          ttft=15894.6ms out=1505 think=1498 chars=1/1  $0.016
+[102/250] q2 think_xhigh    arm=0          ttft=19143.4ms out=1830 think=1823 chars=1/1  $0.017
+[103/250] q2 think_high     arm=0          ttft=23632.1ms out=2238 think=2231 chars=1/1  $0.018
+[104/250] q2 think_max      arm=0          ttft=21770.9ms out=2320 think=2313 chars=1/1  $0.019
+[105/250] q2 think_medium   arm=0          ttft=21033.8ms out=2223 think=2216 chars=1/1  $0.020
+[106/250] q27 think_xhigh    arm=0          ttft=1637.5ms out=71 think=64 chars=1/1  $0.020
+[107/250] q27 think_low      arm=0          ttft=1139.8ms out=36 think=29 chars=1/1  $0.020
+[108/250] q27 think_medium   arm=0          ttft=1726.8ms out=34 think=27 chars=1/1  $0.021
+[109/250] q27 think_high     arm=0          ttft=1446.3ms out=47 think=40 chars=1/1  $0.021
+[110/250] q27 think_max      arm=0          ttft=1178.2ms out=41 think=34 chars=1/1  $0.021
+[111/250] q16 think_max      arm=0          ttft=1150.3ms out=42 think=35 chars=1/1  $0.021
+[112/250] q16 think_low      arm=0          ttft=1471.6ms out=52 think=45 chars=1/1  $0.021
+[113/250] q16 think_xhigh    arm=0          ttft=1059.6ms out=74 think=67 chars=1/1  $0.021
+[114/250] q16 think_medium   arm=0          ttft=1724.2ms out=78 think=71 chars=1/1  $0.021
+[115/250] q16 think_high     arm=0          ttft=1491.1ms out=51 think=44 chars=1/1  $0.021
+[116/250] q49 think_medium   arm=0          ttft=1770.9ms out=120 think=113 chars=1/1  $0.021
+[117/250] q49 think_xhigh    arm=0          ttft=2000.2ms out=166 think=159 chars=1/1  $0.021
+[118/250] q49 think_low      arm=0          ttft=2784.5ms out=163 think=156 chars=1/1  $0.021
+[119/250] q49 think_high     arm=0          ttft=2256.9ms out=130 think=123 chars=1/1  $0.021
+[120/250] q49 think_max      arm=0          ttft=2506.3ms out=171 think=164 chars=1/1  $0.021
+[121/250] q24 think_medium   arm=0          ttft=1364.9ms out=51 think=44 chars=1/1  $0.021
+[122/250] q24 think_xhigh    arm=0          ttft=1048.1ms out=55 think=48 chars=1/1  $0.021
+[123/250] q24 think_max      arm=0          ttft=1828.0ms out=52 think=45 chars=1/1  $0.021
+[124/250] q24 think_high     arm=0          ttft=1797.1ms out=48 think=41 chars=1/1  $0.021
+[125/250] q24 think_low      arm=0          ttft=985.7ms out=36 think=29 chars=1/1  $0.021
+[126/250] q22 think_high     arm=0          ttft=2593.6ms out=209 think=202 chars=1/1  $0.022
+[127/250] q22 think_medium   arm=0          ttft=2133.8ms out=148 think=141 chars=1/1  $0.022
+[128/250] q22 think_xhigh    arm=0          ttft=1988.0ms out=139 think=132 chars=1/1  $0.022
+[129/250] q22 think_max      arm=0          ttft=3754.5ms out=417 think=410 chars=1/1  $0.022
+[130/250] q22 think_low      arm=0          ttft=1777.4ms out=82 think=75 chars=1/1  $0.022
+[131/250] q37 think_low      arm=0          ttft=1165.5ms out=54 think=47 chars=1/1  $0.022
+[132/250] q37 think_medium   arm=0          ttft=1928.4ms out=122 think=115 chars=1/1  $0.022
+[133/250] q37 think_max      arm=0          ttft=1746.4ms out=65 think=58 chars=1/1  $0.022
+[134/250] q37 think_xhigh    arm=0          ttft=1120.5ms out=50 think=43 chars=1/1  $0.022
+[135/250] q37 think_high     arm=0          ttft=1717.6ms out=93 think=86 chars=1/1  $0.022
+[136/250] q43 think_low      arm=0          ttft=1088.6ms out=62 think=55 chars=1/1  $0.022
+[137/250] q43 think_xhigh    arm=0          ttft=1330.8ms out=73 think=66 chars=1/1  $0.022
+[138/250] q43 think_max      arm=0          ttft=1549.8ms out=69 think=62 chars=1/1  $0.022
+[139/250] q43 think_medium   arm=0          ttft=1547.2ms out=48 think=41 chars=1/1  $0.022
+[140/250] q43 think_high     arm=0          ttft=1407.2ms out=61 think=54 chars=1/1  $0.022
+[141/250] q21 think_low      arm=0          ttft=3982.9ms out=115 think=108 chars=1/1  $0.022
+[142/250] q21 think_medium   arm=0          ttft=5153.6ms out=394 think=387 chars=1/1  $0.023
+[143/250] q21 think_high     arm=0          ttft=2191.7ms out=100 think=93 chars=1/1  $0.023
+[144/250] q21 think_max      arm=0          ttft=4688.9ms out=309 think=302 chars=1/1  $0.023
+[145/250] q21 think_xhigh    arm=0          ttft=4450.3ms out=393 think=386 chars=1/1  $0.023
+[146/250] q28 think_xhigh    arm=0          ttft=1156.8ms out=40 think=33 chars=1/1  $0.023
+[147/250] q28 think_max      arm=0          ttft=1174.9ms out=43 think=36 chars=1/1  $0.023
+[148/250] q28 think_medium   arm=0          ttft=1126.4ms out=30 think=23 chars=1/1  $0.023
+[149/250] q28 think_low      arm=0          ttft=1069.5ms out=28 think=21 chars=1/1  $0.023
+[150/250] q28 think_high     arm=0          ttft=1155.5ms out=34 think=27 chars=1/1  $0.023
+[151/250] q33 think_low      arm=0          ttft=1851.2ms out=99 think=92 chars=1/1  $0.023
+[152/250] q33 think_high     arm=0          ttft=1940.7ms out=101 think=94 chars=1/1  $0.023
+[153/250] q33 think_xhigh    arm=0          ttft=6644.0ms out=700 think=693 chars=1/1  $0.024
+[154/250] q33 think_medium   arm=0          ttft=4735.2ms out=372 think=365 chars=1/1  $0.024
+[155/250] q33 think_max      arm=0          ttft=20362.9ms out=2469 think=2462 chars=1/1  $0.025
+[156/250] q34 think_max      arm=0          ttft=10120.0ms out=1134 think=1127 chars=1/1  $0.026
+[157/250] q34 think_low      arm=0          ttft=1460.1ms out=54 think=47 chars=1/1  $0.026
+[158/250] q34 think_medium   arm=0          ttft=5565.9ms out=501 think=494 chars=1/1  $0.026
+[159/250] q34 think_high     arm=0          ttft=5943.1ms out=552 think=545 chars=1/1  $0.026
+[160/250] q34 think_xhigh    arm=0          ttft=8588.3ms out=849 think=842 chars=1/1  $0.027
+[161/250] q19 think_high     arm=0          ttft=4070.6ms out=358 think=351 chars=1/1  $0.027
+[162/250] q19 think_low      arm=0          ttft=3617.3ms out=157 think=150 chars=1/1  $0.027
+[163/250] q19 think_max      arm=0          ttft=1528.7ms out=115 think=108 chars=1/1  $0.027
+[164/250] q19 think_xhigh    arm=0          ttft=2739.2ms out=196 think=189 chars=1/1  $0.027
+[165/250] q19 think_medium   arm=0          ttft=3636.3ms out=292 think=285 chars=1/1  $0.027
+[166/250] q10 think_low      arm=0          ttft=2634.0ms out=174 think=167 chars=1/1  $0.027
+[167/250] q10 think_medium   arm=0          ttft=3495.8ms out=290 think=283 chars=1/1  $0.028
+[168/250] q10 think_xhigh    arm=0          ttft=3001.5ms out=222 think=215 chars=1/1  $0.028
+[169/250] q10 think_high     arm=0          ttft=3145.1ms out=208 think=201 chars=1/1  $0.028
+[170/250] q10 think_max      arm=0          ttft=3831.7ms out=340 think=333 chars=1/1  $0.028
+[171/250] q46 think_max      arm=0          ttft=2022.6ms out=82 think=75 chars=1/1  $0.028
+[172/250] q46 think_medium   arm=0          ttft=1491.6ms out=82 think=75 chars=1/1  $0.028
+[173/250] q46 think_low      arm=0          ttft=1751.6ms out=101 think=94 chars=1/1  $0.028
+[174/250] q46 think_xhigh    arm=0          ttft=1728.5ms out=123 think=116 chars=1/1  $0.028
+[175/250] q46 think_high     arm=0          ttft=1317.7ms out=52 think=45 chars=1/1  $0.028
+[176/250] q40 think_xhigh    arm=0          ttft=4942.8ms out=263 think=256 chars=1/1  $0.028
+[177/250] q40 think_max      arm=0          ttft=3699.4ms out=273 think=266 chars=1/1  $0.028
+[178/250] q40 think_low      arm=0          ttft=1511.5ms out=68 think=61 chars=1/1  $0.029
+[179/250] q40 think_high     arm=0          ttft=5135.3ms out=392 think=385 chars=1/1  $0.029
+[180/250] q40 think_medium   arm=0          ttft=3770.3ms out=320 think=313 chars=1/1  $0.029
+[181/250] q13 think_low      arm=0          ttft=1999.0ms out=56 think=49 chars=1/1  $0.029
+[182/250] q13 think_xhigh    arm=0          ttft=1423.3ms out=78 think=71 chars=1/1  $0.029
+[183/250] q13 think_medium   arm=0          ttft=1277.1ms out=67 think=60 chars=1/1  $0.029
+[184/250] q13 think_max      arm=0          ttft=2995.0ms out=114 think=107 chars=1/1  $0.029
+[185/250] q13 think_high     arm=0          ttft=1449.0ms out=79 think=72 chars=1/1  $0.029
+[186/250] q7 think_medium   arm=0          ttft=13777.1ms out=1103 think=1096 chars=1/1  $0.030
+[187/250] q7 think_max      arm=0          ttft=15075.7ms out=1597 think=1590 chars=1/1  $0.031
+[188/250] q7 think_xhigh    arm=0          ttft=47033.3ms out=5173 think=5166 chars=1/1  $0.033
+[189/250] q7 think_high     arm=0          ttft=13307.6ms out=1010 think=1003 chars=1/1  $0.034
+[190/250] q7 think_low      arm=0          ttft=11463.5ms out=989 think=982 chars=1/1  $0.034
+[191/250] q1 think_high     arm=0          ttft=3421.9ms out=278 think=271 chars=1/1  $0.034
+[192/250] q1 think_xhigh    arm=0          ttft=5103.5ms out=432 think=425 chars=1/1  $0.035
+[193/250] q1 think_low      arm=0          ttft=2371.8ms out=191 think=184 chars=1/1  $0.035
+[194/250] q1 think_max      arm=0          ttft=3238.8ms out=284 think=277 chars=1/1  $0.035
+[195/250] q1 think_medium   arm=0          ttft=2704.7ms out=182 think=175 chars=1/1  $0.035
+[196/250] q44 think_medium   arm=0          ttft=998.3ms out=40 think=33 chars=1/1  $0.035
+[197/250] q44 think_xhigh    arm=0          ttft=1351.4ms out=54 think=47 chars=1/1  $0.035
+[198/250] q44 think_low      arm=0          ttft=1658.8ms out=39 think=32 chars=1/1  $0.035
+[199/250] q44 think_max      arm=0          ttft=1665.5ms out=77 think=70 chars=1/1  $0.035
+[200/250] q44 think_high     arm=0          ttft=1000.2ms out=39 think=32 chars=1/1  $0.035
+[201/250] q17 think_medium   arm=0          ttft=2025.4ms out=44 think=37 chars=1/1  $0.035
+[202/250] q17 think_xhigh    arm=0          ttft=1474.8ms out=72 think=65 chars=1/1  $0.035
+[203/250] q17 think_max      arm=0          ttft=1724.3ms out=59 think=52 chars=1/1  $0.035
+[204/250] q17 think_high     arm=0          ttft=1238.2ms out=55 think=48 chars=1/1  $0.035
+[205/250] q17 think_low      arm=0          ttft=1030.4ms out=47 think=40 chars=1/1  $0.035
+[206/250] q25 think_max      arm=0          ttft=1346.5ms out=33 think=26 chars=1/1  $0.035
+[207/250] q25 think_low      arm=0          ttft=1234.6ms out=22 think=15 chars=1/1  $0.035
+[208/250] q25 think_xhigh    arm=0          ttft=1155.4ms out=33 think=26 chars=1/1  $0.035
+[209/250] q25 think_medium   arm=0          ttft=788.8ms out=27 think=20 chars=1/1  $0.035
+[210/250] q25 think_high     arm=0          ttft=1133.3ms out=33 think=26 chars=1/1  $0.035
+[211/250] q20 think_max      arm=0          ttft=13881.0ms out=1354 think=1347 chars=1/1  $0.036
+[212/250] q20 think_low      arm=0          ttft=1908.3ms out=124 think=117 chars=1/1  $0.036
+[213/250] q20 think_medium   arm=0          ttft=3322.0ms out=287 think=280 chars=1/1  $0.036
+[214/250] q20 think_xhigh    arm=0          ttft=7711.8ms out=694 think=687 chars=1/1  $0.037
+[215/250] q20 think_high     arm=0          ttft=2489.3ms out=149 think=142 chars=1/1  $0.037
+[216/250] q39 think_high     arm=0          ttft=1095.9ms out=36 think=29 chars=1/1  $0.037
+[217/250] q39 think_xhigh    arm=0          ttft=1278.9ms out=67 think=60 chars=1/1  $0.037
+[218/250] q39 think_low      arm=0          ttft=1598.0ms out=32 think=25 chars=1/1  $0.037
+[219/250] q39 think_medium   arm=0          ttft=739.1ms out=30 think=23 chars=1/1  $0.037
+[220/250] q39 think_max      arm=0          ttft=1913.4ms out=74 think=67 chars=1/1  $0.037
+[221/250] q0 think_medium   arm=0          ttft=3846.4ms out=284 think=277 chars=1/1  $0.037
+[222/250] q0 think_high     arm=0          ttft=5757.8ms out=466 think=459 chars=1/1  $0.037
+[223/250] q0 think_max      arm=0          ttft=5194.0ms out=409 think=402 chars=1/1  $0.037
+[224/250] q0 think_low      arm=0          ttft=3508.8ms out=261 think=254 chars=1/1  $0.038
+[225/250] q0 think_xhigh    arm=0          ttft=4615.3ms out=430 think=423 chars=1/1  $0.038
+[226/250] q15 think_max      arm=0          ttft=34307.0ms out=3694 think=3687 chars=1/1  $0.040
+[227/250] q15 think_low      arm=0          ttft=3471.4ms out=212 think=205 chars=1/1  $0.040
+[228/250] q15 think_high     arm=0          ttft=11109.7ms out=1165 think=1158 chars=1/1  $0.040
+[229/250] q15 think_medium   arm=0          ttft=9299.6ms out=986 think=979 chars=1/1  $0.041
+[230/250] q15 think_xhigh    arm=0          ttft=17620.9ms out=1849 think=1842 chars=1/1  $0.042
+[231/250] q8 think_low      arm=0          ttft=3704.4ms out=285 think=278 chars=1/1  $0.042
+[232/250] q8 think_xhigh    arm=0          ttft=5235.8ms out=408 think=401 chars=1/1  $0.042
+[233/250] q8 think_high     arm=0          ttft=5562.2ms out=417 think=410 chars=1/1  $0.042
+[234/250] q8 think_max      arm=0          ttft=3747.4ms out=276 think=269 chars=1/1  $0.043
+[235/250] q8 think_medium   arm=0          ttft=1999.4ms out=127 think=120 chars=1/1  $0.043
+[236/250] q5 think_low      arm=0          ttft=1712.5ms out=126 think=119 chars=1/1  $0.043
+[237/250] q5 think_max      arm=0          ttft=2838.0ms out=175 think=168 chars=1/1  $0.043
+[238/250] q5 think_medium   arm=0          ttft=2098.7ms out=110 think=103 chars=1/1  $0.043
+[239/250] q5 think_high     arm=0          ttft=2073.6ms out=138 think=131 chars=1/1  $0.043
+[240/250] q5 think_xhigh    arm=0          ttft=3121.0ms out=185 think=178 chars=1/1  $0.043
+[241/250] q3 think_low      arm=0          ttft=1626.9ms out=63 think=56 chars=1/1  $0.043
+[242/250] q3 think_high     arm=0          ttft=1887.6ms out=103 think=96 chars=1/1  $0.043
+[243/250] q3 think_max      arm=0          ttft=1672.7ms out=108 think=101 chars=1/1  $0.043
+[244/250] q3 think_xhigh    arm=0          ttft=1618.7ms out=104 think=97 chars=1/1  $0.043
+[245/250] q3 think_medium   arm=0          ttft=1287.8ms out=97 think=90 chars=1/1  $0.043
+[246/250] q41 think_max      arm=0          ttft=4775.2ms out=352 think=345 chars=1/1  $0.043
+[247/250] q41 think_low      arm=0          ttft=2811.5ms out=189 think=182 chars=1/1  $0.044
+[248/250] q41 think_high     arm=0          ttft=3469.7ms out=261 think=254 chars=1/1  $0.044
+[249/250] q41 think_xhigh    arm=0          ttft=3311.9ms out=269 think=262 chars=1/1  $0.044
+[250/250] q41 think_medium   arm=0          ttft=2715.0ms out=197 think=190 chars=1/1  $0.044
+
+[done] 로그 -> out/openai_strict_x50_luna_log.jsonl
+토큰: 입력 22,555 / 출력 83,455 / 비용 $0.044
+→ 확인 1: answer_chars 가 조건 무관 고정인지(길이 통제 성공 여부)
+→ 확인 2: truncated=true 건수(추론 폭주로 답이 없던 콜 — 분석서 제외)
+→ 확인 3: thoughts_tokens 가 단계별로 벌어지는지(설정 반영 여부)
+→ 확인 4: 파싱 후 조건별 up_bytes 중앙값이 같은지(요청 크기 통제 성공 여부)
+
+완료. 다음:  python3 parse_pcap.py out/openai_strict_x50_luna_20261120_054911.pcap out/openai_strict_x50_luna_log.jsonl --local-ip 163.152.223.17 --out out/openai_x50_luna.csv
+[06:21:23] 파싱: out/openai_strict_x50_luna_20261120_054911.pcap
+/usr/local/lib/python3.10/dist-packages/scapy/layers/tls/crypto/groups.py:25: CryptographyDeprecationWarning: Diffie-Hellman over finite fields (FFDH) is deprecated and support will be removed in a future release. Use a more modern key exchange algorithm.
+  from cryptography.hazmat.primitives.asymmetric.dh import DHParameterNumbers
+local IP = 163.152.223.17  (override)
+요청 250개
+pcap 읽는 중...
+패킷 8847개
+
+=== 조건별 패킷 간격(pkt_gap_ms) vs 앱(ttft) ===
+condition     n  pkt_gap중앙  app_ttft중앙  down_bytes중앙 answer_tok
+think_low    50      396.7      1685.7       14419.5       78.0
+think_high   50      533.5      2362.8       16103.5      116.5
+think_max    50      437.6      2900.3       15394.5      144.0
+think_medium  50      374.2      1963.9       15655.5      116.5
+think_xhigh  50      409.5      2174.7       16897.0      163.5
+
+[out] out/x50_luna.csv  (250행)
+→ think_high의 pkt_gap이  얕은 조건보다 크면 = 패킷 레벨서도 추론 신호 확인!
+→ answer_tok 이 조건 간 동일하면 = 출력 길이 통제가 토큰 수준에서 성립.
+
+==================================================
+[06:21:25] 시작: x50_terra
+==================================================
+필터: tcp port 443 and ( host 162.159.140.245 or host 172.66.0.243)
+pcap: out/openai_strict_x50_terra_20261120_062125.pcap  log: out/openai_strict_x50_terra_log.jsonl
+tcpdump PID=186622, 2초 워밍업...
+선별 적용: out/qfile_oai_cross50.json -> 50문항
+문항 50개 / 템플릿 50개 (신뢰구간의 독립 표본 수는 문항이 아니라 템플릿 쪽이다)
+[1/250] q14 think_high     arm=0          ttft=1974.8ms out=5 think=None chars=1/1  $0.000
+[2/250] q14 think_low      arm=0          ttft=1519.3ms out=5 think=None chars=1/1  $0.000
+[3/250] q14 think_max      arm=0          ttft=3858.7ms out=58 think=51 chars=1/1  $0.001
+[4/250] q14 think_medium   arm=0          ttft=1119.7ms out=5 think=None chars=1/1  $0.001
+[5/250] q14 think_xhigh    arm=0          ttft=1252.7ms out=41 think=34 chars=1/1  $0.001
+[6/250] q9 think_medium   arm=0          ttft=1797.9ms out=64 think=57 chars=1/1  $0.001
+[7/250] q9 think_max      arm=0          ttft=7119.2ms out=312 think=305 chars=1/1  $0.003
+[8/250] q9 think_xhigh    arm=0          ttft=3295.9ms out=165 think=158 chars=1/1  $0.004
+[9/250] q9 think_low      arm=0          ttft=2374.0ms out=76 think=69 chars=1/1  $0.005
+[10/250] q9 think_high     arm=0          ttft=3052.0ms out=125 think=118 chars=1/1  $0.005
+[11/250] q4 think_medium   arm=0          ttft=1855.4ms out=105 think=98 chars=1/1  $0.006
+[12/250] q4 think_max      arm=0          ttft=5391.3ms out=347 think=340 chars=1/1  $0.008
+[13/250] q4 think_high     arm=0          ttft=4388.8ms out=241 think=234 chars=1/1  $0.009
+[14/250] q4 think_low      arm=0          ttft=2188.2ms out=81 think=74 chars=1/1  $0.010
+[15/250] q4 think_xhigh    arm=0          ttft=2132.9ms out=117 think=110 chars=1/1  $0.010
+[16/250] q42 think_low      arm=0          ttft=1451.4ms out=5 think=None chars=1/1  $0.010
+[17/250] q42 think_max      arm=0          ttft=1458.3ms out=50 think=43 chars=1/1  $0.011
+[18/250] q42 think_xhigh    arm=0          ttft=1733.8ms out=39 think=32 chars=1/1  $0.011
+[19/250] q42 think_high     arm=0          ttft=1611.8ms out=28 think=21 chars=1/1  $0.011
+[20/250] q42 think_medium   arm=0          ttft=1136.5ms out=5 think=None chars=1/1  $0.011
+[21/250] q29 think_high     arm=0          ttft=1117.7ms out=5 think=None chars=1/1  $0.011
+[22/250] q29 think_max      arm=0          ttft=2111.2ms out=48 think=41 chars=1/1  $0.012
+[23/250] q29 think_medium   arm=0          ttft=1042.6ms out=5 think=None chars=1/1  $0.012
+[24/250] q29 think_xhigh    arm=0          ttft=1229.9ms out=25 think=18 chars=1/1  $0.012
+[25/250] q29 think_low      arm=0          ttft=1467.0ms out=5 think=None chars=1/1  $0.012
+[26/250] q36 think_high     arm=0          ttft=3994.7ms out=196 think=189 chars=1/1  $0.013
+[27/250] q36 think_xhigh    arm=0          ttft=6597.4ms out=337 think=330 chars=1/1  $0.015
+[28/250] q36 think_medium   arm=0          ttft=6267.3ms out=306 think=299 chars=1/1  $0.017
+[29/250] q36 think_low      arm=0          ttft=4534.5ms out=149 think=142 chars=1/1  $0.017
+[30/250] q36 think_max      arm=0          ttft=36112.0ms out=2533 think=2526 chars=1/1  $0.030
+[31/250] q35 think_xhigh    arm=0          ttft=3786.4ms out=170 think=163 chars=1/1  $0.031
+[32/250] q35 think_max      arm=0          ttft=9885.3ms out=523 think=516 chars=1/1  $0.034
+[33/250] q35 think_medium   arm=0          ttft=2346.6ms out=86 think=79 chars=1/1  $0.034
+[34/250] q35 think_high     arm=0          ttft=3876.0ms out=149 think=142 chars=1/1  $0.035
+[35/250] q35 think_low      arm=0          ttft=1858.2ms out=58 think=51 chars=1/1  $0.035
+[36/250] q12 think_xhigh    arm=0          ttft=4482.7ms out=206 think=199 chars=1/1  $0.037
+[37/250] q12 think_max      arm=0          ttft=26918.2ms out=1787 think=1780 chars=1/1  $0.046
+[38/250] q12 think_high     arm=0          ttft=3297.5ms out=212 think=205 chars=1/1  $0.047
+[39/250] q12 think_low      arm=0          ttft=1900.8ms out=34 think=27 chars=1/1  $0.047
+[40/250] q12 think_medium   arm=0          ttft=3117.7ms out=90 think=83 chars=1/1  $0.047
+[41/250] q30 think_xhigh    arm=0          ttft=1651.8ms out=57 think=50 chars=1/1  $0.048
+[42/250] q30 think_max      arm=0          ttft=2725.3ms out=83 think=76 chars=1/1  $0.048
+[43/250] q30 think_low      arm=0          ttft=1247.0ms out=20 think=13 chars=1/1  $0.049
+[44/250] q30 think_high     arm=0          ttft=1522.0ms out=38 think=31 chars=1/1  $0.049
+[45/250] q30 think_medium   arm=0          ttft=1717.9ms out=35 think=28 chars=1/1  $0.049
+[46/250] q31 think_low      arm=0          ttft=1984.1ms out=51 think=44 chars=1/1  $0.049
+[47/250] q31 think_medium   arm=0          ttft=3805.3ms out=118 think=111 chars=1/1  $0.050
+[48/250] q31 think_xhigh    arm=0          ttft=3326.4ms out=127 think=120 chars=1/1  $0.051
+[49/250] q31 think_high     arm=0          ttft=7299.9ms out=365 think=358 chars=1/1  $0.053
+[50/250] q31 think_max      arm=0          ttft=6558.7ms out=335 think=328 chars=1/1  $0.054
+[51/250] q6 think_low      arm=0          ttft=2522.4ms out=86 think=79 chars=1/1  $0.055
+[52/250] q6 think_xhigh    arm=0          ttft=2868.8ms out=121 think=114 chars=1/1  $0.056
+[53/250] q6 think_medium   arm=0          ttft=2102.4ms out=94 think=87 chars=1/1  $0.056
+[54/250] q6 think_high     arm=0          ttft=2242.2ms out=109 think=102 chars=1/1  $0.057
+[55/250] q6 think_max      arm=0          ttft=3865.9ms out=207 think=200 chars=1/1  $0.058
+[56/250] q47 think_xhigh    arm=0          ttft=2577.2ms out=93 think=86 chars=1/1  $0.059
+[57/250] q47 think_high     arm=0          ttft=1762.6ms out=76 think=69 chars=1/1  $0.059
+[58/250] q47 think_medium   arm=0          ttft=2122.4ms out=88 think=81 chars=1/1  $0.060
+[59/250] q47 think_low      arm=0          ttft=1577.8ms out=56 think=49 chars=1/1  $0.060
+[60/250] q47 think_max      arm=0          ttft=2482.4ms out=137 think=130 chars=1/1  $0.061
+[61/250] q38 think_xhigh    arm=0          ttft=3847.4ms out=187 think=180 chars=1/1  $0.062
+[62/250] q38 think_max      arm=0          ttft=6571.5ms out=278 think=271 chars=1/1  $0.063
+[63/250] q38 think_high     arm=0          ttft=3969.6ms out=147 think=140 chars=1/1  $0.064
+[64/250] q38 think_low      arm=0          ttft=1802.0ms out=52 think=45 chars=1/1  $0.065
+[65/250] q38 think_medium   arm=0          ttft=3555.1ms out=83 think=76 chars=1/1  $0.065
+[66/250] q48 think_low      arm=0          ttft=1933.0ms out=32 think=25 chars=1/1  $0.065
+[67/250] q48 think_max      arm=0          ttft=2785.8ms out=92 think=85 chars=1/1  $0.066
+[68/250] q48 think_medium   arm=0          ttft=1391.6ms out=37 think=30 chars=1/1  $0.066
+[69/250] q48 think_xhigh    arm=0          ttft=2387.3ms out=93 think=86 chars=1/1  $0.067
+[70/250] q48 think_high     arm=0          ttft=1410.6ms out=40 think=33 chars=1/1  $0.067
+[71/250] q11 think_xhigh    arm=0          ttft=7715.3ms out=342 think=335 chars=1/1  $0.069
+[72/250] q11 think_medium   arm=0          ttft=6303.5ms out=263 think=256 chars=1/1  $0.070
+[73/250] q11 think_max      arm=0          ttft=20261.3ms out=1117 think=1110 chars=1/1  $0.076
+[74/250] q11 think_low      arm=0          ttft=3119.7ms out=97 think=90 chars=1/1  $0.077
+[75/250] q11 think_high     arm=0          ttft=4842.9ms out=195 think=188 chars=1/1  $0.078
+[76/250] q26 think_max      arm=0          ttft=3175.5ms out=157 think=150 chars=1/1  $0.079
+[77/250] q26 think_medium   arm=0          ttft=1943.0ms out=64 think=57 chars=1/1  $0.079
+[78/250] q26 think_low      arm=0          ttft=1528.8ms out=24 think=17 chars=1/1  $0.079
+[79/250] q26 think_high     arm=0          ttft=1704.5ms out=45 think=38 chars=1/1  $0.080
+[80/250] q26 think_xhigh    arm=0          ttft=2092.2ms out=73 think=66 chars=1/1  $0.080
+[81/250] q32 think_max      arm=0          ttft=60238.3ms out=3351 think=3344 chars=1/1  $0.097
+[82/250] q32 think_xhigh    arm=0          ttft=16800.2ms out=928 think=921 chars=1/1  $0.102
+[83/250] q32 think_low      arm=0          ttft=3276.9ms out=134 think=127 chars=1/1  $0.102
+[84/250] q32 think_high     arm=0          ttft=9785.3ms out=455 think=448 chars=1/1  $0.105
+[85/250] q32 think_medium   arm=0          ttft=1674.6ms out=61 think=54 chars=1/1  $0.105
+[86/250] q45 think_low      arm=0          ttft=1138.9ms out=5 think=None chars=1/1  $0.105
+[87/250] q45 think_xhigh    arm=0          ttft=1936.2ms out=58 think=51 chars=1/1  $0.106
+[88/250] q45 think_medium   arm=0          ttft=1677.1ms out=30 think=23 chars=1/1  $0.106
+[89/250] q45 think_max      arm=0          ttft=2866.8ms out=116 think=109 chars=1/1  $0.106
+[90/250] q45 think_high     arm=0          ttft=1456.5ms out=47 think=40 chars=1/1  $0.107
+[91/250] q23 think_low      arm=0          ttft=1500.7ms out=5 think=None chars=1/1  $0.107
+[92/250] q23 think_medium   arm=0          ttft=1040.4ms out=5 think=None chars=1/1  $0.107
+[93/250] q23 think_high     arm=0          ttft=2235.7ms out=5 think=None chars=1/1  $0.107
+[94/250] q23 think_max      arm=0          ttft=2992.1ms out=77 think=70 chars=1/1  $0.108
+[95/250] q23 think_xhigh    arm=0          ttft=1570.3ms out=33 think=26 chars=1/1  $0.108
+[96/250] q18 think_medium   arm=0          ttft=3620.7ms out=76 think=69 chars=1/1  $0.108
+[97/250] q18 think_low      arm=0          ttft=1869.3ms out=42 think=35 chars=1/1  $0.109
+[98/250] q18 think_high     arm=0          ttft=4791.6ms out=137 think=130 chars=1/1  $0.109
+[99/250] q18 think_max      arm=0          ttft=8634.8ms out=434 think=427 chars=1/1  $0.112
+[100/250] q18 think_xhigh    arm=0          ttft=3988.1ms out=213 think=206 chars=1/1  $0.113
+[101/250] q2 think_low      arm=0          ttft=3861.0ms out=250 think=243 chars=1/1  $0.114
+[102/250] q2 think_xhigh    arm=0          ttft=8476.2ms out=481 think=474 chars=1/1  $0.117
+[103/250] q2 think_high     arm=0          ttft=7982.9ms out=398 think=391 chars=1/1  $0.119
+[104/250] q2 think_max      arm=0          ttft=10352.8ms out=523 think=516 chars=1/1  $0.121
+[105/250] q2 think_medium   arm=0          ttft=8921.8ms out=390 think=383 chars=1/1  $0.123
+[106/250] q27 think_xhigh    arm=0          ttft=2785.8ms out=81 think=74 chars=1/1  $0.124
+[107/250] q27 think_low      arm=0          ttft=3907.3ms out=49 think=42 chars=1/1  $0.124
+[108/250] q27 think_medium   arm=0          ttft=1946.8ms out=58 think=51 chars=1/1  $0.125
+[109/250] q27 think_high     arm=0          ttft=1466.0ms out=44 think=37 chars=1/1  $0.125
+[110/250] q27 think_max      arm=0          ttft=4194.3ms out=201 think=194 chars=1/1  $0.126
+[111/250] q16 think_max      arm=0          ttft=5759.0ms out=174 think=167 chars=1/1  $0.127
+[112/250] q16 think_low      arm=0          ttft=3035.2ms out=5 think=None chars=1/1  $0.127
+[113/250] q16 think_xhigh    arm=0          ttft=4273.7ms out=141 think=134 chars=1/1  $0.128
+[114/250] q16 think_medium   arm=0          ttft=2374.0ms out=53 think=46 chars=1/1  $0.128
+[115/250] q16 think_high     arm=0          ttft=1841.8ms out=52 think=45 chars=1/1  $0.129
+[116/250] q49 think_medium   arm=0          ttft=2110.3ms out=47 think=40 chars=1/1  $0.129
+[117/250] q49 think_xhigh    arm=0          ttft=2922.1ms out=79 think=72 chars=1/1  $0.130
+[118/250] q49 think_low      arm=0          ttft=1258.4ms out=28 think=21 chars=1/1  $0.130
+[119/250] q49 think_high     arm=0          ttft=2780.2ms out=50 think=43 chars=1/1  $0.130
+[120/250] q49 think_max      arm=0          ttft=2716.6ms out=82 think=75 chars=1/1  $0.131
+[121/250] q24 think_medium   arm=0          ttft=1256.4ms out=5 think=None chars=1/1  $0.131
+[122/250] q24 think_xhigh    arm=0          ttft=2538.8ms out=5 think=None chars=1/1  $0.131
+[123/250] q24 think_max      arm=0          ttft=2642.2ms out=74 think=67 chars=1/1  $0.132
+[124/250] q24 think_high     arm=0          ttft=1231.9ms out=5 think=None chars=1/1  $0.132
+[125/250] q24 think_low      arm=0          ttft=1193.7ms out=5 think=None chars=1/1  $0.132
+[126/250] q22 think_high     arm=0          ttft=4464.4ms out=177 think=170 chars=1/1  $0.133
+[127/250] q22 think_medium   arm=0          ttft=7937.5ms out=284 think=277 chars=1/1  $0.134
+[128/250] q22 think_xhigh    arm=0          ttft=10041.4ms out=461 think=454 chars=1/1  $0.137
+[129/250] q22 think_max      arm=0          ttft=16491.0ms out=978 think=971 chars=1/1  $0.142
+[130/250] q22 think_low      arm=0          ttft=2036.7ms out=64 think=57 chars=1/1  $0.142
+[131/250] q37 think_low      arm=0          ttft=1364.0ms out=31 think=24 chars=1/1  $0.142
+[132/250] q37 think_medium   arm=0          ttft=1817.4ms out=32 think=25 chars=1/1  $0.142
+[133/250] q37 think_max      arm=0          ttft=3019.0ms out=126 think=119 chars=1/1  $0.143
+[134/250] q37 think_xhigh    arm=0          ttft=1363.0ms out=44 think=37 chars=1/1  $0.143
+[135/250] q37 think_high     arm=0          ttft=2219.5ms out=55 think=48 chars=1/1  $0.144
+[136/250] q43 think_low      arm=0          ttft=1775.1ms out=35 think=28 chars=1/1  $0.144
+[137/250] q43 think_xhigh    arm=0          ttft=1693.3ms out=39 think=32 chars=1/1  $0.144
+[138/250] q43 think_max      arm=0          ttft=2940.8ms out=118 think=111 chars=1/1  $0.145
+[139/250] q43 think_medium   arm=0          ttft=1640.5ms out=40 think=33 chars=1/1  $0.145
+[140/250] q43 think_high     arm=0          ttft=1788.8ms out=49 think=42 chars=1/1  $0.146
+[141/250] q21 think_low      arm=0          ttft=2570.5ms out=37 think=30 chars=1/1  $0.146
+[142/250] q21 think_medium   arm=0          ttft=4451.7ms out=138 think=131 chars=1/1  $0.147
+[143/250] q21 think_high     arm=0          ttft=4530.9ms out=241 think=234 chars=1/1  $0.148
+[144/250] q21 think_max      arm=0          ttft=42965.3ms out=2616 think=2609 chars=1/1  $0.161
+[145/250] q21 think_xhigh    arm=0          ttft=35063.8ms out=2171 think=2164 chars=1/1  $0.172
+[146/250] q28 think_xhigh    arm=0          ttft=1231.1ms out=5 think=None chars=1/1  $0.172
+[147/250] q28 think_max      arm=0          ttft=1403.9ms out=36 think=29 chars=1/1  $0.172
+[148/250] q28 think_medium   arm=0          ttft=1964.4ms out=5 think=None chars=1/1  $0.173
+[149/250] q28 think_low      arm=0          ttft=1277.4ms out=5 think=None chars=1/1  $0.173
+[150/250] q28 think_high     arm=0          ttft=1213.2ms out=5 think=None chars=1/1  $0.173
+[151/250] q33 think_low      arm=0          ttft=3121.4ms out=112 think=105 chars=1/1  $0.173
+[152/250] q33 think_high     arm=0          ttft=5593.2ms out=322 think=315 chars=1/1  $0.175
+[153/250] q33 think_xhigh    arm=0          ttft=15953.0ms out=859 think=852 chars=1/1  $0.179
+[154/250] q33 think_medium   arm=0          ttft=4393.9ms out=208 think=201 chars=1/1  $0.181
+[155/250] q33 think_max      arm=0          ttft=12980.9ms out=752 think=745 chars=1/1  $0.184
+[156/250] q34 think_max      arm=0          ttft=39257.0ms out=2327 think=2320 chars=1/1  $0.196
+[157/250] q34 think_low      arm=0          ttft=5666.6ms out=227 think=220 chars=1/1  $0.197
+[158/250] q34 think_medium   arm=0          ttft=4816.3ms out=203 think=196 chars=1/1  $0.198
+[159/250] q34 think_high     arm=0          ttft=8558.3ms out=435 think=428 chars=1/1  $0.201
+[160/250] q34 think_xhigh    arm=0          ttft=7791.1ms out=341 think=334 chars=1/1  $0.202
+[161/250] q19 think_high     arm=0          ttft=4504.8ms out=239 think=232 chars=1/1  $0.204
+[162/250] q19 think_low      arm=0          ttft=3004.2ms out=101 think=94 chars=1/1  $0.204
+[163/250] q19 think_max      arm=0          ttft=9872.4ms out=579 think=572 chars=1/1  $0.207
+[164/250] q19 think_xhigh    arm=0          ttft=9057.8ms out=508 think=501 chars=1/1  $0.210
+[165/250] q19 think_medium   arm=0          ttft=4362.8ms out=117 think=110 chars=1/1  $0.211
+[166/250] q10 think_low      arm=0          ttft=2824.8ms out=118 think=111 chars=1/1  $0.211
+[167/250] q10 think_medium   arm=0          ttft=3554.2ms out=141 think=134 chars=1/1  $0.212
+[168/250] q10 think_xhigh    arm=0          ttft=5384.2ms out=212 think=205 chars=1/1  $0.213
+[169/250] q10 think_high     arm=0          ttft=3764.6ms out=155 think=148 chars=1/1  $0.214
+[170/250] q10 think_max      arm=0          ttft=18518.4ms out=1208 think=1201 chars=1/1  $0.220
+[171/250] q46 think_max      arm=0          ttft=3070.1ms out=186 think=179 chars=1/1  $0.221
+[172/250] q46 think_medium   arm=0          ttft=1571.0ms out=32 think=25 chars=1/1  $0.221
+[173/250] q46 think_low      arm=0          ttft=1781.6ms out=35 think=28 chars=1/1  $0.222
+[174/250] q46 think_xhigh    arm=0          ttft=3872.8ms out=99 think=92 chars=1/1  $0.222
+[175/250] q46 think_high     arm=0          ttft=2520.9ms out=59 think=52 chars=1/1  $0.223
+[176/250] q40 think_xhigh    arm=0          ttft=7317.3ms out=323 think=316 chars=1/1  $0.224
+[177/250] q40 think_max      arm=0          ttft=25222.1ms out=1252 think=1245 chars=1/1  $0.231
+[178/250] q40 think_low      arm=0          ttft=2261.9ms out=59 think=52 chars=1/1  $0.231
+[179/250] q40 think_high     arm=0          ttft=4089.9ms out=135 think=128 chars=1/1  $0.232
+[180/250] q40 think_medium   arm=0          ttft=4496.2ms out=186 think=179 chars=1/1  $0.233
+[181/250] q13 think_low      arm=0          ttft=1545.2ms out=40 think=33 chars=1/1  $0.233
+[182/250] q13 think_xhigh    arm=0          ttft=1819.4ms out=65 think=58 chars=1/1  $0.234
+[183/250] q13 think_medium   arm=0          ttft=1530.4ms out=43 think=36 chars=1/1  $0.234
+[184/250] q13 think_max      arm=0          ttft=3019.9ms out=121 think=114 chars=1/1  $0.235
+[185/250] q13 think_high     arm=0          ttft=2744.8ms out=52 think=45 chars=1/1  $0.235
+[186/250] q7 think_medium   arm=0          ttft=7255.5ms out=348 think=341 chars=1/1  $0.237
+[187/250] q7 think_max      arm=0          ttft=13692.3ms out=814 think=807 chars=1/1  $0.241
+[188/250] q7 think_xhigh    arm=0          ttft=8829.4ms out=523 think=516 chars=1/1  $0.244
+[189/250] q7 think_high     arm=0          ttft=7841.9ms out=414 think=407 chars=1/1  $0.246
+[190/250] q7 think_low      arm=0          ttft=6866.7ms out=368 think=361 chars=1/1  $0.248
+[191/250] q1 think_high     arm=0          ttft=3065.4ms out=128 think=121 chars=1/1  $0.248
+[192/250] q1 think_xhigh    arm=0          ttft=4213.4ms out=189 think=182 chars=1/1  $0.250
+[193/250] q1 think_low      arm=0          ttft=2144.1ms out=65 think=58 chars=1/1  $0.250
+[194/250] q1 think_max      arm=0          ttft=4943.6ms out=216 think=209 chars=1/1  $0.251
+[195/250] q1 think_medium   arm=0          ttft=3426.9ms out=124 think=117 chars=1/1  $0.252
+[196/250] q44 think_medium   arm=0          ttft=1220.4ms out=5 think=None chars=1/1  $0.252
+[197/250] q44 think_xhigh    arm=0          ttft=1945.2ms out=5 think=None chars=1/1  $0.252
+[198/250] q44 think_low      arm=0          ttft=1137.7ms out=5 think=None chars=1/1  $0.252
+[199/250] q44 think_max      arm=0          ttft=2041.8ms out=63 think=56 chars=1/1  $0.252
+[200/250] q44 think_high     arm=0          ttft=1235.1ms out=28 think=21 chars=1/1  $0.253
+[201/250] q17 think_medium   arm=0          ttft=1067.1ms out=23 think=16 chars=1/1  $0.253
+[202/250] q17 think_xhigh    arm=0          ttft=1680.9ms out=37 think=30 chars=1/1  $0.253
+[203/250] q17 think_max      arm=0          ttft=2684.0ms out=76 think=69 chars=1/1  $0.254
+[204/250] q17 think_high     arm=0          ttft=2760.6ms out=36 think=29 chars=1/1  $0.254
+[205/250] q17 think_low      arm=0          ttft=1840.2ms out=5 think=None chars=1/1  $0.254
+[206/250] q25 think_max      arm=0          ttft=2247.6ms out=43 think=36 chars=1/1  $0.254
+[207/250] q25 think_low      arm=0          ttft=1341.2ms out=5 think=None chars=1/1  $0.254
+[208/250] q25 think_xhigh    arm=0          ttft=960.6ms out=5 think=None chars=1/1  $0.254
+[209/250] q25 think_medium   arm=0          ttft=1814.2ms out=5 think=None chars=1/1  $0.255
+[210/250] q25 think_high     arm=0          ttft=1014.1ms out=5 think=None chars=1/1  $0.255
+[211/250] q20 think_max      arm=0          ttft=9858.7ms out=413 think=406 chars=1/1  $0.257
+[212/250] q20 think_low      arm=0          ttft=2833.9ms out=61 think=54 chars=1/1  $0.257
+[213/250] q20 think_medium   arm=0          ttft=4291.1ms out=132 think=125 chars=1/1  $0.258
+[214/250] q20 think_xhigh    arm=0          ttft=5117.5ms out=183 think=176 chars=1/1  $0.259
+[215/250] q20 think_high     arm=0          ttft=5240.0ms out=136 think=129 chars=1/1  $0.260
+[216/250] q39 think_high     arm=0          ttft=1354.4ms out=35 think=28 chars=1/1  $0.260
+[217/250] q39 think_xhigh    arm=0          ttft=1608.5ms out=34 think=27 chars=1/1  $0.260
+[218/250] q39 think_low      arm=0          ttft=1562.8ms out=5 think=None chars=1/1  $0.260
+[219/250] q39 think_medium   arm=0          ttft=1129.2ms out=5 think=None chars=1/1  $0.260
+[220/250] q39 think_max      arm=0          ttft=2126.7ms out=59 think=52 chars=1/1  $0.261
+[221/250] q0 think_medium   arm=0          ttft=3242.9ms out=132 think=125 chars=1/1  $0.262
+[222/250] q0 think_high     arm=0          ttft=4494.1ms out=192 think=185 chars=1/1  $0.263
+[223/250] q0 think_max      arm=0          ttft=2876.2ms out=139 think=132 chars=1/1  $0.263
+[224/250] q0 think_low      arm=0          ttft=4054.9ms out=123 think=116 chars=1/1  $0.264
+[225/250] q0 think_xhigh    arm=0          ttft=4209.2ms out=189 think=182 chars=1/1  $0.265
+[226/250] q15 think_max      arm=0          ttft=18184.1ms out=1132 think=1125 chars=1/1  $0.271
+[227/250] q15 think_low      arm=0          ttft=3269.8ms out=94 think=87 chars=1/1  $0.271
+[228/250] q15 think_high     arm=0          ttft=3854.8ms out=152 think=145 chars=1/1  $0.272
+[229/250] q15 think_medium   arm=0          ttft=3718.1ms out=137 think=130 chars=1/1  $0.273
+[230/250] q15 think_xhigh    arm=0          ttft=4122.7ms out=173 think=166 chars=1/1  $0.274
+[231/250] q8 think_low      arm=0          ttft=3280.9ms out=141 think=134 chars=1/1  $0.275
+[232/250] q8 think_xhigh    arm=0          ttft=4394.5ms out=180 think=173 chars=1/1  $0.276
+[233/250] q8 think_high     arm=0          ttft=4250.0ms out=162 think=155 chars=1/1  $0.277
+[234/250] q8 think_max      arm=0          ttft=5200.7ms out=269 think=262 chars=1/1  $0.278
+[235/250] q8 think_medium   arm=0          ttft=6405.2ms out=240 think=233 chars=1/1  $0.279
+[236/250] q5 think_low      arm=0          ttft=2059.3ms out=67 think=60 chars=1/1  $0.280
+[237/250] q5 think_max      arm=0          ttft=2633.0ms out=106 think=99 chars=1/1  $0.281
+[238/250] q5 think_medium   arm=0          ttft=2770.1ms out=67 think=60 chars=1/1  $0.281
+[239/250] q5 think_high     arm=0          ttft=1723.1ms out=60 think=53 chars=1/1  $0.281
+[240/250] q5 think_xhigh    arm=0          ttft=1931.3ms out=91 think=84 chars=1/1  $0.282
+[241/250] q3 think_low      arm=0          ttft=2343.9ms out=46 think=39 chars=1/1  $0.282
+[242/250] q3 think_high     arm=0          ttft=1419.9ms out=53 think=46 chars=1/1  $0.283
+[243/250] q3 think_max      arm=0          ttft=2397.8ms out=100 think=93 chars=1/1  $0.283
+[244/250] q3 think_xhigh    arm=0          ttft=2028.7ms out=55 think=48 chars=1/1  $0.284
+[245/250] q3 think_medium   arm=0          ttft=2565.3ms out=51 think=44 chars=1/1  $0.284
+[246/250] q41 think_max      arm=0          ttft=14446.3ms out=900 think=893 chars=1/1  $0.289
+[247/250] q41 think_low      arm=0          ttft=1894.2ms out=51 think=44 chars=1/1  $0.289
+[248/250] q41 think_high     arm=0          ttft=4490.4ms out=138 think=131 chars=1/1  $0.290
+[249/250] q41 think_xhigh    arm=0          ttft=6967.5ms out=349 think=342 chars=1/1  $0.292
+[250/250] q41 think_medium   arm=0          ttft=2913.8ms out=92 think=85 chars=1/1  $0.292
+
+[done] 로그 -> out/openai_strict_x50_terra_log.jsonl
+토큰: 입력 22,555 / 출력 53,926 / 비용 $0.292
+→ 확인 1: answer_chars 가 조건 무관 고정인지(길이 통제 성공 여부)
+→ 확인 2: truncated=true 건수(추론 폭주로 답이 없던 콜 — 분석서 제외)
+→ 확인 3: thoughts_tokens 가 단계별로 벌어지는지(설정 반영 여부)
+→ 확인 4: 파싱 후 조건별 up_bytes 중앙값이 같은지(요청 크기 통제 성공 여부)
+
+완료. 다음:  python3 parse_pcap.py out/openai_strict_x50_terra_20261120_062125.pcap out/openai_strict_x50_terra_log.jsonl --local-ip 163.152.223.17 --out out/openai_x50_terra.csv
+[06:56:51] 파싱: out/openai_strict_x50_terra_20261120_062125.pcap
+/usr/local/lib/python3.10/dist-packages/scapy/layers/tls/crypto/groups.py:25: CryptographyDeprecationWarning: Diffie-Hellman over finite fields (FFDH) is deprecated and support will be removed in a future release. Use a more modern key exchange algorithm.
+  from cryptography.hazmat.primitives.asymmetric.dh import DHParameterNumbers
+local IP = 163.152.223.17  (override)
+요청 250개
+pcap 읽는 중...
+패킷 7442개
+
+=== 조건별 패킷 간격(pkt_gap_ms) vs 앱(ttft) ===
+condition     n  pkt_gap중앙  app_ttft중앙  down_bytes중앙 answer_tok
+think_low    50      472.8      1958.5       13762.5       50.0
+think_high   50      471.4      2916.1       15258.0      117.0
+think_max    50      534.2      4569.0       18278.0      204.0
+think_medium  50      459.6      2234.5       14375.0       71.5
+think_xhigh  50      504.1      3311.2       15740.0      124.0
+
+[out] out/x50_terra.csv  (250행)
+→ think_high의 pkt_gap이  얕은 조건보다 크면 = 패킷 레벨서도 추론 신호 확인!
+→ answer_tok 이 조건 간 동일하면 = 출력 길이 통제가 토큰 수준에서 성립.
+
+==================================================
+[06:56:53] 시작: x50_sol
+==================================================
+필터: tcp port 443 and ( host 162.159.140.245 or host 172.66.0.243)
+pcap: out/openai_strict_x50_sol_20261120_065653.pcap  log: out/openai_strict_x50_sol_log.jsonl
+tcpdump PID=186841, 2초 워밍업...
+선별 적용: out/qfile_oai_cross50.json -> 50문항
+문항 50개 / 템플릿 50개 (신뢰구간의 독립 표본 수는 문항이 아니라 템플릿 쪽이다)
+[1/250] q14 think_high     arm=0          ttft=2234.1ms out=26 think=19 chars=1/1  $0.000
+[2/250] q14 think_low      arm=0          ttft=3425.0ms out=18 think=11 chars=1/1  $0.001
+[3/250] q14 think_max      arm=0          ttft=2816.8ms out=65 think=58 chars=1/1  $0.002
+[4/250] q14 think_medium   arm=0          ttft=2801.9ms out=19 think=12 chars=1/1  $0.002
+[5/250] q14 think_xhigh    arm=0          ttft=3044.6ms out=56 think=49 chars=1/1  $0.003
+[6/250] q9 think_medium   arm=0          ttft=3659.5ms out=29 think=22 chars=1/1  $0.003
+[7/250] q9 think_max      arm=0          ttft=6214.0ms out=164 think=157 chars=1/1  $0.005
+[8/250] q9 think_xhigh    arm=0          ttft=3739.5ms out=154 think=147 chars=1/1  $0.007
+[9/250] q9 think_low      arm=0          ttft=2368.9ms out=31 think=24 chars=1/1  $0.007
+[10/250] q9 think_high     arm=0          ttft=2943.3ms out=58 think=51 chars=1/1  $0.008
+[11/250] q4 think_medium   arm=0          ttft=2782.6ms out=93 think=86 chars=1/1  $0.009
+[12/250] q4 think_max      arm=0          ttft=3869.2ms out=147 think=140 chars=1/1  $0.011
+[13/250] q4 think_high     arm=0          ttft=2719.2ms out=104 think=97 chars=1/1  $0.012
+[14/250] q4 think_low      arm=0          ttft=1700.1ms out=79 think=72 chars=1/1  $0.013
+[15/250] q4 think_xhigh    arm=0          ttft=3934.8ms out=198 think=191 chars=1/1  $0.015
+[16/250] q42 think_low      arm=0          ttft=1152.9ms out=5 think=None chars=1/1  $0.016
+[17/250] q42 think_max      arm=0          ttft=2607.2ms out=61 think=54 chars=1/1  $0.016
+[18/250] q42 think_xhigh    arm=0          ttft=2092.9ms out=52 think=45 chars=1/1  $0.017
+[19/250] q42 think_high     arm=0          ttft=1325.6ms out=29 think=22 chars=1/1  $0.018
+[20/250] q42 think_medium   arm=0          ttft=1425.9ms out=5 think=None chars=1/1  $0.018
+[21/250] q29 think_high     arm=0          ttft=1684.8ms out=26 think=19 chars=1/1  $0.018
+[22/250] q29 think_max      arm=0          ttft=2446.4ms out=62 think=55 chars=1/1  $0.019
+[23/250] q29 think_medium   arm=0          ttft=1338.6ms out=5 think=None chars=1/1  $0.019
+[24/250] q29 think_xhigh    arm=0          ttft=1615.0ms out=29 think=22 chars=1/1  $0.020
+[25/250] q29 think_low      arm=0          ttft=1299.8ms out=5 think=None chars=1/1  $0.020
+[26/250] q36 think_high     arm=0          ttft=7126.2ms out=206 think=199 chars=1/1  $0.022
+[27/250] q36 think_xhigh    arm=0          ttft=5778.5ms out=219 think=212 chars=1/1  $0.024
+[28/250] q36 think_medium   arm=0          ttft=7270.9ms out=110 think=103 chars=1/1  $0.026
+[29/250] q36 think_low      arm=0          ttft=4944.3ms out=134 think=127 chars=1/1  $0.027
+[30/250] q36 think_max      arm=0          ttft=21441.0ms out=975 think=968 chars=1/1  $0.037
+[31/250] q35 think_xhigh    arm=0          ttft=3336.3ms out=107 think=100 chars=1/1  $0.038
+[32/250] q35 think_max      arm=0          ttft=7324.7ms out=330 think=323 chars=1/1  $0.042
+[33/250] q35 think_medium   arm=0          ttft=3525.5ms out=57 think=50 chars=1/1  $0.042
+[34/250] q35 think_high     arm=0          ttft=4943.2ms out=84 think=77 chars=1/1  $0.043
+[35/250] q35 think_low      arm=0          ttft=3735.7ms out=66 think=59 chars=1/1  $0.044
+[36/250] q12 think_xhigh    arm=0          ttft=9067.3ms out=278 think=271 chars=1/1  $0.047
+[37/250] q12 think_max      arm=0          ttft=8636.5ms out=394 think=387 chars=1/1  $0.051
+[38/250] q12 think_high     arm=0          ttft=7466.2ms out=282 think=275 chars=1/1  $0.054
+[39/250] q12 think_low      arm=0          ttft=3745.6ms out=88 think=81 chars=1/1  $0.055
+[40/250] q12 think_medium   arm=0          ttft=3244.7ms out=77 think=70 chars=1/1  $0.056
+[41/250] q30 think_xhigh    arm=0          ttft=2615.0ms out=53 think=46 chars=1/1  $0.057
+[42/250] q30 think_max      arm=0          ttft=3064.9ms out=78 think=71 chars=1/1  $0.058
+[43/250] q30 think_low      arm=0          ttft=2346.4ms out=30 think=23 chars=1/1  $0.058
+[44/250] q30 think_high     arm=0          ttft=1719.1ms out=29 think=22 chars=1/1  $0.059
+[45/250] q30 think_medium   arm=0          ttft=2062.2ms out=23 think=16 chars=1/1  $0.059
+[46/250] q31 think_low      arm=0          ttft=5256.5ms out=159 think=152 chars=1/1  $0.061
+[47/250] q31 think_medium   arm=0          ttft=3391.5ms out=55 think=48 chars=1/1  $0.062
+[48/250] q31 think_xhigh    arm=0          ttft=13016.1ms out=484 think=477 chars=1/1  $0.067
+[49/250] q31 think_high     arm=0          ttft=3915.8ms out=105 think=98 chars=1/1  $0.068
+[50/250] q31 think_max      arm=0          ttft=8668.0ms out=354 think=347 chars=1/1  $0.072
+[51/250] q6 think_low      arm=0          ttft=2824.9ms out=68 think=61 chars=1/1  $0.072
+[52/250] q6 think_xhigh    arm=0          ttft=4699.9ms out=130 think=123 chars=1/1  $0.074
+[53/250] q6 think_medium   arm=0          ttft=3756.3ms out=96 think=89 chars=1/1  $0.075
+[54/250] q6 think_high     arm=0          ttft=3082.7ms out=98 think=91 chars=1/1  $0.076
+[55/250] q6 think_max      arm=0          ttft=4590.6ms out=141 think=134 chars=1/1  $0.078
+[56/250] q47 think_xhigh    arm=0          ttft=3633.4ms out=137 think=130 chars=1/1  $0.080
+[57/250] q47 think_high     arm=0          ttft=3221.7ms out=88 think=81 chars=1/1  $0.081
+[58/250] q47 think_medium   arm=0          ttft=2018.4ms out=60 think=53 chars=1/1  $0.082
+[59/250] q47 think_low      arm=0          ttft=3126.1ms out=48 think=41 chars=1/1  $0.082
+[60/250] q47 think_max      arm=0          ttft=4411.6ms out=152 think=145 chars=1/1  $0.084
+[61/250] q38 think_xhigh    arm=0          ttft=4039.6ms out=115 think=108 chars=1/1  $0.085
+[62/250] q38 think_max      arm=0          ttft=4326.8ms out=202 think=195 chars=1/1  $0.088
+[63/250] q38 think_high     arm=0          ttft=3801.7ms out=89 think=82 chars=1/1  $0.089
+[64/250] q38 think_low      arm=0          ttft=3491.7ms out=50 think=43 chars=1/1  $0.089
+[65/250] q38 think_medium   arm=0          ttft=4039.9ms out=61 think=54 chars=1/1  $0.090
+[66/250] q48 think_low      arm=0          ttft=3293.2ms out=31 think=24 chars=1/1  $0.091
+[67/250] q48 think_max      arm=0          ttft=4162.8ms out=142 think=135 chars=1/1  $0.092
+[68/250] q48 think_medium   arm=0          ttft=2552.2ms out=49 think=42 chars=1/1  $0.093
+[69/250] q48 think_xhigh    arm=0          ttft=3307.6ms out=72 think=65 chars=1/1  $0.094
+[70/250] q48 think_high     arm=0          ttft=7620.4ms out=66 think=59 chars=1/1  $0.095
+[71/250] q11 think_xhigh    arm=0          ttft=33509.0ms out=1423 think=1416 chars=1/1  $0.110
+[72/250] q11 think_medium   arm=0          ttft=9267.7ms out=302 think=295 chars=1/1  $0.113
+[73/250] q11 think_max      arm=0          ttft=71713.6ms out=3498 think=3491 chars=1/1  $0.148
+[74/250] q11 think_low      arm=0          ttft=7754.2ms out=219 think=212 chars=1/1  $0.150
+[75/250] q11 think_high     arm=0          ttft=11457.3ms out=448 think=441 chars=1/1  $0.155
+[76/250] q26 think_max      arm=0          ttft=5010.5ms out=163 think=156 chars=1/1  $0.157
+[77/250] q26 think_medium   arm=0          ttft=1565.5ms out=23 think=16 chars=1/1  $0.157
+[78/250] q26 think_low      arm=0          ttft=2005.0ms out=29 think=22 chars=1/1  $0.158
+[79/250] q26 think_high     arm=0          ttft=2244.3ms out=52 think=45 chars=1/1  $0.158
+[80/250] q26 think_xhigh    arm=0          ttft=3020.6ms out=90 think=83 chars=1/1  $0.159
+[81/250] q32 think_max      arm=0          ttft=53896.0ms out=2365 think=2358 chars=1/1  $0.183
+[82/250] q32 think_xhigh    arm=0          ttft=10252.2ms out=329 think=322 chars=1/1  $0.187
+[83/250] q32 think_low      arm=0          ttft=3274.8ms out=84 think=77 chars=1/1  $0.188
+[84/250] q32 think_high     arm=0          ttft=20282.9ms out=343 think=336 chars=1/1  $0.191
+[85/250] q32 think_medium   arm=0          ttft=6274.2ms out=170 think=163 chars=1/1  $0.193
+[86/250] q45 think_low      arm=0          ttft=1857.3ms out=20 think=13 chars=1/1  $0.193
+[87/250] q45 think_xhigh    arm=0          ttft=2857.4ms out=72 think=65 chars=1/1  $0.194
+[88/250] q45 think_medium   arm=0          ttft=2255.9ms out=24 think=17 chars=1/1  $0.195
+[89/250] q45 think_max      arm=0          ttft=3649.4ms out=148 think=141 chars=1/1  $0.196
+[90/250] q45 think_high     arm=0          ttft=3170.1ms out=34 think=27 chars=1/1  $0.197
+[91/250] q23 think_low      arm=0          ttft=1494.3ms out=5 think=None chars=1/1  $0.197
+[92/250] q23 think_medium   arm=0          ttft=2760.9ms out=5 think=None chars=1/1  $0.197
+[93/250] q23 think_high     arm=0          ttft=1419.2ms out=21 think=14 chars=1/1  $0.198
+[94/250] q23 think_max      arm=0          ttft=2269.4ms out=65 think=58 chars=1/1  $0.198
+[95/250] q23 think_xhigh    arm=0          ttft=1757.9ms out=29 think=22 chars=1/1  $0.199
+[96/250] q18 think_medium   arm=0          ttft=2160.5ms out=34 think=27 chars=1/1  $0.199
+[97/250] q18 think_low      arm=0          ttft=1653.3ms out=32 think=25 chars=1/1  $0.200
+[98/250] q18 think_high     arm=0          ttft=2346.8ms out=39 think=32 chars=1/1  $0.200
+[99/250] q18 think_max      arm=0          ttft=4211.5ms out=111 think=104 chars=1/1  $0.202
+[100/250] q18 think_xhigh    arm=0          ttft=3200.8ms out=65 think=58 chars=1/1  $0.202
+[101/250] q2 think_low      arm=0          ttft=6493.7ms out=218 think=211 chars=1/1  $0.205
+[102/250] q2 think_xhigh    arm=0          ttft=8873.0ms out=359 think=352 chars=1/1  $0.209
+[103/250] q2 think_high     arm=0          ttft=10532.2ms out=335 think=328 chars=1/1  $0.212
+[104/250] q2 think_max      arm=0          ttft=6491.4ms out=334 think=327 chars=1/1  $0.216
+[105/250] q2 think_medium   arm=0          ttft=7428.0ms out=239 think=232 chars=1/1  $0.219
+[106/250] q27 think_xhigh    arm=0          ttft=2899.6ms out=69 think=62 chars=1/1  $0.219
+[107/250] q27 think_low      arm=0          ttft=2114.7ms out=27 think=20 chars=1/1  $0.220
+[108/250] q27 think_medium   arm=0          ttft=2543.4ms out=28 think=21 chars=1/1  $0.220
+[109/250] q27 think_high     arm=0          ttft=3429.3ms out=28 think=21 chars=1/1  $0.221
+[110/250] q27 think_max      arm=0          ttft=3969.1ms out=102 think=95 chars=1/1  $0.222
+[111/250] q16 think_max      arm=0          ttft=4929.7ms out=103 think=96 chars=1/1  $0.223
+[112/250] q16 think_low      arm=0          ttft=2105.9ms out=22 think=15 chars=1/1  $0.223
+[113/250] q16 think_xhigh    arm=0          ttft=3597.7ms out=35 think=28 chars=1/1  $0.224
+[114/250] q16 think_medium   arm=0          ttft=3311.9ms out=34 think=27 chars=1/1  $0.224
+[115/250] q16 think_high     arm=0          ttft=2242.1ms out=33 think=26 chars=1/1  $0.225
+[116/250] q49 think_medium   arm=0          ttft=4265.8ms out=32 think=25 chars=1/1  $0.226
+[117/250] q49 think_xhigh    arm=0          ttft=3011.3ms out=51 think=44 chars=1/1  $0.226
+[118/250] q49 think_low      arm=0          ttft=3264.9ms out=38 think=31 chars=1/1  $0.227
+[119/250] q49 think_high     arm=0          ttft=3258.1ms out=30 think=23 chars=1/1  $0.228
+[120/250] q49 think_max      arm=0          ttft=4761.9ms out=101 think=94 chars=1/1  $0.229
+[121/250] q24 think_medium   arm=0          ttft=2716.8ms out=22 think=15 chars=1/1  $0.229
+[122/250] q24 think_xhigh    arm=0          ttft=3651.1ms out=59 think=52 chars=1/1  $0.230
+[123/250] q24 think_max      arm=0          ttft=3159.3ms out=73 think=66 chars=1/1  $0.231
+[124/250] q24 think_high     arm=0          ttft=4291.7ms out=26 think=19 chars=1/1  $0.232
+[125/250] q24 think_low      arm=0          ttft=2609.9ms out=5 think=None chars=1/1  $0.232
+[126/250] q22 think_high     arm=0          ttft=12090.0ms out=448 think=441 chars=1/1  $0.236
+[127/250] q22 think_medium   arm=0          ttft=10185.5ms out=271 think=264 chars=1/1  $0.239
+[128/250] q22 think_xhigh    arm=0          ttft=25128.7ms out=1279 think=1272 chars=1/1  $0.252
+[129/250] q22 think_max      arm=0          ttft=24773.6ms out=1236 think=1229 chars=1/1  $0.265
+[130/250] q22 think_low      arm=0          ttft=5435.5ms out=136 think=129 chars=1/1  $0.266
+[131/250] q37 think_low      arm=0          ttft=3087.1ms out=34 think=27 chars=1/1  $0.267
+[132/250] q37 think_medium   arm=0          ttft=1909.1ms out=33 think=26 chars=1/1  $0.267
+[133/250] q37 think_max      arm=0          ttft=4491.4ms out=89 think=82 chars=1/1  $0.268
+[134/250] q37 think_xhigh    arm=0          ttft=3080.0ms out=76 think=69 chars=1/1  $0.269
+[135/250] q37 think_high     arm=0          ttft=2002.5ms out=44 think=37 chars=1/1  $0.270
+[136/250] q43 think_low      arm=0          ttft=2617.5ms out=21 think=14 chars=1/1  $0.270
+[137/250] q43 think_xhigh    arm=0          ttft=2691.8ms out=60 think=53 chars=1/1  $0.271
+[138/250] q43 think_max      arm=0          ttft=2850.1ms out=84 think=77 chars=1/1  $0.272
+[139/250] q43 think_medium   arm=0          ttft=3505.8ms out=24 think=17 chars=1/1  $0.272
+[140/250] q43 think_high     arm=0          ttft=2606.2ms out=41 think=34 chars=1/1  $0.273
+[141/250] q21 think_low      arm=0          ttft=5960.7ms out=133 think=126 chars=1/1  $0.274
+[142/250] q21 think_medium   arm=0          ttft=9584.6ms out=282 think=275 chars=1/1  $0.277
+[143/250] q21 think_high     arm=0          ttft=19476.7ms out=704 think=697 chars=1/1  $0.285
+[144/250] q21 think_max      arm=0          ttft=16965.9ms out=803 think=796 chars=1/1  $0.293
+[145/250] q21 think_xhigh    arm=0          ttft=5644.1ms out=190 think=183 chars=1/1  $0.295
+[146/250] q28 think_xhigh    arm=0          ttft=2779.4ms out=30 think=23 chars=1/1  $0.295
+[147/250] q28 think_max      arm=0          ttft=2610.5ms out=68 think=61 chars=1/1  $0.296
+[148/250] q28 think_medium   arm=0          ttft=2186.4ms out=5 think=None chars=1/1  $0.296
+[149/250] q28 think_low      arm=0          ttft=2739.4ms out=5 think=None chars=1/1  $0.297
+[150/250] q28 think_high     arm=0          ttft=2634.4ms out=28 think=21 chars=1/1  $0.297
+[151/250] q33 think_low      arm=0          ttft=4775.3ms out=69 think=62 chars=1/1  $0.298
+[152/250] q33 think_high     arm=0          ttft=5880.2ms out=125 think=118 chars=1/1  $0.299
+[153/250] q33 think_xhigh    arm=0          ttft=11753.0ms out=465 think=458 chars=1/1  $0.304
+[154/250] q33 think_medium   arm=0          ttft=8082.8ms out=170 think=163 chars=1/1  $0.306
+[155/250] q33 think_max      arm=0          ttft=18589.4ms out=797 think=790 chars=1/1  $0.314
+[156/250] q34 think_max      arm=0          ttft=37346.0ms out=1750 think=1743 chars=1/1  $0.332
+[157/250] q34 think_low      arm=0          ttft=5735.9ms out=196 think=189 chars=1/1  $0.334
+[158/250] q34 think_medium   arm=0          ttft=6287.4ms out=181 think=174 chars=1/1  $0.336
+[159/250] q34 think_high     arm=0          ttft=10228.0ms out=392 think=385 chars=1/1  $0.340
+[160/250] q34 think_xhigh    arm=0          ttft=10645.4ms out=482 think=475 chars=1/1  $0.345
+[161/250] q19 think_high     arm=0          ttft=4380.5ms out=99 think=92 chars=1/1  $0.346
+[162/250] q19 think_low      arm=0          ttft=3974.1ms out=58 think=51 chars=1/1  $0.347
+[163/250] q19 think_max      arm=0          ttft=6263.3ms out=334 think=327 chars=1/1  $0.350
+[164/250] q19 think_xhigh    arm=0          ttft=8783.8ms out=265 think=258 chars=1/1  $0.353
+[165/250] q19 think_medium   arm=0          ttft=2548.8ms out=52 think=45 chars=1/1  $0.354
+[166/250] q10 think_low      arm=0          ttft=4333.3ms out=95 think=88 chars=1/1  $0.355
+[167/250] q10 think_medium   arm=0          ttft=4115.9ms out=105 think=98 chars=1/1  $0.356
+[168/250] q10 think_xhigh    arm=0          ttft=21524.0ms out=939 think=932 chars=1/1  $0.366
+[169/250] q10 think_high     arm=0          ttft=12236.0ms out=486 think=479 chars=1/1  $0.371
+[170/250] q10 think_max      arm=0          ttft=29958.5ms out=1389 think=1382 chars=1/1  $0.385
+[171/250] q46 think_max      arm=0          ttft=5743.2ms out=183 think=176 chars=1/1  $0.387
+[172/250] q46 think_medium   arm=0          ttft=2420.9ms out=33 think=26 chars=1/1  $0.387
+[173/250] q46 think_low      arm=0          ttft=1745.6ms out=23 think=16 chars=1/1  $0.388
+[174/250] q46 think_xhigh    arm=0          ttft=4936.9ms out=150 think=143 chars=1/1  $0.389
+[175/250] q46 think_high     arm=0          ttft=3085.5ms out=42 think=35 chars=1/1  $0.390
+[176/250] q40 think_xhigh    arm=0          ttft=3244.3ms out=91 think=84 chars=1/1  $0.391
+[177/250] q40 think_max      arm=0          ttft=5039.8ms out=142 think=135 chars=1/1  $0.393
+[178/250] q40 think_low      arm=0          ttft=1975.0ms out=24 think=17 chars=1/1  $0.393
+[179/250] q40 think_high     arm=0          ttft=4546.4ms out=49 think=42 chars=1/1  $0.394
+[180/250] q40 think_medium   arm=0          ttft=3155.4ms out=41 think=34 chars=1/1  $0.394
+[181/250] q13 think_low      arm=0          ttft=3162.3ms out=36 think=29 chars=1/1  $0.395
+[182/250] q13 think_xhigh    arm=0          ttft=3374.8ms out=46 think=39 chars=1/1  $0.396
+[183/250] q13 think_medium   arm=0          ttft=2142.8ms out=40 think=33 chars=1/1  $0.396
+[184/250] q13 think_max      arm=0          ttft=3954.5ms out=136 think=129 chars=1/1  $0.398
+[185/250] q13 think_high     arm=0          ttft=2376.7ms out=37 think=30 chars=1/1  $0.398
+[186/250] q7 think_medium   arm=0          ttft=11489.3ms out=340 think=333 chars=1/1  $0.402
+[187/250] q7 think_max      arm=0          ttft=16343.0ms out=757 think=750 chars=1/1  $0.410
+[188/250] q7 think_xhigh    arm=0          ttft=13422.4ms out=520 think=513 chars=1/1  $0.415
+[189/250] q7 think_high     arm=0          ttft=13074.2ms out=408 think=401 chars=1/1  $0.419
+[190/250] q7 think_low      arm=0          ttft=10073.6ms out=261 think=254 chars=1/1  $0.422
+[191/250] q1 think_high     arm=0          ttft=3530.9ms out=68 think=61 chars=1/1  $0.423
+[192/250] q1 think_xhigh    arm=0          ttft=3529.3ms out=79 think=72 chars=1/1  $0.424
+[193/250] q1 think_low      arm=0          ttft=2881.0ms out=37 think=30 chars=1/1  $0.424
+[194/250] q1 think_max      arm=0          ttft=5335.7ms out=167 think=160 chars=1/1  $0.426
+[195/250] q1 think_medium   arm=0          ttft=2245.2ms out=29 think=22 chars=1/1  $0.427
+[196/250] q44 think_medium   arm=0          ttft=1919.4ms out=5 think=None chars=1/1  $0.427
+[197/250] q44 think_xhigh    arm=0          ttft=2120.1ms out=43 think=36 chars=1/1  $0.427
+[198/250] q44 think_low      arm=0          ttft=1707.9ms out=5 think=None chars=1/1  $0.428
+[199/250] q44 think_max      arm=0          ttft=3355.8ms out=83 think=76 chars=1/1  $0.429
+[200/250] q44 think_high     arm=0          ttft=3495.2ms out=36 think=29 chars=1/1  $0.429
+[201/250] q17 think_medium   arm=0          ttft=2518.4ms out=21 think=14 chars=1/1  $0.430
+[202/250] q17 think_xhigh    arm=0          ttft=4094.6ms out=55 think=48 chars=1/1  $0.430
+[203/250] q17 think_max      arm=0          ttft=3472.1ms out=60 think=53 chars=1/1  $0.431
+[204/250] q17 think_high     arm=0          ttft=4088.7ms out=29 think=22 chars=1/1  $0.431
+[205/250] q17 think_low      arm=0          ttft=3152.7ms out=5 think=None chars=1/1  $0.432
+[206/250] q25 think_max      arm=0          ttft=4764.1ms out=53 think=46 chars=1/1  $0.432
+[207/250] q25 think_low      arm=0          ttft=2641.2ms out=5 think=None chars=1/1  $0.433
+[208/250] q25 think_xhigh    arm=0          ttft=3635.1ms out=28 think=21 chars=1/1  $0.433
+[209/250] q25 think_medium   arm=0          ttft=1528.1ms out=5 think=None chars=1/1  $0.433
+[210/250] q25 think_high     arm=0          ttft=3181.2ms out=32 think=25 chars=1/1  $0.434
+[211/250] q20 think_max      arm=0          ttft=5794.3ms out=120 think=113 chars=1/1  $0.435
+[212/250] q20 think_low      arm=0          ttft=3278.0ms out=26 think=19 chars=1/1  $0.435
+[213/250] q20 think_medium   arm=0          ttft=4224.5ms out=61 think=54 chars=1/1  $0.436
+[214/250] q20 think_xhigh    arm=0          ttft=4802.5ms out=115 think=108 chars=1/1  $0.438
+[215/250] q20 think_high     arm=0          ttft=4286.0ms out=66 think=59 chars=1/1  $0.438
+[216/250] q39 think_high     arm=0          ttft=1995.3ms out=46 think=39 chars=1/1  $0.439
+[217/250] q39 think_xhigh    arm=0          ttft=2516.8ms out=45 think=38 chars=1/1  $0.440
+[218/250] q39 think_low      arm=0          ttft=1815.2ms out=5 think=None chars=1/1  $0.440
+[219/250] q39 think_medium   arm=0          ttft=2325.3ms out=22 think=15 chars=1/1  $0.440
+[220/250] q39 think_max      arm=0          ttft=2812.9ms out=72 think=65 chars=1/1  $0.441
+[221/250] q0 think_medium   arm=0          ttft=7240.9ms out=178 think=171 chars=1/1  $0.443
+[222/250] q0 think_high     arm=0          ttft=4936.5ms out=115 think=108 chars=1/1  $0.444
+[223/250] q0 think_max      arm=0          ttft=5593.8ms out=181 think=174 chars=1/1  $0.446
+[224/250] q0 think_low      arm=0          ttft=4711.7ms out=100 think=93 chars=1/1  $0.447
+[225/250] q0 think_xhigh    arm=0          ttft=4361.3ms out=90 think=83 chars=1/1  $0.448
+[226/250] q15 think_max      arm=0          ttft=7246.1ms out=324 think=317 chars=1/1  $0.452
+[227/250] q15 think_low      arm=0          ttft=6681.1ms out=177 think=170 chars=1/1  $0.454
+[228/250] q15 think_high     arm=0          ttft=6225.0ms out=176 think=169 chars=1/1  $0.456
+[229/250] q15 think_medium   arm=0          ttft=5552.7ms out=121 think=114 chars=1/1  $0.457
+[230/250] q15 think_xhigh    arm=0          ttft=25465.3ms out=1006 think=999 chars=1/1  $0.467
+[231/250] q8 think_low      arm=0          ttft=5327.6ms out=137 think=130 chars=1/1  $0.469
+[232/250] q8 think_xhigh    arm=0          ttft=5376.7ms out=175 think=168 chars=1/1  $0.471
+[233/250] q8 think_high     arm=0          ttft=6085.6ms out=123 think=116 chars=1/1  $0.472
+[234/250] q8 think_max      arm=0          ttft=6888.3ms out=238 think=231 chars=1/1  $0.475
+[235/250] q8 think_medium   arm=0          ttft=4018.4ms out=118 think=111 chars=1/1  $0.476
+[236/250] q5 think_low      arm=0          ttft=2416.5ms out=59 think=52 chars=1/1  $0.477
+[237/250] q5 think_max      arm=0          ttft=3519.1ms out=121 think=114 chars=1/1  $0.479
+[238/250] q5 think_medium   arm=0          ttft=3829.6ms out=59 think=52 chars=1/1  $0.480
+[239/250] q5 think_high     arm=0          ttft=4619.0ms out=66 think=59 chars=1/1  $0.480
+[240/250] q5 think_xhigh    arm=0          ttft=4525.9ms out=83 think=76 chars=1/1  $0.482
+[241/250] q3 think_low      arm=0          ttft=1821.5ms out=24 think=17 chars=1/1  $0.482
+[242/250] q3 think_high     arm=0          ttft=2078.8ms out=47 think=40 chars=1/1  $0.483
+[243/250] q3 think_max      arm=0          ttft=4517.2ms out=114 think=107 chars=1/1  $0.484
+[244/250] q3 think_xhigh    arm=0          ttft=2744.6ms out=63 think=56 chars=1/1  $0.485
+[245/250] q3 think_medium   arm=0          ttft=2555.8ms out=34 think=27 chars=1/1  $0.485
+[246/250] q41 think_max      arm=0          ttft=6988.0ms out=244 think=237 chars=1/1  $0.488
+[247/250] q41 think_low      arm=0          ttft=2224.3ms out=41 think=34 chars=1/1  $0.489
+[248/250] q41 think_high     arm=0          ttft=3415.1ms out=92 think=85 chars=1/1  $0.490
+[249/250] q41 think_xhigh    arm=0          ttft=5591.0ms out=123 think=116 chars=1/1  $0.491
+[250/250] q41 think_medium   arm=0          ttft=4335.5ms out=58 think=51 chars=1/1  $0.492
+
+[done] 로그 -> out/openai_strict_x50_sol_log.jsonl
+토큰: 입력 22,555 / 출력 44,679 / 비용 $0.492
+→ 확인 1: answer_chars 가 조건 무관 고정인지(길이 통제 성공 여부)
+→ 확인 2: truncated=true 건수(추론 폭주로 답이 없던 콜 — 분석서 제외)
+→ 확인 3: thoughts_tokens 가 단계별로 벌어지는지(설정 반영 여부)
+→ 확인 4: 파싱 후 조건별 up_bytes 중앙값이 같은지(요청 크기 통제 성공 여부)
+
+완료. 다음:  python3 parse_pcap.py out/openai_strict_x50_sol_20261120_065653.pcap out/openai_strict_x50_sol_log.jsonl --local-ip 163.152.223.17 --out out/openai_x50_sol.csv
+[07:36:47] 파싱: out/openai_strict_x50_sol_20261120_065653.pcap
+/usr/local/lib/python3.10/dist-packages/scapy/layers/tls/crypto/groups.py:25: CryptographyDeprecationWarning: Diffie-Hellman over finite fields (FFDH) is deprecated and support will be removed in a future release. Use a more modern key exchange algorithm.
+  from cryptography.hazmat.primitives.asymmetric.dh import DHParameterNumbers
+local IP = 163.152.223.17  (override)
+요청 250개
+pcap 읽는 중...
+패킷 7506개
+
+=== 조건별 패킷 간격(pkt_gap_ms) vs 앱(ttft) ===
+condition     n  pkt_gap중앙  app_ttft중앙  down_bytes중앙 answer_tok
+think_low    50      661.8      3106.6       15048.0       36.5
+think_high   50      926.6      3513.1       15678.0       66.0
+think_max    50      825.0      4846.9       18395.5      147.5
+think_medium  50      786.8      3200.1       15136.5       45.0
+think_xhigh  50      695.3      3695.3       16305.0       90.5
+
+[out] out/x50_sol.csv  (250행)
+→ think_high의 pkt_gap이  얕은 조건보다 크면 = 패킷 레벨서도 추론 신호 확인!
+→ answer_tok 이 조건 간 동일하면 = 출력 길이 통제가 토큰 수준에서 성립.
+
+[07:36:49] 전체 종료.
