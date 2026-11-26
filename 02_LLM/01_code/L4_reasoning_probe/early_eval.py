@@ -105,6 +105,11 @@ def main() -> None:
     ap.add_argument("--echo-sub", default="", metavar="FEAT:K[,FEAT:K]",
                     help="피처값에서 k x len(effort문자열) 을 뺀다. "
                          "예) down_bytes:2.0,up_bytes:1.0. k 는 echo_fit.py 로 잰다")
+    # 2026-11-26 추가. Gemini 캡처(out/gem_v2_all.csv)는 parse_pcap 산출 wide CSV 라
+    # cutoff_ms 열이 없다. 그 경우 전체 창(cutoff 0) 한 줄짜리로 보고 같은 코드로 돌린다.
+    # 분류기·분할·피처를 똑같이 써야 다른 provider 와 숫자를 나란히 놓을 수 있다.
+    ap.add_argument("--qfile", default="",
+                    help="선별 JSON 의 'good' q_idx 만 남긴다. 공통 문항 축으로 맞출 때 쓴다")
     a = ap.parse_args()
 
     # --echo-sub 파싱은 행을 읽기 전에 해서, 오타면 비싼 계산 전에 바로 죽게 한다.
@@ -119,6 +124,21 @@ def main() -> None:
         echo_k[f] = float(k)
 
     rows = read(a.csv_path)
+    # wide CSV(cutoff_ms 없음) 는 전체 창 한 줄짜리 long CSV 로 취급한다.
+    if rows and "cutoff_ms" not in rows[0]:
+        for r in rows:
+            r["cutoff_ms"] = "0"
+            r.setdefault("finished_by_cutoff", "1")
+            r.setdefault("responded", "1")
+        print("[wide CSV] cutoff_ms 열이 없어 전체 창(cutoff 0) 으로만 평가한다.\n")
+    if a.qfile:
+        import json
+        from pathlib import Path
+        good = {str(int(x)) for x in
+                json.loads(Path(a.qfile).read_text(encoding="utf-8"))["good"]}
+        before = len(rows)
+        rows = [r for r in rows if str(r.get("q_idx", "")).strip() in good]
+        print(f"[선별] {a.qfile} -> {len(rows)}/{before}행\n")
     if a.clean_only:
         rows = [r for r in rows
                 if r.get("complied") == "1" and r.get("truncated") == "0"
@@ -200,8 +220,8 @@ def main() -> None:
         if not yt:
             continue
         acc = 100.0 * accuracy_score(yt, yp)
-        resp = 100.0 * sum(int(num(r["responded"])) for r in g) / len(g)
-        fin = 100.0 * sum(int(num(r["finished_by_cutoff"])) for r in g) / len(g)
+        resp = 100.0 * sum(int(num(r.get("responded"), 1)) for r in g) / len(g)
+        fin = 100.0 * sum(int(num(r.get("finished_by_cutoff"), 1)) for r in g) / len(g)
         lab = "전체" if cut == 0 else f"{cut}ms"
         print(f"{lab:>8} {len(g):>6} {acc:>7.1f}% {acc/chance:>8.2f}x {resp:>8.1f}% {fin:>8.1f}%")
         out_rows.append({"cutoff_ms": cut, "n": len(g), "acc": round(acc, 2),

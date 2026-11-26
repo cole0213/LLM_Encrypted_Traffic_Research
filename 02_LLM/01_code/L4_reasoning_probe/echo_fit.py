@@ -200,6 +200,22 @@ def main():
     recs = []
     for path in a.csvs:
         rows = read(path)
+
+        # 2026-11-26. parse_pcap 산출 wide CSV(out/gem_v2_all.csv 등)는 cutoff_ms 열이 없다.
+
+        # 전체 창 한 줄짜리 long CSV 로 취급해 같은 코드로 감사한다.
+
+        if rows and "cutoff_ms" not in rows[0]:
+
+            for r in rows:
+
+                r["cutoff_ms"] = "0"
+
+                r.setdefault("responded", "1")
+
+                r.setdefault("finished_by_cutoff", "1")
+
+            print(f"[wide CSV] {path} — cutoff_ms 가 없어 전체 창으로 본다")
         if not rows or "thoughts_tokens" not in rows[0]:
             print(f"[건너뜀] {path} — thoughts_tokens 열이 없다")
             continue
