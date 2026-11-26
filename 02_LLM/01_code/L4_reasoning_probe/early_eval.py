@@ -52,6 +52,11 @@ ORD = ["think_low", "think_medium", "think_high", "think_xhigh", "think_max"]
 # 패킷 수·시간 열은 에코의 영향을 안 받으므로 건드리지 않는다.
 BYTE_FEATS = ["down_bytes", "up_bytes", "down_pkt_mean", "down_pkt_max"]
 
+# effort 문자열의 글자 수. --echo-sub 가 '피처 - k x 글자수' 를 뺄 때 쓴다.
+# 깊이 순서(3<6<4<5<3)와 일치하지 않는다는 점이 이 교정의 근거다.
+STRLEN = {"think_low": 3, "think_medium": 6, "think_high": 4,
+          "think_xhigh": 5, "think_max": 3}
+
 
 def read(path: str) -> list[dict]:
     with open(path, encoding="utf-8-sig") as f:
@@ -93,7 +98,25 @@ def main() -> None:
     ap.add_argument("--quantize", type=int, default=0, metavar="B",
                     help="바이트 피처를 B 바이트 버킷으로 반올림(0=끄기). "
                          "라벨 에코 누출 제거용. 권장 100")
+    # 2026-11-24 추가. 양자화는 '라벨을 안 보는' 둔기라 신호도 같이 깎는다(하한만 준다).
+    # echo_fit.py 로 잰 글자당 바이트 k 를 그만큼만 빼면 신호를 안 깎는다.
+    # 단 이쪽은 **라벨을 본다** — k 가 틀리면 그 오차가 다시 라벨에 정렬된 신호로 남는다.
+    # 그래서 교정판은 양자화판을 대체하지 않고 '중간 추정' 으로 같이 보고한다.
+    ap.add_argument("--echo-sub", default="", metavar="FEAT:K[,FEAT:K]",
+                    help="피처값에서 k x len(effort문자열) 을 뺀다. "
+                         "예) down_bytes:2.0,up_bytes:1.0. k 는 echo_fit.py 로 잰다")
     a = ap.parse_args()
+
+    # --echo-sub 파싱은 행을 읽기 전에 해서, 오타면 비싼 계산 전에 바로 죽게 한다.
+    echo_k = {}
+    for part in (p.strip() for p in a.echo_sub.split(",") if p.strip()):
+        if ":" not in part:
+            raise SystemExit(f"--echo-sub 형식 오류: {part!r} (FEAT:K 로 적어라)")
+        f, k = part.rsplit(":", 1)
+        f = f.strip()
+        if f not in WIRE:
+            raise SystemExit(f"--echo-sub: {f!r} 는 WIRE 피처가 아니다")
+        echo_k[f] = float(k)
 
     rows = read(a.csv_path)
     if a.clean_only:
@@ -111,6 +134,21 @@ def main() -> None:
     if a.cutoffs:
         want = {int(x.strip()) for x in a.cutoffs.split(",") if x.strip()}
         cuts_all = [c for c in cuts_all if c in want]
+
+    # 에코 정확 교정. 양자화보다 먼저 적용한다 — 에코를 뺀 뒤에 버킷을 나눠야
+    # 순서가 말이 된다(반대로 하면 이미 뭉갠 값에서 몇 바이트를 빼는 꼴이다).
+    # 보통은 둘 중 하나만 쓴다.
+    if echo_k:
+        miss = sorted({r["condition"] for r in rows} - set(STRLEN))
+        if miss:
+            raise SystemExit(f"--echo-sub: 글자 수를 모르는 조건이 있다 {miss}")
+        for r in rows:
+            L = STRLEN[r["condition"]]
+            for f, k in echo_k.items():
+                if r.get(f) not in (None, ""):
+                    r[f] = str(num(r[f]) - k * L)
+        print("[에코 교정] " + ", ".join(f"{f} -= {k}x글자수" for f, k in echo_k.items())
+              + "  — 이 수치는 라벨을 쓴 교정판이다. 양자화판과 같이 읽어라.\n")
 
     # 바이트 피처 양자화. 라벨 에코는 6바이트 규모라 버킷 하나에 흡수되고,
     # 진짜 추론 신호(수천 바이트)는 버킷을 넘나들어 그대로 남는다.
