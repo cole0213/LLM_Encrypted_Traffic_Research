@@ -409,7 +409,8 @@ function build(pres) {
       { t: 'Gemini 는 새 측정 없이 들어왔다 — 기존 481문항 × 3조건 캡처가 공통 250문항을 전부 덮고 있었다.' },
       { t: 'Gemini 에도 게이트가 있다. 공통 250문항에서 low 콜의 83%가 추론 0 이다(medium·high 는 100%).', bold: true, color: HOT,
         sub: '"게이트는 문항마다 걸린다" 가 세 제조사 전부에서 확인됐다 — OpenAI 11-24 · Anthropic 11-18 · Google 11-26.' },
-      { t: '⚠ 1·2위는 low 중앙값이 0 이라 배수가 +1 보정의 산물이다. 둘 사이 순서는 사실상 high 중앙값 크기로 정해진 것이고, 그것이 RF 를 맞힌 것은 우연일 수 있다.', color: INK_SOFT },
+      { t: '⚠ 1·2위는 low 중앙값이 0 이라 배수가 +1 보정의 산물이다. 둘 사이 순서는 사실상 high 중앙값 크기로 정해진 것이고, 그것이 RF 를 맞힌 것은 우연일 수 있다.', color: INK_SOFT,
+        sub: '그날 저녁 확인: sonnet 은 medium 콜의 57.3% 도 추론 0 이다. 213배는 깊이가 아니라 게이트의 크기다 — 다음 장.' },
     ], { size: 12 }), { x: M, y: 4.78, w: W, h: 1.6, isTextBox: true, margin: 0, valign: 'top' });
     notes(s, [
       '[왜 3단으로 다시 쟀나]',
@@ -428,6 +429,78 @@ function build(pres) {
       '(OpenAI 조기 창은 같은 처리에서 54%p 붕괴했다).',
       '다만 검사 A 는 못 돌렸다 — 추론 0 행이 전부 low 에 몰려 있어 조건 쌍이 0개다.',
       '검사 하나로만 판정했으므로 깨끗하다고 단정하면 안 된다.',
+    ]);
+  }
+
+  {
+    // 2026-11-26 저녁 추가. "Task A 가 맞히는 것은 깊이가 아니라 켜짐/꺼짐 아니냐"는
+    // 반론에 답하는 장. 앞 장(독립 재확인)의 3단 RF 정본과 같은 측정에서 이어진다.
+    const s = content(pres, '4 결과', '게이트인가 깊이인가',
+      'Task A 가 보는 것은 켜짐/꺼짐만이 아니다',
+      'Gemini 의 66.3% 는 게이트와 깊이의 합이다. 게이트가 설계상 없는 비교에서도 우연 위에 남는다.');
+    s.addText([
+      { text: '반론 — ', options: { bold: true, fontSize: 13, color: HOT } },
+      { text: '"맞히는 것은 추론 깊이가 아니라 추론을 했는가 / 안 했는가 아닌가." Gemini 는 공통 250문항에서 low 콜의 83%가 추론 0 이라, 이 반론이 Task A 1위 모델에서 가장 세게 걸린다.',
+        options: { fontSize: 13, color: INK } },
+    ], { x: M, y: 1.34, w: W, h: 0.64, isTextBox: true, margin: 0.08, valign: 'top', fill: { color: 'FDF0EC' } });
+
+    s.addText('① 전 조건 추론>0 인 문항만 남기면 (A1 3분류, 우연 33.3%)', {
+      x: M, y: 2.00, w: 5.45, h: 0.26, isTextBox: true, margin: 0, fontSize: 11.5, bold: true, color: INK });
+    table(s, [
+      ['모델', '전체', '추론>0', '문항'],
+      ['gemini-3.5-flash-lite', '66.3%', '*52.5%', '40'],
+      ['gpt-6.1-sol', '47.9%', '45.8%', '217'],
+      ['gpt-6.1-terra', '39.6%', '43.6%', '198'],
+      ['claude-haiku-5-5', '44.9%', '*38.6%', '139'],
+    ], [2.35, 1.0, 1.1, 0.8], { x: M, y: 2.30, fontSize: 10.5, rowH: 0.27 });
+    s.addText('Gemini 는 13.8%p 떨어진다 — 반론이 절반 맞다. 그래도 52.5% 는 우연 33.3% 위다(z=2.43).', {
+      x: M, y: 3.72, w: 5.45, h: 0.62, isTextBox: true, margin: 0, fontSize: 10.5, color: INK_SOFT, valign: 'top' });
+
+    s.addText('② medium 대 high — 게이트가 설계상 없는 비교 (우연 50%)', {
+      x: M + 6.0, y: 2.00, w: 5.45, h: 0.26, isTextBox: true, margin: 0, fontSize: 11.5, bold: true, color: INK });
+    table(s, [
+      ['모델', 'medium 추론0', '정확도', '판정'],
+      ['gpt-6.1-sol', '3.6%', '*63.2%', '깊이'],
+      ['gemini-3.5-flash-lite', '0.0%', '*59.9%', '깊이'],
+      ['gpt-6-luna', '0.0%', '51.7%', '우연'],
+      ['gpt-6.1-terra', '11.2%', '51.2%', '우연'],
+      ['claude-haiku-5-5', '16.3%', '58.0%', '오염'],
+      ['claude-sonnet-5-5', '57.3%', '75.4%', '오염'],
+    ], [2.35, 1.2, 1.0, 0.9], { x: M + 6.0, y: 2.30, fontSize: 10.5, rowH: 0.27 });
+    s.addText('두 조건 모두 추론 0 이 없으면 켜짐/꺼짐 성분이 구조적으로 존재할 수 없다. 표본도 안 깎인다.', {
+      x: M + 6.0, y: 4.26, w: 5.45, h: 0.42, isTextBox: true, margin: 0, fontSize: 10.5, color: INK_SOFT, valign: 'top' });
+
+    s.addText([
+      { text: 'Gemini 의 medium·high 는 추론 0 이 정확히 0건인데도 59.9% 다 (n=481, z=3.06).',
+        options: { bold: true, fontSize: 14, color: HOT, breakLine: true } },
+      { text: '즉 Gemini 의 3단 66.3% 는 두 성분의 합이다 — 게이트(low 재현율 86.1%) + 깊이(59.9%). 반론이 가장 세게 걸리던 모델에서 반론이 깨졌다.',
+        options: { fontSize: 12.5, color: INK } },
+    ], { x: M, y: 4.74, w: W, h: 0.88, isTextBox: true, margin: 0.08, valign: 'top', fill: { color: 'FDF0EC' } });
+
+    s.addText(bullets([
+      { t: 'luna·terra 는 깊이 신호가 아예 없다. medium→high 토큰 배수가 꼴찌 둘(1.23 · 1.25)이고, 관측 채널이 조건 내부 산포를 못 넘는다 — luna 는 첫 바이트 시각이 +53ms 인데 내부 IQR 이 1,493ms 다.', color: INK_SOFT },
+      { t: 'haiku·sonnet 은 이 논증에 쓸 수 없다. medium 에 꺼진 콜이 16.3% · 57.3% 섞여 게이트가 다시 들어온다. sonnet 75.4% 는 깊이 성적이 아니다.', color: INK_SOFT },
+    ], { size: 11.5 }), { x: M, y: 5.70, w: W, h: 1.05, isTextBox: true, margin: 0, valign: 'top' });
+
+    notes(s, [
+      '[이 장이 답하는 질문]',
+      '지도교수·심사자가 가장 먼저 물을 질문이다. "효율 설정을 맞힌 게 아니라 그냥 생각했는지 안 했는지를',
+      '맞힌 것 아니냐." 답은 "둘 다지만 깊이도 실제로 있다" 이다.',
+      '',
+      '[왜 대조 ② 가 ① 보다 강한가]',
+      '① 은 문항을 걸러내므로 Gemini 에서 40문항까지 줄어 신뢰구간이 넓어진다.',
+      '또 문항이 줄면 그 자체로 정확도가 떨어질 수 있어, 하락분 중 얼마가 게이트이고',
+      '얼마가 표본 축소인지 못 가른다.',
+      '② 는 조건 두 개를 고르는 것이라 표본이 안 줄고, Gemini·luna 에서는 추론 0 이',
+      '정확히 0건이라 게이트 성분이 설계상 존재하지 않는다. 그래서 ② 가 정본이다.',
+      '',
+      '[sonnet 75.4% 를 인용하지 말 것]',
+      'sonnet 은 500행 중 353행만 남았고 low 141 / medium 143 / high 210 으로 기울었다.',
+      '다수 기준선이 50% 가 아니라 59.5% 이고, early_eval.py 는 "우연 50.0%" 로 찍는다.',
+      '균형정확도로는 73.5% 다. 게다가 medium 의 57.3% 가 추론 0 이라 깊이 성적이 아니다.',
+      '',
+      '[z 는 보수적 값]',
+      '한 문항의 두세 행이 독립이 아니므로 문항 수를 n 으로 본 값이다. 행 수로 보면 더 커진다.',
     ]);
   }
 
